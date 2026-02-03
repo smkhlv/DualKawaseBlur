@@ -7,6 +7,7 @@ class PipelineStateCache {
 
     private var downsamplePipeline: MTLRenderPipelineState?
     private var upsamplePipeline: MTLRenderPipelineState?
+    private var copyPipeline: MTLRenderPipelineState?
 
     enum PipelineError: Error {
         case functionNotFound(String)
@@ -48,8 +49,28 @@ class PipelineStateCache {
         return pipeline
     }
 
+    /// Get or create copy pipeline state (for rendering to drawable)
+    func getCopyPipeline() throws -> MTLRenderPipelineState {
+        if let pipeline = copyPipeline {
+            return pipeline
+        }
+
+        let pipeline = try createPipeline(
+            vertexFunction: "vertexShader",
+            fragmentFunction: "copyFragment",
+            pixelFormat: .bgra8Unorm
+        )
+
+        copyPipeline = pipeline
+        return pipeline
+    }
+
     /// Create pipeline state with given shader functions
-    private func createPipeline(vertexFunction: String, fragmentFunction: String) throws -> MTLRenderPipelineState {
+    private func createPipeline(
+        vertexFunction: String,
+        fragmentFunction: String,
+        pixelFormat: MTLPixelFormat = .bgra8Unorm_srgb
+    ) throws -> MTLRenderPipelineState {
         guard let vertexFunc = library.makeFunction(name: vertexFunction) else {
             throw PipelineError.functionNotFound(vertexFunction)
         }
@@ -73,8 +94,8 @@ class PipelineStateCache {
 
         descriptor.vertexDescriptor = vertexDescriptor
 
-        // Color attachment format - use sRGB for correct color handling
-        descriptor.colorAttachments[0].pixelFormat = .bgra8Unorm_srgb
+        // Color attachment format
+        descriptor.colorAttachments[0].pixelFormat = pixelFormat
 
         do {
             return try device.makeRenderPipelineState(descriptor: descriptor)
@@ -87,5 +108,6 @@ class PipelineStateCache {
     func clear() {
         downsamplePipeline = nil
         upsamplePipeline = nil
+        copyPipeline = nil
     }
 }

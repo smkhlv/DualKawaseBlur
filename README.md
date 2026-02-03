@@ -5,10 +5,11 @@ High-performance Dual Kawase Blur implementation for iOS using Metal.
 ## Features
 
 - Fast GPU-accelerated blur using Metal
+- Real-time 60fps blur for animated content (`BlurContainer`)
+- Static image blur (`DualKawaseBlurEngine`)
 - High-quality Dual Kawase algorithm
-- Simple one-line API
+- SwiftUI and UIKit support
 - Configurable blur strength (iterations) and radius (offset)
-- Minimal dependencies (UIKit, Metal, MetalKit)
 
 ## Requirements
 
@@ -35,13 +36,44 @@ Or in Xcode:
 
 ## Usage
 
+### Real-time Blur (SwiftUI)
+
+Use `BlurContainer` to blur dynamic or animated content at 60fps:
+
 ```swift
 import DualKawaseBlur
 
-// Initialize engine once
+BlurContainer(iterations: 3, offset: 2.0) {
+    // Content to blur
+    AnimatedGradientView()
+} overlay: {
+    // Content displayed on top of blur
+    Text("Hello, Blur!")
+        .foregroundColor(.white)
+}
+```
+
+### Real-time Blur (UIKit)
+
+```swift
+import DualKawaseBlur
+
+let container = BlurContainerView()
+container.iterations = 3
+container.offset = 2.0
+container.sourceView = animatedBackgroundView
+container.overlayView = labelView
+```
+
+### Static Image Blur
+
+Use `DualKawaseBlurEngine` for one-time image processing:
+
+```swift
+import DualKawaseBlur
+
 let engine = try DualKawaseBlurEngine()
 
-// Apply blur
 let blurred = engine.blur(
     image: myImage,
     iterations: 3,  // 1-5: blur strength (higher = stronger)
@@ -67,11 +99,30 @@ For 1024×1024 image on iPhone 12+:
 - 3 iterations: ~5-10ms
 - Texture pyramid cached - changing only offset is very fast
 
+### Animating Content Inside BlurContainer
+
+When using `BlurContainer` with animations, use `TimelineView` to provide real interpolated values:
+
+```swift
+TimelineView(.animation) { timeline in
+    let phase = sin(timeline.date.timeIntervalSinceReferenceDate) * 0.5 + 0.5
+
+    BlurContainer(iterations: 3, offset: 2.0) {
+        MyAnimatedView(phase: phase)
+    } overlay: {
+        Text("Blurred!")
+    }
+}
+```
+
+> **Note:** Standard SwiftUI `withAnimation` won't work inside `BlurContainer` because the content is captured via `drawHierarchy`. Use `TimelineView` with computed values instead.
+
 ### Memory Management
 
 ```swift
 // Clear cached textures when needed
-engine.clearCache()
+engine.clearCache()        // DualKawaseBlurEngine
+container.clearCache()     // BlurContainerView
 
 // Call on memory warning
 NotificationCenter.default.addObserver(
@@ -86,9 +137,9 @@ NotificationCenter.default.addObserver(
 ## Example App
 
 See `Examples/DualKawaseBlurDemo` for interactive demo with:
-- Image picker integration
+- **Image tab**: Static image blur with picker
+- **Live tab**: Real-time animated blur demo
 - Real-time parameter sliders
-- Live blur preview
 
 Run the demo:
 ```bash

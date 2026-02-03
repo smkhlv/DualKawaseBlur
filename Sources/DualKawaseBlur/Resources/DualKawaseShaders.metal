@@ -91,3 +91,19 @@ fragment float4 upsampleFragment(
 
     return sum / 12.0;
 }
+
+// MARK: - Copy Fragment Shader
+
+/// Simple copy shader for rendering to drawable
+fragment float4 copyFragment(
+    VertexOut in [[stage_in]],
+    texture2d<float> sourceTexture [[texture(0)]]
+) {
+    constexpr sampler linearSampler(
+        mag_filter::linear,
+        min_filter::linear,
+        address::clamp_to_edge
+    );
+
+    return sourceTexture.sample(linearSampler, in.texCoord);
+}
