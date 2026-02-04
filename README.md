@@ -2,10 +2,12 @@
 
 High-performance Dual Kawase Blur implementation for iOS using Metal.
 
+![Live Blur Demo](Simulator%20Screen%20Recording%20-%20iPhone%2017%20-%202026-02-04%20at%2013.41.16.gif)
+
 ## Features
 
 - Fast GPU-accelerated blur using Metal
-- Real-time 60fps blur for animated content (`BlurContainer`)
+- Real-time blur for animated content (`BlurContainer`)
 - Static image blur (`DualKawaseBlurEngine`)
 - High-quality Dual Kawase algorithm
 - SwiftUI and UIKit support
@@ -38,7 +40,7 @@ Or in Xcode:
 
 ### Real-time Blur (SwiftUI)
 
-Use `BlurContainer` to blur dynamic or animated content at 60fps:
+Use `BlurContainer` to blur dynamic or animated content in real-time:
 
 ```swift
 import DualKawaseBlur
