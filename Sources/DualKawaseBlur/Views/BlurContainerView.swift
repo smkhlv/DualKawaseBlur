@@ -59,10 +59,16 @@ public final class BlurContainerView: UIView {
     private var metalContext: MetalContext?
     private var blurPipeline: BlurRenderer?
     private var texturePyramid: TexturePyramid?
-    private var sourceTexture: MTLTexture?
 
     private var frameUpdateLink: CADisplayLink?
     private var needsPyramidUpdate = true
+
+    // Triple buffering
+    private static let maxInflightFrames = 3
+    private let inflightSemaphore = DispatchSemaphore(value: maxInflightFrames)
+    private var sharedSurfaces: [SharedIOSurfaceTexture] = []
+    private var currentBufferIndex = 0
+    private var lastTextureSize: CGSize = .zero
 
     // MARK: - Initialization
 
@@ -88,8 +94,6 @@ public final class BlurContainerView: UIView {
 
     private func setupViewHierarchy() {
         // Source container - holds the view to be blurred
-        // Not hidden - needs to render for animations to work
-        // Will be covered by the Metal layer
         sourceContainerView = UIView()
         sourceContainerView.backgroundColor = .clear
         addSubview(sourceContainerView)
@@ -215,123 +219,103 @@ public final class BlurContainerView: UIView {
     @objc private func processFrame(_ sender: CADisplayLink) {
         guard let source = sourceView,
               source.bounds.width > 0,
-              source.bounds.height > 0 else {
+              source.bounds.height > 0,
+              let context = metalContext,
+              let pipeline = blurPipeline,
+              let pyramid = texturePyramid else {
             return
         }
-
-        captureSourceToTexture()
-        executeBlurPass()
-    }
-
-    // MARK: - Rendering
-
-    private func captureSourceToTexture() {
-        guard let context = metalContext,
-              let source = sourceView else { return }
 
         let scale = renderTarget.contentsScale
         let textureSize = CGSize(
             width: bounds.width * scale,
             height: bounds.height * scale
         )
-
         guard textureSize.width > 0, textureSize.height > 0 else { return }
 
-        // Create or recreate texture if needed
-        if sourceTexture == nil ||
-           sourceTexture!.width != Int(textureSize.width) ||
-           sourceTexture!.height != Int(textureSize.height) {
-            sourceTexture = createSourceTexture(size: textureSize, device: context.device)
+        // Recreate shared surfaces if size changed
+        if textureSize != lastTextureSize {
+            recreateSharedSurfaces(device: context.device, size: textureSize)
+            lastTextureSize = textureSize
         }
 
-        guard let texture = sourceTexture else { return }
+        guard !sharedSurfaces.isEmpty else { return }
 
-        // Use UIGraphicsImageRenderer to capture with animations
-        let format = UIGraphicsImageRendererFormat()
-        format.scale = scale
-        format.opaque = true
+        // Wait for an available buffer (blocks only if all 3 are in-flight)
+        inflightSemaphore.wait()
 
-        let renderer = UIGraphicsImageRenderer(size: bounds.size, format: format)
-        let capturedImage = renderer.image { _ in
-            // drawHierarchy captures the presentation layer (with animations!)
-            source.drawHierarchy(in: source.bounds, afterScreenUpdates: false)
-        }
+        let surface = sharedSurfaces[currentBufferIndex]
 
-        guard let cgImage = capturedImage.cgImage else { return }
+        // Zero-copy: render view directly into IOSurface-backed texture
+        surface.renderView(source, scale: scale)
 
-        // Convert to BGRA pixel data for Metal texture
-        let bytesPerPixel = 4
-        let bytesPerRow = bytesPerPixel * Int(textureSize.width)
-
-        guard let colorSpace = CGColorSpace(name: CGColorSpace.sRGB),
-              let cgContext = CGContext(
-                  data: nil,
-                  width: Int(textureSize.width),
-                  height: Int(textureSize.height),
-                  bitsPerComponent: 8,
-                  bytesPerRow: bytesPerRow,
-                  space: colorSpace,
-                  bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue
-              ) else {
-            return
-        }
-
-        cgContext.draw(cgImage, in: CGRect(origin: .zero, size: textureSize))
-
-        guard let data = cgContext.data else { return }
-
-        let region = MTLRegionMake2D(0, 0, Int(textureSize.width), Int(textureSize.height))
-        texture.replace(region: region, mipmapLevel: 0, withBytes: data, bytesPerRow: bytesPerRow)
-    }
-
-    private func executeBlurPass() {
-        guard let context = metalContext,
-              let pipeline = blurPipeline,
-              let pyramid = texturePyramid,
-              let source = sourceTexture,
-              let drawable = renderTarget.nextDrawable() else {
+        guard let drawable = renderTarget.nextDrawable() else {
+            inflightSemaphore.signal()
             return
         }
 
         // Update pyramid if needed
         if needsPyramidUpdate {
             do {
-                let size = CGSize(width: source.width, height: source.height)
+                let size = CGSize(width: surface.width, height: surface.height)
                 try pyramid.createPyramid(size: size, iterations: iterations)
                 needsPyramidUpdate = false
             } catch {
                 print("BlurContainerView: Failed to create pyramid - \(error)")
+                inflightSemaphore.signal()
                 return
             }
         }
 
-        // Execute blur and present
+        // Create command buffer and encode blur
+        guard let commandBuffer = context.commandQueue.makeCommandBuffer() else {
+            inflightSemaphore.signal()
+            return
+        }
+        commandBuffer.label = "Dual Kawase Blur Live"
+
+        // Signal semaphore when GPU finishes this frame
+        let semaphore = inflightSemaphore
+        commandBuffer.addCompletedHandler { _ in
+            semaphore.signal()
+        }
+
         do {
-            try pipeline.executeBlurAsync(
-                source: source,
+            try pipeline.encodeBlur(
+                commandBuffer: commandBuffer,
+                source: surface.texture,
                 pyramid: pyramid,
                 iterations: iterations,
                 offset: offset,
                 drawable: drawable
             )
+
+            commandBuffer.present(drawable)
+            commandBuffer.commit()
         } catch {
             print("BlurContainerView: Failed to execute blur - \(error)")
+            // Don't signal here — completedHandler will signal
         }
+
+        currentBufferIndex = (currentBufferIndex + 1) % Self.maxInflightFrames
     }
 
-    // MARK: - Texture Creation
+    // MARK: - Shared Surface Management
 
-    private func createSourceTexture(size: CGSize, device: MTLDevice) -> MTLTexture? {
-        let descriptor = MTLTextureDescriptor.texture2DDescriptor(
-            pixelFormat: .bgra8Unorm_srgb,
-            width: Int(size.width),
-            height: Int(size.height),
-            mipmapped: false
-        )
-        descriptor.usage = [.shaderRead]
-        descriptor.storageMode = .shared
+    private func recreateSharedSurfaces(device: MTLDevice, size: CGSize) {
+        sharedSurfaces.removeAll()
+        currentBufferIndex = 0
 
-        return device.makeTexture(descriptor: descriptor)
+        let w = Int(size.width)
+        let h = Int(size.height)
+
+        for _ in 0..<Self.maxInflightFrames {
+            guard let surface = SharedIOSurfaceTexture(device: device, width: w, height: h) else {
+                print("BlurContainerView: Failed to create shared surface")
+                return
+            }
+            sharedSurfaces.append(surface)
+        }
     }
 
     // MARK: - Invalidation
@@ -348,7 +332,8 @@ public final class BlurContainerView: UIView {
     /// Clears cached resources. Call on memory warning.
     public func clearCache() {
         texturePyramid?.clear()
-        sourceTexture = nil
+        sharedSurfaces.removeAll()
+        lastTextureSize = .zero
         needsPyramidUpdate = true
     }
 

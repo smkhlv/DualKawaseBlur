@@ -78,13 +78,8 @@ class BlurRenderer {
         return pyramid[0]
     }
 
-    /// Execute blur asynchronously without blocking
-    /// - Parameters:
-    ///   - source: Input texture to blur
-    ///   - pyramid: Pre-allocated texture pyramid
-    ///   - iterations: Number of blur iterations (1-5)
-    ///   - offset: Blur radius multiplier (1.0-5.0)
-    ///   - drawable: CAMetalDrawable to present the result
+    /// Execute blur asynchronously without blocking.
+    /// Creates its own command buffer, commits and presents.
     func executeBlurAsync(
         source: MTLTexture,
         pyramid: TexturePyramid,
@@ -98,6 +93,29 @@ class BlurRenderer {
 
         commandBuffer.label = "Dual Kawase Blur Async"
 
+        try encodeBlur(
+            commandBuffer: commandBuffer,
+            source: source,
+            pyramid: pyramid,
+            iterations: iterations,
+            offset: offset,
+            drawable: drawable
+        )
+
+        commandBuffer.present(drawable)
+        commandBuffer.commit()
+    }
+
+    /// Encode blur passes into an existing command buffer without committing.
+    /// Caller is responsible for present/commit/completion handling.
+    func encodeBlur(
+        commandBuffer: MTLCommandBuffer,
+        source: MTLTexture,
+        pyramid: TexturePyramid,
+        iterations: Int,
+        offset: Float,
+        drawable: CAMetalDrawable
+    ) throws {
         // Phase 1: Initial downsample from source to pyramid[1]
         try renderPass(
             commandBuffer: commandBuffer,
@@ -135,9 +153,6 @@ class BlurRenderer {
             source: pyramid[0],
             drawable: drawable
         )
-
-        commandBuffer.present(drawable)
-        commandBuffer.commit()
     }
 
     /// Render pass that outputs directly to drawable
