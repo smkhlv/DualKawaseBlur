@@ -50,6 +50,12 @@ public final class BlurContainerView: UIView {
         }
     }
 
+    /// Optional closure that provides a Metal texture directly each frame.
+    /// When set, this takes priority over `sourceView` — the texture is used
+    /// as blur input with zero CPU overhead (pure GPU path).
+    /// Use this for Metal-rendered content (e.g. MTKView-based animations).
+    public var textureProvider: (() -> MTLTexture?)?
+
     // MARK: - Private Properties
 
     private var sourceContainerView: UIView!
@@ -209,7 +215,7 @@ public final class BlurContainerView: UIView {
     public override func didMoveToWindow() {
         super.didMoveToWindow()
 
-        if window != nil && sourceView != nil {
+        if window != nil && (sourceView != nil || textureProvider != nil) {
             startRenderLoop()
         } else {
             stopRenderLoop()
@@ -217,37 +223,45 @@ public final class BlurContainerView: UIView {
     }
 
     @objc private func processFrame(_ sender: CADisplayLink) {
-        guard let source = sourceView,
-              source.bounds.width > 0,
-              source.bounds.height > 0,
-              let context = metalContext,
+        guard let context = metalContext,
               let pipeline = blurPipeline,
               let pyramid = texturePyramid else {
             return
         }
 
-        let scale = renderTarget.contentsScale
-        let textureSize = CGSize(
-            width: bounds.width * scale,
-            height: bounds.height * scale
-        )
-        guard textureSize.width > 0, textureSize.height > 0 else { return }
+        // Get source texture: textureProvider (GPU path) or sourceView (IOSurface path)
+        let sourceTexture: MTLTexture
 
-        // Recreate shared surfaces if size changed
-        if textureSize != lastTextureSize {
-            recreateSharedSurfaces(device: context.device, size: textureSize)
-            lastTextureSize = textureSize
+        if let provider = textureProvider, let texture = provider() {
+            // Direct GPU path — zero CPU overhead
+            sourceTexture = texture
+        } else if let source = sourceView,
+                  source.bounds.width > 0,
+                  source.bounds.height > 0 {
+            // IOSurface path — capture UIView via layer.render
+            let scale = renderTarget.contentsScale
+            let textureSize = CGSize(
+                width: bounds.width * scale,
+                height: bounds.height * scale
+            )
+            guard textureSize.width > 0, textureSize.height > 0 else { return }
+
+            if textureSize != lastTextureSize {
+                recreateSharedSurfaces(device: context.device, size: textureSize)
+                lastTextureSize = textureSize
+            }
+            guard !sharedSurfaces.isEmpty else { return }
+
+            let surface = sharedSurfaces[currentBufferIndex]
+            surface.renderView(source, scale: scale)
+            sourceTexture = surface.texture
+            currentBufferIndex = (currentBufferIndex + 1) % Self.maxInflightFrames
+        } else {
+            return
         }
 
-        guard !sharedSurfaces.isEmpty else { return }
-
-        // Wait for an available buffer (blocks only if all 3 are in-flight)
+        // Wait for an available buffer
         inflightSemaphore.wait()
-
-        let surface = sharedSurfaces[currentBufferIndex]
-
-        // Zero-copy: render view directly into IOSurface-backed texture
-        surface.renderView(source, scale: scale)
 
         guard let drawable = renderTarget.nextDrawable() else {
             inflightSemaphore.signal()
@@ -257,7 +271,7 @@ public final class BlurContainerView: UIView {
         // Update pyramid if needed
         if needsPyramidUpdate {
             do {
-                let size = CGSize(width: surface.width, height: surface.height)
+                let size = CGSize(width: sourceTexture.width, height: sourceTexture.height)
                 try pyramid.createPyramid(size: size, iterations: iterations)
                 needsPyramidUpdate = false
             } catch {
@@ -283,7 +297,7 @@ public final class BlurContainerView: UIView {
         do {
             try pipeline.encodeBlur(
                 commandBuffer: commandBuffer,
-                source: surface.texture,
+                source: sourceTexture,
                 pyramid: pyramid,
                 iterations: iterations,
                 offset: offset,
@@ -294,10 +308,7 @@ public final class BlurContainerView: UIView {
             commandBuffer.commit()
         } catch {
             print("BlurContainerView: Failed to execute blur - \(error)")
-            // Don't signal here — completedHandler will signal
         }
-
-        currentBufferIndex = (currentBufferIndex + 1) % Self.maxInflightFrames
     }
 
     // MARK: - Shared Surface Management
