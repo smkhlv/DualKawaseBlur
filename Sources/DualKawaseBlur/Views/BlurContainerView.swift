@@ -54,7 +54,13 @@ public final class BlurContainerView: UIView {
     /// When set, this takes priority over `sourceView` — the texture is used
     /// as blur input with zero CPU overhead (pure GPU path).
     /// Use this for Metal-rendered content (e.g. MTKView-based animations).
-    public var textureProvider: (() -> MTLTexture?)?
+    public var textureProvider: (() -> MTLTexture?)? {
+        didSet {
+            if textureProvider != nil, window != nil {
+                startRenderLoop()
+            }
+        }
+    }
 
     // MARK: - Private Properties
 
