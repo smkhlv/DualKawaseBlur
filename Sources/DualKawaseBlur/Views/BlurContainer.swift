@@ -1,11 +1,12 @@
 import SwiftUI
 import Metal
 
-/// A SwiftUI container that displays blurred content with an overlay.
+/// A SwiftUI container that renders blurred content with an overlay.
 ///
-/// Use this view to create real-time blur effects over dynamic SwiftUI content.
-/// The source content is rendered, blurred using the Dual Kawase algorithm,
-/// and displayed with the overlay on top.
+/// Use `UIViewControllerRepresentable` so that SwiftUI manages the view controller
+/// hierarchy correctly. This guarantees that the overlay `UIHostingController` is
+/// embedded via `addChild`/`didMove(toParent:)`, which is required for `NavigationStack`,
+/// `TabView`, safe area insets, and keyboard avoidance to work properly inside the overlay.
 ///
 /// Example:
 /// ```swift
@@ -17,14 +18,11 @@ import Metal
 /// }
 /// ```
 @available(iOS 13.0, *)
-public struct BlurContainer<Source: View, Overlay: View>: UIViewRepresentable {
+public struct BlurContainer<Source: View, Overlay: View>: UIViewControllerRepresentable {
 
     // MARK: - Properties
 
-    /// Number of blur iterations (1-5). Higher values produce stronger blur.
     public let iterations: Int
-
-    /// Blur offset multiplier (1.0-5.0). Higher values produce wider blur.
     public let offset: Float
 
     private let source: Source?
@@ -33,12 +31,7 @@ public struct BlurContainer<Source: View, Overlay: View>: UIViewRepresentable {
 
     // MARK: - Initialization
 
-    /// Creates a blur container with SwiftUI source content.
-    /// - Parameters:
-    ///   - iterations: Number of blur iterations (1-5). Default is 3.
-    ///   - offset: Blur offset multiplier (1.0-5.0). Default is 2.0.
-    ///   - source: The content to be blurred.
-    ///   - overlay: The content displayed on top of the blur.
+    /// Creates a blur container with a SwiftUI source view and an overlay.
     public init(
         iterations: Int = 3,
         offset: Float = 2.0,
@@ -52,96 +45,74 @@ public struct BlurContainer<Source: View, Overlay: View>: UIViewRepresentable {
         self.textureProvider = nil
     }
 
-    // MARK: - UIViewRepresentable
+    // MARK: - UIViewControllerRepresentable
 
-    public func makeUIView(context: Context) -> BlurContainerView {
-        let containerView = BlurContainerView()
-        containerView.iterations = iterations
-        containerView.offset = offset
+    public func makeUIViewController(context: Context) -> BlurContainerViewController<Overlay> {
+        let vc = BlurContainerViewController<Overlay>()
+        vc.loadViewIfNeeded()
 
-        if let textureProvider = textureProvider {
-            // Direct GPU path — no source view needed
-            containerView.textureProvider = textureProvider
-        } else if let source = source {
-            // SwiftUI source view path
+        vc.blurView.iterations = iterations
+        vc.blurView.offset = offset
+
+        if let textureProvider {
+            vc.blurView.textureProvider = textureProvider
+        } else if let source {
             let sourceHosting = UIHostingController(rootView: source)
             sourceHosting.view.backgroundColor = .clear
-            containerView.sourceView = sourceHosting.view
+            vc.blurView.sourceView = sourceHosting.view
             context.coordinator.sourceHosting = sourceHosting
         }
 
-        // Create hosting controller for overlay content
-        let overlayHosting = UIHostingController(rootView: overlay)
-        overlayHosting.view.backgroundColor = .clear
-        containerView.overlayView = overlayHosting.view
-        context.coordinator.overlayHosting = overlayHosting
+        vc.configureOverlay(overlay)
 
-        return containerView
+        return vc
     }
 
-    public func updateUIView(_ uiView: BlurContainerView, context: Context) {
-        uiView.iterations = iterations
-        uiView.offset = offset
+    public func updateUIViewController(
+        _ uiViewController: BlurContainerViewController<Overlay>,
+        context: Context
+    ) {
+        uiViewController.blurView.iterations = iterations
+        uiViewController.blurView.offset = offset
 
         if textureProvider != nil {
-            uiView.textureProvider = textureProvider
-        } else {
-            // Update source content
-            if let source = source {
-                context.coordinator.sourceHosting?.rootView = source
-            }
+            uiViewController.blurView.textureProvider = textureProvider
+        } else if let source {
+            context.coordinator.sourceHosting?.rootView = source
         }
 
-        // Update overlay content
-        context.coordinator.overlayHosting?.rootView = overlay
+        uiViewController.configureOverlay(overlay)
     }
 
-    public func makeCoordinator() -> Coordinator {
-        Coordinator()
-    }
-
-    // MARK: - Coordinator
+    public func makeCoordinator() -> Coordinator { Coordinator() }
 
     public class Coordinator {
         var sourceHosting: UIHostingController<Source>?
-        var overlayHosting: UIHostingController<Overlay>?
     }
 }
 
-// MARK: - Convenience Initializer (No Overlay)
+// MARK: - Convenience: No Overlay
 
 @available(iOS 13.0, *)
 public extension BlurContainer where Overlay == EmptyView {
 
     /// Creates a blur container without an overlay.
-    /// - Parameters:
-    ///   - iterations: Number of blur iterations (1-5). Default is 3.
-    ///   - offset: Blur offset multiplier (1.0-5.0). Default is 2.0.
-    ///   - source: The content to be blurred.
     init(
         iterations: Int = 3,
         offset: Float = 2.0,
         @ViewBuilder source: () -> Source
     ) {
-        self.init(iterations: iterations, offset: offset, source: source) {
-            EmptyView()
-        }
+        self.init(iterations: iterations, offset: offset, source: source) { EmptyView() }
     }
 }
 
-// MARK: - Metal Texture Provider Initializer
+// MARK: - Metal Texture Provider
 
 @available(iOS 13.0, *)
 public extension BlurContainer where Source == EmptyView {
 
     /// Creates a blur container that takes a Metal texture directly each frame.
     /// Use this for Metal-rendered content (e.g. MTKView-based animations).
-    /// Zero CPU overhead — pure GPU blur pipeline.
-    /// - Parameters:
-    ///   - iterations: Number of blur iterations (1-5). Default is 3.
-    ///   - offset: Blur offset multiplier (1.0-5.0). Default is 2.0.
-    ///   - textureProvider: Closure called each frame to get the source texture.
-    ///   - overlay: The content displayed on top of the blur.
     init(
         iterations: Int = 3,
         offset: Float = 2.0,
@@ -170,6 +141,45 @@ public extension BlurContainer where Source == EmptyView, Overlay == EmptyView {
         self.source = nil
         self.overlay = EmptyView()
         self.textureProvider = textureProvider
+    }
+}
+
+// MARK: - BlurContainerViewController
+
+/// The view controller that `BlurContainer` vends to SwiftUI.
+///
+/// Because SwiftUI calls `addChild`/`didMove(toParent:)` automatically for
+/// `UIViewControllerRepresentable`, this VC is correctly placed in the hierarchy.
+/// The overlay hosting controller is then added as a *child* of this VC, which
+/// propagates safe area insets and navigation context correctly into the overlay.
+@available(iOS 13.0, *)
+public final class BlurContainerViewController<Overlay: View>: UIViewController {
+
+    /// The underlying Metal blur view. Available after `loadViewIfNeeded()`.
+    public private(set) var blurView: BlurContainerView!
+
+    private var overlayHosting: UIHostingController<Overlay>?
+
+    public override func loadView() {
+        blurView = BlurContainerView()
+        view = blurView
+    }
+
+    /// Installs or updates the overlay hosting controller.
+    /// A no-op when `Overlay == EmptyView`.
+    func configureOverlay(_ overlay: Overlay) {
+        guard Overlay.self != EmptyView.self else { return }
+
+        if let existing = overlayHosting {
+            existing.rootView = overlay
+        } else {
+            let hosting = UIHostingController(rootView: overlay)
+            hosting.view.backgroundColor = .clear
+            addChild(hosting)
+            blurView.overlayView = hosting.view
+            hosting.didMove(toParent: self)
+            overlayHosting = hosting
+        }
     }
 }
 
