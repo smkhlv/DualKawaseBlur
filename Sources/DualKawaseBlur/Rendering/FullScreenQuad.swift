@@ -2,8 +2,9 @@ import Metal
 import Foundation
 
 /// Manages vertex buffer for full-screen quad rendering
-class FullScreenQuad {
-    let vertexBuffer: MTLBuffer
+/// Immutable vertex data shared by stateless render encoders.
+final class FullScreenQuad: Sendable {
+    private let vertexBuffer: MetalBufferReference
 
     /// Quad vertices in NDC coordinates (-1 to +1)
     /// Correct order for triangle strip: TL → BL → TR → BR
@@ -30,12 +31,22 @@ class FullScreenQuad {
             throw QuadError.bufferCreationFailed
         }
 
-        self.vertexBuffer = buffer
+        vertexBuffer = MetalBufferReference(buffer)
     }
 
     /// Bind vertex buffer and draw quad
     func draw(encoder: MTLRenderCommandEncoder) {
-        encoder.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+        encoder.setVertexBuffer(vertexBuffer.value, offset: 0, index: 0)
         encoder.drawPrimitives(type: .triangleStrip, vertexStart: 0, vertexCount: 4)
+    }
+}
+
+/// `MTLBuffer` is an imported immutable resource handle here and Metal permits
+/// concurrent encoding with it. This wrapper is the sole audited unchecked edge.
+private struct MetalBufferReference: @unchecked Sendable {
+    let value: MTLBuffer
+
+    init(_ value: MTLBuffer) {
+        self.value = value
     }
 }

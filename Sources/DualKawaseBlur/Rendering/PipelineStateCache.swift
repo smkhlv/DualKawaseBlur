@@ -1,113 +1,98 @@
 import Metal
 
-/// Caches compiled pipeline states for efficient reuse
-class PipelineStateCache {
-    private let device: MTLDevice
-    private let library: MTLLibrary
+/// Immutable render pipelines, safe to reuse while encoding on multiple threads.
+final class PipelineStateCache: Sendable {
+    private let downsamplePipelines: [MTLPixelFormat: MTLRenderPipelineState]
+    private let upsamplePipelines: [MTLPixelFormat: MTLRenderPipelineState]
+    private let copyPipelines: [MTLPixelFormat: MTLRenderPipelineState]
 
-    private var downsamplePipeline: MTLRenderPipelineState?
-    private var upsamplePipeline: MTLRenderPipelineState?
-    private var copyPipeline: MTLRenderPipelineState?
-
-    enum PipelineError: Error {
-        case functionNotFound(String)
-        case pipelineCreationFailed(Error)
+    init(device: MTLDevice, library: MTLLibrary) throws {
+        let formats: [MTLPixelFormat] = [.bgra8Unorm, .bgra8Unorm_srgb]
+        downsamplePipelines = try Self.makePipelines(
+            device: device,
+            library: library,
+            fragmentFunctionName: "downsampleFragment",
+            formats: formats
+        )
+        upsamplePipelines = try Self.makePipelines(
+            device: device,
+            library: library,
+            fragmentFunctionName: "upsampleFragment",
+            formats: formats
+        )
+        copyPipelines = try Self.makePipelines(
+            device: device,
+            library: library,
+            fragmentFunctionName: "copyFragment",
+            formats: formats
+        )
     }
 
-    init(device: MTLDevice, library: MTLLibrary) {
-        self.device = device
-        self.library = library
+    func downsamplePipeline(for format: MTLPixelFormat) throws -> MTLRenderPipelineState {
+        try pipeline(in: downsamplePipelines, for: format)
     }
 
-    /// Get or create downsample pipeline state
+    func upsamplePipeline(for format: MTLPixelFormat) throws -> MTLRenderPipelineState {
+        try pipeline(in: upsamplePipelines, for: format)
+    }
+
+    func copyPipeline(for format: MTLPixelFormat) throws -> MTLRenderPipelineState {
+        try pipeline(in: copyPipelines, for: format)
+    }
+
     func getDownsamplePipeline() throws -> MTLRenderPipelineState {
-        if let pipeline = downsamplePipeline {
-            return pipeline
-        }
-
-        let pipeline = try createPipeline(
-            vertexFunction: "vertexShader",
-            fragmentFunction: "downsampleFragment"
-        )
-
-        downsamplePipeline = pipeline
-        return pipeline
+        try downsamplePipeline(for: .bgra8Unorm_srgb)
     }
 
-    /// Get or create upsample pipeline state
     func getUpsamplePipeline() throws -> MTLRenderPipelineState {
-        if let pipeline = upsamplePipeline {
-            return pipeline
-        }
-
-        let pipeline = try createPipeline(
-            vertexFunction: "vertexShader",
-            fragmentFunction: "upsampleFragment"
-        )
-
-        upsamplePipeline = pipeline
-        return pipeline
+        try upsamplePipeline(for: .bgra8Unorm_srgb)
     }
 
-    /// Get or create copy pipeline state (for rendering to drawable)
     func getCopyPipeline() throws -> MTLRenderPipelineState {
-        if let pipeline = copyPipeline {
-            return pipeline
+        try copyPipeline(for: .bgra8Unorm)
+    }
+
+    private func pipeline(
+        in pipelines: [MTLPixelFormat: MTLRenderPipelineState],
+        for format: MTLPixelFormat
+    ) throws -> MTLRenderPipelineState {
+        guard let pipeline = pipelines[format] else {
+            throw DualKawaseBlurError.unsupportedTexture
         }
-
-        let pipeline = try createPipeline(
-            vertexFunction: "vertexShader",
-            fragmentFunction: "copyFragment",
-            pixelFormat: .bgra8Unorm
-        )
-
-        copyPipeline = pipeline
         return pipeline
     }
 
-    /// Create pipeline state with given shader functions
-    private func createPipeline(
-        vertexFunction: String,
-        fragmentFunction: String,
-        pixelFormat: MTLPixelFormat = .bgra8Unorm_srgb
-    ) throws -> MTLRenderPipelineState {
-        guard let vertexFunc = library.makeFunction(name: vertexFunction) else {
-            throw PipelineError.functionNotFound(vertexFunction)
+    private static func makePipelines(
+        device: MTLDevice,
+        library: MTLLibrary,
+        fragmentFunctionName: String,
+        formats: [MTLPixelFormat]
+    ) throws -> [MTLPixelFormat: MTLRenderPipelineState] {
+        guard
+            let vertexFunction = library.makeFunction(name: "vertexShader"),
+            let fragmentFunction = library.makeFunction(name: fragmentFunctionName)
+        else {
+            throw DualKawaseBlurError.pipelineCreationFailed
         }
 
-        guard let fragmentFunc = library.makeFunction(name: fragmentFunction) else {
-            throw PipelineError.functionNotFound(fragmentFunction)
-        }
+        return try Dictionary(uniqueKeysWithValues: formats.map { format in
+            let descriptor = MTLRenderPipelineDescriptor()
+            descriptor.vertexFunction = vertexFunction
+            descriptor.fragmentFunction = fragmentFunction
+            descriptor.colorAttachments[0].pixelFormat = format
 
-        let descriptor = MTLRenderPipelineDescriptor()
-        descriptor.vertexFunction = vertexFunc
-        descriptor.fragmentFunction = fragmentFunc
+            let vertexDescriptor = MTLVertexDescriptor()
+            vertexDescriptor.attributes[0].format = .float3
+            vertexDescriptor.attributes[0].bufferIndex = 0
+            vertexDescriptor.layouts[0].stride = MemoryLayout<Vertex>.stride
+            vertexDescriptor.layouts[0].stepFunction = .perVertex
+            descriptor.vertexDescriptor = vertexDescriptor
 
-        // Configure vertex input layout
-        let vertexDescriptor = MTLVertexDescriptor()
-        vertexDescriptor.attributes[0].format = .float3
-        vertexDescriptor.attributes[0].offset = 0
-        vertexDescriptor.attributes[0].bufferIndex = 0
-
-        vertexDescriptor.layouts[0].stride = MemoryLayout<Vertex>.stride
-        vertexDescriptor.layouts[0].stepFunction = .perVertex
-
-        descriptor.vertexDescriptor = vertexDescriptor
-
-        // Color attachment format
-        descriptor.colorAttachments[0].pixelFormat = pixelFormat
-
-        do {
-            return try device.makeRenderPipelineState(descriptor: descriptor)
-        } catch {
-            throw PipelineError.pipelineCreationFailed(error)
-        }
-    }
-
-    /// Clear cached pipelines (for memory management)
-    func clear() {
-        downsamplePipeline = nil
-        upsamplePipeline = nil
-        copyPipeline = nil
+            do {
+                return (format, try device.makeRenderPipelineState(descriptor: descriptor))
+            } catch {
+                throw DualKawaseBlurError.pipelineCreationFailed
+            }
+        })
     }
 }

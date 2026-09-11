@@ -1,239 +1,163 @@
 import Metal
-import CoreGraphics
-import QuartzCore
 
-/// Executes the Dual Kawase Blur rendering algorithm
-class BlurRenderer {
-    private let device: MTLDevice
-    private let commandQueue: MTLCommandQueue
-    private let pipelineCache: PipelineStateCache
+final class DualKawaseBlurRenderer: Sendable {
+    private let context: MetalContext
     private let quad: FullScreenQuad
 
-    enum RenderError: Error {
-        case commandBufferCreationFailed
-        case renderPassCreationFailed
+    init(context: MetalContext) throws {
+        self.context = context
+        quad = try FullScreenQuad(device: context.device)
     }
 
-    init(device: MTLDevice, commandQueue: MTLCommandQueue, library: MTLLibrary) throws {
-        self.device = device
-        self.commandQueue = commandQueue
-        self.pipelineCache = PipelineStateCache(device: device, library: library)
-        self.quad = try FullScreenQuad(device: device)
-    }
-
-    /// Execute complete blur algorithm on texture pyramid
-    /// - Parameters:
-    ///   - source: Input texture to blur
-    ///   - pyramid: Pre-allocated texture pyramid
-    ///   - iterations: Number of blur iterations (1-5)
-    ///   - offset: Blur radius multiplier (1.0-5.0)
-    /// - Returns: Blurred texture (pyramid level 0)
-    func executeBlur(
+    func encode(
         source: MTLTexture,
-        pyramid: TexturePyramid,
-        iterations: Int,
-        offset: Float
-    ) throws -> MTLTexture {
-        guard let commandBuffer = commandQueue.makeCommandBuffer() else {
-            throw RenderError.commandBufferCreationFailed
-        }
-
-        commandBuffer.label = "Dual Kawase Blur"
-
-        // Phase 1: Initial downsample from source to pyramid[1]
-        try renderPass(
-            commandBuffer: commandBuffer,
-            source: source,
-            target: pyramid[1],
-            pipeline: try pipelineCache.getDownsamplePipeline(),
-            offset: offset
-        )
-
-        // Phase 2: Downsample loop - pyramid[i] -> pyramid[i+1]
-        for i in 1..<iterations {
-            try renderPass(
-                commandBuffer: commandBuffer,
-                source: pyramid[i],
-                target: pyramid[i + 1],
-                pipeline: try pipelineCache.getDownsamplePipeline(),
-                offset: offset
-            )
-        }
-
-        // Phase 3: Upsample loop - pyramid[i] -> pyramid[i-1]
-        for i in stride(from: iterations, through: 1, by: -1) {
-            try renderPass(
-                commandBuffer: commandBuffer,
-                source: pyramid[i],
-                target: pyramid[i - 1],
-                pipeline: try pipelineCache.getUpsamplePipeline(),
-                offset: offset
-            )
-        }
-
-        commandBuffer.commit()
-        commandBuffer.waitUntilCompleted()
-
-        // Result is in pyramid[0]
-        return pyramid[0]
-    }
-
-    /// Execute blur asynchronously without blocking.
-    /// Creates its own command buffer, commits and presents.
-    func executeBlurAsync(
-        source: MTLTexture,
-        pyramid: TexturePyramid,
-        iterations: Int,
-        offset: Float,
-        drawable: CAMetalDrawable
+        destination: MTLTexture,
+        workspace: TexturePyramid,
+        configuration: BlurConfiguration,
+        into commandBuffer: MTLCommandBuffer
     ) throws {
-        guard let commandBuffer = commandQueue.makeCommandBuffer() else {
-            throw RenderError.commandBufferCreationFailed
+        guard
+            source.device === context.device,
+            destination.device === context.device,
+            commandBuffer.device === context.device,
+            commandBuffer.status == .notEnqueued || commandBuffer.status == .enqueued,
+            isSupportedPixelFormat(source.pixelFormat),
+            isSupportedPixelFormat(destination.pixelFormat),
+            isSupportedSource(source),
+            isSupportedDestination(destination)
+        else {
+            throw DualKawaseBlurError.unsupportedTexture
         }
 
-        commandBuffer.label = "Dual Kawase Blur Async"
+        let expectedLayout: TexturePyramidLayout
+        do {
+            expectedLayout = try TexturePyramidLayout(
+                width: source.width,
+                height: source.height,
+                configuration: configuration
+            )
+        } catch {
+            throw DualKawaseBlurError.invalidConfiguration
+        }
 
-        try encodeBlur(
-            commandBuffer: commandBuffer,
+        guard
+            workspace.layout == expectedLayout,
+            workspace.pixelFormat == source.pixelFormat,
+            workspace.textures.count == expectedLayout.levels.count,
+            zip(workspace.textures, expectedLayout.levels).allSatisfy({ texture, level in
+                texture.device === context.device
+                    && texture.width == level.width
+                    && texture.height == level.height
+                    && texture.pixelFormat == source.pixelFormat
+                    && isSupportedWorkspaceTexture(texture)
+            }),
+            let firstTexture = workspace.textures.first
+        else {
+            throw DualKawaseBlurError.unsupportedTexture
+        }
+
+        try encodePass(
             source: source,
-            pyramid: pyramid,
-            iterations: iterations,
-            offset: offset,
-            drawable: drawable
+            destination: firstTexture,
+            pipeline: context.pipelines.downsamplePipeline(for: firstTexture.pixelFormat),
+            offset: configuration.offset,
+            into: commandBuffer
         )
 
-        commandBuffer.present(drawable)
-        commandBuffer.commit()
-    }
-
-    /// Encode blur passes into an existing command buffer without committing.
-    /// Caller is responsible for present/commit/completion handling.
-    func encodeBlur(
-        commandBuffer: MTLCommandBuffer,
-        source: MTLTexture,
-        pyramid: TexturePyramid,
-        iterations: Int,
-        offset: Float,
-        drawable: CAMetalDrawable
-    ) throws {
-        // Phase 1: Initial downsample from source to pyramid[1]
-        try renderPass(
-            commandBuffer: commandBuffer,
-            source: source,
-            target: pyramid[1],
-            pipeline: try pipelineCache.getDownsamplePipeline(),
-            offset: offset
-        )
-
-        // Phase 2: Downsample loop - pyramid[i] -> pyramid[i+1]
-        for i in 1..<iterations {
-            try renderPass(
-                commandBuffer: commandBuffer,
-                source: pyramid[i],
-                target: pyramid[i + 1],
-                pipeline: try pipelineCache.getDownsamplePipeline(),
-                offset: offset
+        for index in workspace.textures.indices.dropFirst() {
+            try encodePass(
+                source: workspace[index - 1],
+                destination: workspace[index],
+                pipeline: context.pipelines.downsamplePipeline(for: workspace[index].pixelFormat),
+                offset: configuration.offset,
+                into: commandBuffer
             )
         }
 
-        // Phase 3: Upsample loop - pyramid[i] -> pyramid[i-1]
-        for i in stride(from: iterations, through: 1, by: -1) {
-            try renderPass(
-                commandBuffer: commandBuffer,
-                source: pyramid[i],
-                target: pyramid[i - 1],
-                pipeline: try pipelineCache.getUpsamplePipeline(),
-                offset: offset
+        for index in workspace.textures.indices.dropFirst().reversed() {
+            try encodePass(
+                source: workspace[index],
+                destination: workspace[index - 1],
+                pipeline: context.pipelines.upsamplePipeline(for: workspace[index - 1].pixelFormat),
+                offset: configuration.offset,
+                into: commandBuffer
             )
         }
 
-        // Final pass: copy pyramid[0] to drawable texture
-        try renderPassToDrawable(
-            commandBuffer: commandBuffer,
-            source: pyramid[0],
-            drawable: drawable
+        try encodePass(
+            source: firstTexture,
+            destination: destination,
+            pipeline: context.pipelines.upsamplePipeline(for: destination.pixelFormat),
+            offset: configuration.offset,
+            into: commandBuffer
         )
     }
 
-    /// Render pass that outputs directly to drawable
-    private func renderPassToDrawable(
-        commandBuffer: MTLCommandBuffer,
+    private func encodePass(
         source: MTLTexture,
-        drawable: CAMetalDrawable
-    ) throws {
-        let renderPassDescriptor = MTLRenderPassDescriptor()
-        renderPassDescriptor.colorAttachments[0].texture = drawable.texture
-        renderPassDescriptor.colorAttachments[0].loadAction = .dontCare
-        renderPassDescriptor.colorAttachments[0].storeAction = .store
-
-        guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
-            throw RenderError.renderPassCreationFailed
-        }
-
-        encoder.label = "Copy to Drawable"
-
-        encoder.setRenderPipelineState(try pipelineCache.getCopyPipeline())
-
-        encoder.setViewport(MTLViewport(
-            originX: 0,
-            originY: 0,
-            width: Double(drawable.texture.width),
-            height: Double(drawable.texture.height),
-            znear: 0.0,
-            zfar: 1.0
-        ))
-
-        encoder.setFragmentTexture(source, index: 0)
-        quad.draw(encoder: encoder)
-        encoder.endEncoding()
-    }
-
-    /// Execute single render pass
-    private func renderPass(
-        commandBuffer: MTLCommandBuffer,
-        source: MTLTexture,
-        target: MTLTexture,
+        destination: MTLTexture,
         pipeline: MTLRenderPipelineState,
-        offset: Float
+        offset: Float,
+        into commandBuffer: MTLCommandBuffer
     ) throws {
-        // Create render pass descriptor
-        let renderPassDescriptor = MTLRenderPassDescriptor()
-        renderPassDescriptor.colorAttachments[0].texture = target
-        renderPassDescriptor.colorAttachments[0].loadAction = .dontCare
-        renderPassDescriptor.colorAttachments[0].storeAction = .store
+        let descriptor = MTLRenderPassDescriptor()
+        descriptor.colorAttachments[0].texture = destination
+        descriptor.colorAttachments[0].loadAction = .dontCare
+        descriptor.colorAttachments[0].storeAction = .store
 
-        guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor) else {
-            throw RenderError.renderPassCreationFailed
+        guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
+            throw DualKawaseBlurError.commandBufferCreationFailed
         }
+        defer { encoder.endEncoding() }
 
-        encoder.label = "Blur Pass"
-
-        // Set pipeline state
         encoder.setRenderPipelineState(pipeline)
-
-        // Set viewport to target texture size
-        encoder.setViewport(MTLViewport(
-            originX: 0,
-            originY: 0,
-            width: Double(target.width),
-            height: Double(target.height),
-            znear: 0.0,
-            zfar: 1.0
-        ))
-
-        // Set uniforms
+        encoder.setViewport(
+            MTLViewport(
+                originX: 0,
+                originY: 0,
+                width: Double(destination.width),
+                height: Double(destination.height),
+                znear: 0,
+                zfar: 1
+            )
+        )
         var uniforms = BlurUniforms(
-            textureWidth: Float(target.width),
-            textureHeight: Float(target.height),
+            textureWidth: Float(destination.width),
+            textureHeight: Float(destination.height),
             offsetValue: offset
         )
-
-        encoder.setFragmentBytes(&uniforms, length: MemoryLayout<BlurUniforms>.size, index: 0)
+        encoder.setFragmentBytes(
+            &uniforms,
+            length: MemoryLayout<BlurUniforms>.size,
+            index: 0
+        )
         encoder.setFragmentTexture(source, index: 0)
-
-        // Draw full-screen quad
         quad.draw(encoder: encoder)
+    }
 
-        encoder.endEncoding()
+    private func isSupportedSource(_ texture: MTLTexture) -> Bool {
+        texture.textureType == .type2D
+            && texture.sampleCount == 1
+            && texture.arrayLength == 1
+            && texture.depth == 1
+            && !texture.isFramebufferOnly
+            && (texture.usage.isEmpty || texture.usage.contains(.shaderRead))
+    }
+
+    private func isSupportedPixelFormat(_ pixelFormat: MTLPixelFormat) -> Bool {
+        pixelFormat == .bgra8Unorm || pixelFormat == .bgra8Unorm_srgb
+    }
+
+    private func isSupportedDestination(_ texture: MTLTexture) -> Bool {
+        texture.textureType == .type2D
+            && texture.sampleCount == 1
+            && texture.arrayLength == 1
+            && texture.depth == 1
+            && (texture.usage.isEmpty || texture.usage.contains(.renderTarget))
+    }
+
+    private func isSupportedWorkspaceTexture(_ texture: MTLTexture) -> Bool {
+        isSupportedSource(texture)
+            && texture.usage.contains(.renderTarget)
     }
 }

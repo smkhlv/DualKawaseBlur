@@ -1,46 +1,31 @@
-import Metal
 import Foundation
+import Metal
 
-/// Central Metal context managing device, queue, and shader library
-class MetalContext {
+/// Immutable references to Metal objects whose APIs are documented as thread-safe.
+final class MetalContext: Sendable {
     let device: MTLDevice
     let commandQueue: MTLCommandQueue
     let library: MTLLibrary
+    let pipelines: PipelineStateCache
 
-    enum MetalError: Error {
-        case deviceNotFound
-        case commandQueueCreationFailed
-        case libraryNotFound
-    }
-
-    init() throws {
-        // Get default Metal device
-        guard let device = MTLCreateSystemDefaultDevice() else {
-            throw MetalError.deviceNotFound
+    init(device: MTLDevice?) throws {
+        guard let device else {
+            throw DualKawaseBlurError.metalUnavailable
         }
-        self.device = device
-
-        // Create command queue
         guard let commandQueue = device.makeCommandQueue() else {
-            throw MetalError.commandQueueCreationFailed
+            throw DualKawaseBlurError.metalUnavailable
         }
+        guard let library = try? device.makeDefaultLibrary(bundle: Bundle.module) else {
+            throw DualKawaseBlurError.libraryLoadingFailed
+        }
+
+        self.device = device
         self.commandQueue = commandQueue
-
-        // Load Metal library from correct bundle (SPM module or app bundle)
-        #if SWIFT_PACKAGE
-        let bundle = Bundle.module
-        #else
-        let bundle = Bundle(for: MetalContext.self)
-        #endif
-
-        guard let library = try? device.makeDefaultLibrary(bundle: bundle) else {
-            throw MetalError.libraryNotFound
-        }
         self.library = library
+        pipelines = try PipelineStateCache(device: device, library: library)
     }
 
-    /// Create a command buffer from the queue
-    func makeCommandBuffer() -> MTLCommandBuffer? {
-        return commandQueue.makeCommandBuffer()
+    convenience init() throws {
+        try self.init(device: MTLCreateSystemDefaultDevice())
     }
 }

@@ -69,7 +69,7 @@ public final class BlurContainerView: UIView {
     private var renderTarget: CAMetalLayer!
 
     private var metalContext: MetalContext?
-    private var blurPipeline: BlurRenderer?
+    private var blurPipeline: DualKawaseBlurRenderer?
     private var texturePyramid: TexturePyramid?
 
     private var frameUpdateLink: CADisplayLink?
@@ -122,12 +122,7 @@ public final class BlurContainerView: UIView {
 
             guard let context = metalContext else { return }
 
-            blurPipeline = try BlurRenderer(
-                device: context.device,
-                commandQueue: context.commandQueue,
-                library: context.library
-            )
-            texturePyramid = TexturePyramid(device: context.device)
+            blurPipeline = try DualKawaseBlurRenderer(context: context)
 
             setupRenderTarget(device: context.device)
         } catch {
@@ -230,8 +225,7 @@ public final class BlurContainerView: UIView {
 
     @objc private func processFrame(_ sender: CADisplayLink) {
         guard let context = metalContext,
-              let pipeline = blurPipeline,
-              let pyramid = texturePyramid else {
+              let pipeline = blurPipeline else {
             return
         }
 
@@ -274,17 +268,35 @@ public final class BlurContainerView: UIView {
             return
         }
 
-        // Update pyramid if needed
-        if needsPyramidUpdate {
-            do {
-                let size = CGSize(width: sourceTexture.width, height: sourceTexture.height)
-                try pyramid.createPyramid(size: size, iterations: iterations)
+        let configuration = BlurConfiguration(iterations: iterations, offset: offset)
+        let pyramid: TexturePyramid
+        do {
+            let requiredLayout = try TexturePyramidLayout(
+                width: sourceTexture.width,
+                height: sourceTexture.height,
+                configuration: configuration
+            )
+            if !needsPyramidUpdate,
+               let currentPyramid = texturePyramid,
+               currentPyramid.layout == requiredLayout,
+               currentPyramid.pixelFormat == sourceTexture.pixelFormat {
+                pyramid = currentPyramid
+            } else {
+                let newPyramid = try TexturePyramid(
+                    device: context.device,
+                    width: sourceTexture.width,
+                    height: sourceTexture.height,
+                    pixelFormat: sourceTexture.pixelFormat,
+                    configuration: configuration
+                )
+                texturePyramid = newPyramid
+                pyramid = newPyramid
                 needsPyramidUpdate = false
-            } catch {
-                print("BlurContainerView: Failed to create pyramid - \(error)")
-                inflightSemaphore.signal()
-                return
             }
+        } catch {
+            print("BlurContainerView: Failed to create pyramid - \(error)")
+            inflightSemaphore.signal()
+            return
         }
 
         // Create command buffer and encode blur
@@ -301,19 +313,19 @@ public final class BlurContainerView: UIView {
         }
 
         do {
-            try pipeline.encodeBlur(
-                commandBuffer: commandBuffer,
+            try pipeline.encode(
                 source: sourceTexture,
-                pyramid: pyramid,
-                iterations: iterations,
-                offset: offset,
-                drawable: drawable
+                destination: drawable.texture,
+                workspace: pyramid,
+                configuration: configuration,
+                into: commandBuffer
             )
 
             commandBuffer.present(drawable)
             commandBuffer.commit()
         } catch {
             print("BlurContainerView: Failed to execute blur - \(error)")
+            inflightSemaphore.signal()
         }
     }
 
@@ -348,7 +360,7 @@ public final class BlurContainerView: UIView {
 
     /// Clears cached resources. Call on memory warning.
     public func clearCache() {
-        texturePyramid?.clear()
+        texturePyramid = nil
         sharedSurfaces.removeAll()
         lastTextureSize = .zero
         needsPyramidUpdate = true

@@ -1,125 +1,180 @@
-import UIKit
+import CoreImage
 import Metal
-import MetalKit
-import CoreGraphics
+import UIKit
 
-/// Handles conversion between UIImage and Metal textures
-class ImageTextureConverter {
-    private let device: MTLDevice
-    private let textureLoader: MTKTextureLoader
+struct PreparedImage: Sendable {
+    let pixels: ImagePixels
+    var width: Int { pixels.width }
+    var height: Int { pixels.height }
+    var scale: CGFloat { pixels.scale }
+}
 
-    enum ConversionError: Error {
+struct ImagePixels: Sendable {
+    enum ColorSpace: Sendable, Equatable {
+        case sRGB
+        case displayP3
+
+        var cgColorSpace: CGColorSpace {
+            switch self {
+            case .sRGB: CGColorSpace(name: CGColorSpace.sRGB)!
+            case .displayP3: CGColorSpace(name: CGColorSpace.displayP3)!
+            }
+        }
+    }
+
+    let bytes: Data
+    let width: Int
+    let height: Int
+    let scale: CGFloat
+    let colorSpace: ColorSpace
+}
+
+final class ImageTextureConverter: Sendable {
+    enum ConversionError: Error, Sendable {
         case cgImageCreationFailed
         case textureCreationFailed
         case invalidTextureFormat
         case bufferCreationFailed
     }
 
-    init(device: MTLDevice) {
-        self.device = device
-        self.textureLoader = MTKTextureLoader(device: device)
+    private let device: MTLDevice
+
+    init(device: MTLDevice) { self.device = device }
+
+    @MainActor
+    func prepare(_ image: UIImage) throws -> PreparedImage {
+        guard image.size.width > 0, image.size.height > 0, image.scale > 0 else {
+            throw ConversionError.cgImageCreationFailed
+        }
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = image.scale
+        format.opaque = false
+        format.preferredRange = .standard
+        let normalized = UIGraphicsImageRenderer(size: image.size, format: format).image { _ in
+            image.draw(in: CGRect(origin: .zero, size: image.size))
+        }
+        guard let cgImage = normalized.cgImage else {
+            throw ConversionError.cgImageCreationFailed
+        }
+        let colorSpace: ImagePixels.ColorSpace = image.cgImage?.colorSpace?.name == CGColorSpace.displayP3
+            || image.ciImage?.colorSpace?.name == CGColorSpace.displayP3
+            ? .displayP3
+            : .sRGB
+        return PreparedImage(pixels: ImagePixels(
+            bytes: try Self.bgraBytes(from: cgImage, colorSpace: colorSpace.cgColorSpace),
+            width: cgImage.width,
+            height: cgImage.height,
+            scale: image.scale,
+            colorSpace: colorSpace
+        ))
     }
 
-    /// Convert UIImage to MTLTexture
+    @MainActor
+    func image(from pixels: ImagePixels) throws -> UIImage {
+        UIImage(cgImage: try Self.makeCGImage(from: pixels), scale: pixels.scale, orientation: .up)
+    }
+
+    @MainActor
     func texture(from image: UIImage) throws -> MTLTexture {
-        guard let cgImage = image.cgImage else {
-            throw ConversionError.cgImageCreationFailed
-        }
-
-        // Load texture with sRGB color space for correct gamma handling
-        let options: [MTKTextureLoader.Option: Any] = [
-            .textureUsage: NSNumber(value: MTLTextureUsage.shaderRead.rawValue),
-            .textureStorageMode: NSNumber(value: MTLStorageMode.private.rawValue),
-            .SRGB: NSNumber(value: true)
-        ]
-
-        do {
-            return try textureLoader.newTexture(cgImage: cgImage, options: options)
-        } catch {
-            throw ConversionError.textureCreationFailed
-        }
+        try texture(from: prepare(image))
     }
 
-    /// Convert MTLTexture to UIImage
-    func image(from texture: MTLTexture) throws -> UIImage {
-        // For private storage, need to blit to shared texture first
-        // Convert from sRGB to linear during blit by using non-sRGB format
-        let sharedTexture = try createSharedTexture(from: texture)
-
-        // Extract bytes from texture
-        let width = texture.width
-        let height = texture.height
-        let bytesPerPixel = 4
-        let bytesPerRow = bytesPerPixel * width
-        let imageByteCount = bytesPerRow * height
-
-        var imageBytes = [UInt8](repeating: 0, count: imageByteCount)
-
-        let region = MTLRegionMake2D(0, 0, width, height)
-        sharedTexture.getBytes(&imageBytes, bytesPerRow: bytesPerRow, from: region, mipmapLevel: 0)
-
-        // Create CGImage from bytes with sRGB color space
-        // Note: texture is in sRGB format, so bytes are already gamma-corrected
-        guard let colorSpace = CGColorSpace(name: CGColorSpace.sRGB),
-              let bitmapContext = CGContext(
-                data: &imageBytes,
-                width: width,
-                height: height,
-                bitsPerComponent: 8,
-                bytesPerRow: bytesPerRow,
-                space: colorSpace,
-                bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue
-              ),
-              let cgImage = bitmapContext.makeImage() else {
-            throw ConversionError.cgImageCreationFailed
-        }
-
-        return UIImage(cgImage: cgImage)
-    }
-
-    /// Create shared-storage copy of texture for CPU access
-    private func createSharedTexture(from texture: MTLTexture) throws -> MTLTexture {
-        // If already shared, return as-is
-        if texture.storageMode == .shared {
-            return texture
-        }
-
-        // Create shared texture
+    func texture(from image: PreparedImage) throws -> MTLTexture {
         let descriptor = MTLTextureDescriptor.texture2DDescriptor(
-            pixelFormat: texture.pixelFormat,
-            width: texture.width,
-            height: texture.height,
+            pixelFormat: .bgra8Unorm_srgb,
+            width: image.width,
+            height: image.height,
             mipmapped: false
         )
-        descriptor.storageMode = .shared
         descriptor.usage = .shaderRead
-
-        guard let sharedTexture = device.makeTexture(descriptor: descriptor) else {
+        descriptor.storageMode = .shared
+        guard let texture = device.makeTexture(descriptor: descriptor) else {
             throw ConversionError.textureCreationFailed
         }
+        image.pixels.bytes.withUnsafeBytes { storage in
+            texture.replace(
+                region: MTLRegionMake2D(0, 0, image.width, image.height),
+                mipmapLevel: 0,
+                withBytes: storage.baseAddress!,
+                bytesPerRow: image.width * 4
+            )
+        }
+        return texture
+    }
 
-        // Copy private texture to shared via blit
-        guard let commandBuffer = device.makeCommandQueue()?.makeCommandBuffer(),
-              let blitEncoder = commandBuffer.makeBlitCommandEncoder() else {
+    func makeReadbackTexture(width: Int, height: Int, pixelFormat: MTLPixelFormat) throws -> MTLTexture {
+        guard pixelFormat == .bgra8Unorm || pixelFormat == .bgra8Unorm_srgb else {
+            throw ConversionError.invalidTextureFormat
+        }
+        let descriptor = MTLTextureDescriptor.texture2DDescriptor(
+            pixelFormat: pixelFormat,
+            width: width,
+            height: height,
+            mipmapped: false
+        )
+        descriptor.usage = .shaderRead
+        descriptor.storageMode = .shared
+        guard let texture = device.makeTexture(descriptor: descriptor) else {
+            throw ConversionError.textureCreationFailed
+        }
+        return texture
+    }
+
+    func encodeReadback(from source: MTLTexture, to destination: MTLTexture, into commandBuffer: MTLCommandBuffer) throws {
+        guard source.device === device, destination.device === device,
+              commandBuffer.device === device, source.width == destination.width,
+              source.height == destination.height, source.pixelFormat == destination.pixelFormat,
+              let encoder = commandBuffer.makeBlitCommandEncoder() else {
             throw ConversionError.bufferCreationFailed
         }
-
-        blitEncoder.copy(
-            from: texture,
-            sourceSlice: 0,
-            sourceLevel: 0,
-            sourceOrigin: MTLOrigin(x: 0, y: 0, z: 0),
-            sourceSize: MTLSize(width: texture.width, height: texture.height, depth: 1),
-            to: sharedTexture,
-            destinationSlice: 0,
-            destinationLevel: 0,
-            destinationOrigin: MTLOrigin(x: 0, y: 0, z: 0)
+        encoder.copy(
+            from: source, sourceSlice: 0, sourceLevel: 0, sourceOrigin: .init(x: 0, y: 0, z: 0),
+            sourceSize: .init(width: source.width, height: source.height, depth: 1),
+            to: destination, destinationSlice: 0, destinationLevel: 0,
+            destinationOrigin: .init(x: 0, y: 0, z: 0)
         )
+        encoder.endEncoding()
+    }
 
-        blitEncoder.endEncoding()
-        commandBuffer.commit()
-        commandBuffer.waitUntilCompleted()
+    func pixels(from texture: MTLTexture, metadata: PreparedImage) throws -> ImagePixels {
+        guard texture.storageMode == .shared else { throw ConversionError.invalidTextureFormat }
+        var bytes = Data(count: texture.width * texture.height * 4)
+        bytes.withUnsafeMutableBytes { storage in
+            texture.getBytes(
+                storage.baseAddress!, bytesPerRow: texture.width * 4,
+                from: MTLRegionMake2D(0, 0, texture.width, texture.height), mipmapLevel: 0
+            )
+        }
+        return ImagePixels(
+            bytes: bytes, width: texture.width, height: texture.height,
+            scale: metadata.scale, colorSpace: metadata.pixels.colorSpace
+        )
+    }
 
-        return sharedTexture
+    private static func bgraBytes(from image: CGImage, colorSpace: CGColorSpace) throws -> Data {
+        var bytes = Data(count: image.width * image.height * 4)
+        let succeeded = bytes.withUnsafeMutableBytes { storage in
+            guard let context = CGContext(
+                data: storage.baseAddress, width: image.width, height: image.height,
+                bitsPerComponent: 8, bytesPerRow: image.width * 4, space: colorSpace,
+                bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue | CGBitmapInfo.byteOrder32Little.rawValue
+            ) else { return false }
+            context.draw(image, in: CGRect(x: 0, y: 0, width: image.width, height: image.height))
+            return true
+        }
+        guard succeeded else { throw ConversionError.cgImageCreationFailed }
+        return bytes
+    }
+
+    @MainActor
+    private static func makeCGImage(from pixels: ImagePixels) throws -> CGImage {
+        guard let provider = CGDataProvider(data: pixels.bytes as CFData),
+              let image = CGImage(
+                width: pixels.width, height: pixels.height, bitsPerComponent: 8, bitsPerPixel: 32,
+                bytesPerRow: pixels.width * 4, space: pixels.colorSpace.cgColorSpace,
+                bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue).union(.byteOrder32Little),
+                provider: provider, decode: nil, shouldInterpolate: true, intent: .defaultIntent
+              ) else { throw ConversionError.cgImageCreationFailed }
+        return image
     }
 }
