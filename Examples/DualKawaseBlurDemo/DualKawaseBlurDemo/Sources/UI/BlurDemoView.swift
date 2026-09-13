@@ -1,8 +1,9 @@
 import SwiftUI
+import PhotosUI
 import DualKawaseBlur
 
 struct BlurDemoView: View {
-    @State private var selectedTab: Int = 0
+    @State private var selectedTab = DemoTab.image
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -10,18 +11,30 @@ struct BlurDemoView: View {
                 .tabItem {
                     Label("Image", systemImage: "photo")
                 }
-                .tag(0)
+                .tag(DemoTab.image)
 
-            LiveBlurDemoView()
+            CapturedBlurDemoView()
                 .tabItem {
-                    Label("Live", systemImage: "waveform")
+                    Label("Captured", systemImage: "waveform")
                 }
-                .tag(1)
+                .tag(DemoTab.captured)
+
+            MetalBlurDemoView()
+                .tabItem {
+                    Label("Metal", systemImage: "circle.hexagongrid")
+                }
+                .tag(DemoTab.metal)
+
+            BenchmarkView()
+                .tabItem {
+                    Label("Benchmark", systemImage: "gauge.with.dots.needle.67percent")
+                }
+                .tag(DemoTab.benchmark)
         }
     }
 }
 
-// MARK: - Image Blur Demo (Original)
+// MARK: - Image Blur Demo
 
 struct ImageBlurDemoView: View {
     @State private var selectedImage: UIImage?
@@ -30,11 +43,15 @@ struct ImageBlurDemoView: View {
     @State private var offset: Float = 2.0
     @State private var isProcessing: Bool = false
     @State private var showImagePicker: Bool = false
+    @State private var selectedPickerItem: PhotosPickerItem?
+    @State private var processingTask: Task<Void, Never>?
+    @State private var processingGeneration: UInt64 = 0
+    @State private var presentedError: String?
 
     private let blurEngine = try? DualKawaseBlurEngine()
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 GeometryReader { geometry in
                     ZStack {
@@ -79,55 +96,107 @@ struct ImageBlurDemoView: View {
             }
             .navigationTitle("Image Blur")
             .navigationBarTitleDisplayMode(.inline)
-            .sheet(isPresented: $showImagePicker) {
-                ImagePickerView(selectedImage: $selectedImage)
+            .photosPicker(
+                isPresented: $showImagePicker,
+                selection: $selectedPickerItem,
+                matching: .images
+            )
+            .task(id: selectedPickerItem) {
+                await loadSelectedImage()
             }
-            .onChange(of: selectedImage) { _ in
+            .onChange(of: selectedImage) {
                 blurredImage = nil
+            }
+            .alert(
+                "Unable to Process Image",
+                isPresented: Binding(
+                    get: { presentedError != nil },
+                    set: { if $0 == false { presentedError = nil } }
+                )
+            ) {
+                Button("OK", role: .cancel) { presentedError = nil }
+            } message: {
+                Text(presentedError ?? "Unknown error")
+            }
+            .onDisappear {
+                processingTask?.cancel()
             }
         }
     }
 
+    @MainActor
     private func processBlur() {
-        guard let image = selectedImage else {
-            return
-        }
-
+        processingTask?.cancel()
+        guard let image = selectedImage, let blurEngine else { return }
+        processingGeneration &+= 1
+        let generation = processingGeneration
+        let configuration = BlurConfiguration(iterations: iterations, offset: offset)
         isProcessing = true
-
-        DispatchQueue.global(qos: .userInitiated).async {
-            let result = blurEngine?.blur(
-                image: image,
-                iterations: iterations,
-                offset: offset
-            )
-
-            DispatchQueue.main.async {
-                self.blurredImage = result
-                self.isProcessing = false
+        processingTask = Task {
+            defer {
+                if processingGeneration == generation {
+                    isProcessing = false
+                    processingTask = nil
+                }
             }
+            do {
+                let result = try await blurEngine.blur(image, configuration: configuration)
+                try Task.checkCancellation()
+                guard processingGeneration == generation else { return }
+                blurredImage = result
+            } catch is CancellationError {
+                // A newer request or view teardown superseded this work.
+            } catch {
+                if processingGeneration == generation, !Task.isCancelled {
+                    presentedError = error.localizedDescription
+                }
+            }
+        }
+    }
+
+    @MainActor
+    private func loadSelectedImage() async {
+        guard let selectedPickerItem else { return }
+        processingTask?.cancel()
+        processingGeneration &+= 1
+        processingTask = nil
+        isProcessing = false
+        do {
+            guard let data = try await selectedPickerItem.loadTransferable(type: Data.self),
+                  let image = UIImage(data: data) else {
+                presentedError = "The selected item is not a supported image."
+                return
+            }
+            try Task.checkCancellation()
+            selectedImage = image
+        } catch is CancellationError {
+            // `.task(id:)` cancels the previous selection load automatically.
+        } catch {
+            presentedError = error.localizedDescription
         }
     }
 }
 
-// MARK: - Live Blur Demo
+// MARK: - Captured Blur Demo
 
-struct LiveBlurDemoView: View {
+struct CapturedBlurDemoView: View {
     @State private var iterations: Int = 3
     @State private var offset: Float = 2.0
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             VStack(spacing: 0) {
                 // TimelineView provides real animation values for UIKit capture
                 TimelineView(.animation) { timeline in
                     let phase = computePhase(from: timeline.date)
 
-                    BlurContainer(iterations: iterations, offset: offset) {
+                    CapturedBlurView(
+                        configuration: .init(iterations: iterations, offset: offset)
+                    ) {
                         AnimatedGradientBackground(phase: phase)
                     } overlay: {
                         VStack(spacing: 8) {
-                            Text("Real-time Blur")
+                            Text("CPU-captured SwiftUI")
                                 .font(.title2.weight(.semibold))
                                 .foregroundColor(.white)
 
@@ -162,7 +231,7 @@ struct LiveBlurDemoView: View {
                 .padding()
                 .background(Color(.systemBackground))
             }
-            .navigationTitle("Live Blur")
+            .navigationTitle("Captured Blur")
             .navigationBarTitleDisplayMode(.inline)
         }
     }
@@ -181,6 +250,73 @@ struct LiveBlurDemoView: View {
 
     private func easeInOut(_ t: CGFloat) -> CGFloat {
         return t < 0.5 ? 2 * t * t : 1 - pow(-2 * t + 2, 2) / 2
+    }
+}
+
+// MARK: - Metal Blur Demo
+
+struct MetalBlurDemoView: View {
+    @State private var frames = MetalBlurFrameSource()
+    @State private var iterations: Int = 3
+    @State private var offset: Float = 2
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 0) {
+                ZStack {
+                    DemoMetalFrameProducer(source: frames)
+
+                    MetalBlurView(
+                        source: frames,
+                        configuration: .init(iterations: iterations, offset: offset)
+                    ) {
+                        VStack(spacing: 8) {
+                            Text("GPU-to-GPU Metal")
+                                .font(.title2.weight(.semibold))
+                                .foregroundStyle(.white)
+
+                            Text("iterations: \(iterations), offset: \(String(format: "%.1f", offset))")
+                                .font(.caption)
+                                .foregroundStyle(.white.opacity(0.7))
+                        }
+                    }
+                }
+
+                BlurControls(iterations: $iterations, offset: $offset)
+            }
+            .navigationTitle("Metal Blur")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+}
+
+private struct BlurControls: View {
+    @Binding var iterations: Int
+    @Binding var offset: Float
+
+    var body: some View {
+        VStack(spacing: 16) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Iterations: \(iterations)")
+                    .font(.subheadline)
+                Slider(value: iterationsBinding, in: 1...5, step: 1)
+            }
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Offset: \(String(format: "%.1f", offset))")
+                    .font(.subheadline)
+                Slider(value: $offset, in: 1...5, step: 0.1)
+            }
+        }
+        .padding()
+        .background(Color(.systemBackground))
+    }
+
+    private var iterationsBinding: Binding<Double> {
+        Binding(
+            get: { Double(iterations) },
+            set: { iterations = Int($0.rounded()) }
+        )
     }
 }
 

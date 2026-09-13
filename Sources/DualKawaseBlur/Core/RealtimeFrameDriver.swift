@@ -106,7 +106,7 @@ final class RealtimeFrameDriver<Resource: Sendable, Drawable: AnyObject> {
 }
 
 @MainActor
-private final class RealtimeErrorReporter: Sendable {
+final class RealtimeErrorReporter: Sendable {
     private let onError: (@MainActor @Sendable (DualKawaseBlurError) -> Void)?
     private var lastError: DualKawaseBlurError?
     private var lastSequence: UInt64 = 0

@@ -17,8 +17,10 @@ final class SharedIOSurfaceTexture {
 
     private let bytesPerRow: Int
 
-    init?(device: MTLDevice, width: Int, height: Int) {
-        guard width > 0, height > 0 else { return nil }
+    init(device: MTLDevice, width: Int, height: Int) throws {
+        guard width > 0, height > 0 else {
+            throw DualKawaseBlurError.textureAllocationFailed
+        }
 
         self.width = width
         self.height = height
@@ -38,7 +40,7 @@ final class SharedIOSurfaceTexture {
         ]
 
         guard let surface = IOSurfaceCreate(properties as CFDictionary) else {
-            return nil
+            throw DualKawaseBlurError.textureAllocationFailed
         }
         self.surface = surface
 
@@ -62,7 +64,7 @@ final class SharedIOSurfaceTexture {
                   bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue
                             | CGBitmapInfo.byteOrder32Little.rawValue
               ) else {
-            return nil
+            throw DualKawaseBlurError.textureAllocationFailed
         }
         self.cgContext = context
 
@@ -81,15 +83,17 @@ final class SharedIOSurfaceTexture {
             iosurface: surface,
             plane: 0
         ) else {
-            return nil
+            throw DualKawaseBlurError.textureAllocationFailed
         }
         self.texture = texture
     }
 
     /// Render a view's current visual state into the shared surface.
     /// After this call, `self.texture` contains the rendered content with zero copy.
+    @MainActor
     func renderView(_ view: UIView, scale: CGFloat) {
         IOSurfaceLock(surface, [], nil)
+        defer { IOSurfaceUnlock(surface, [], nil) }
 
         cgContext.clear(CGRect(x: 0, y: 0, width: width, height: height))
 
@@ -107,6 +111,5 @@ final class SharedIOSurfaceTexture {
 
         cgContext.restoreGState()
 
-        IOSurfaceUnlock(surface, [], nil)
     }
 }
