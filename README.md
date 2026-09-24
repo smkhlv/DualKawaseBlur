@@ -1,163 +1,181 @@
-# Dual Kawase Blur
+# DualKawaseBlur
 
-High-performance Dual Kawase Blur implementation for iOS using Metal.
+Metal-backed Dual Kawase blur primitives for Swift and SwiftUI. The package exposes
+three integration levels: asynchronous `UIImage` processing, GPU-to-GPU frame blur,
+and a SwiftUI capture surface for content that does not already have a Metal frame.
 
-![Live Blur Demo](Simulator%20Screen%20Recording%20-%20iPhone%2017%20-%202026-02-04%20at%2013.41.16.gif)
+The package is intentionally a general frame consumer. It does not depend on
+`SphereAnimation` or on any particular animation/renderer package.
 
 ## Features
 
-- Fast GPU-accelerated blur using Metal
-- Real-time blur for animated content (`BlurContainer`)
-- Static image blur (`DualKawaseBlurEngine`)
-- High-quality Dual Kawase algorithm
-- SwiftUI and UIKit support
-- Configurable blur strength (iterations) and radius (offset)
+- Async `UIImage` blur with cancellation and typed errors.
+- Low-level encoding into a caller-owned Metal command buffer.
+- `MetalBlurFrameSource` for latest-frame delivery with GPU readiness and exactly-once
+  producer cleanup.
+- `MetalBlurView` for zero-copy GPU-to-GPU SwiftUI integration.
+- `CapturedBlurView` for SwiftUI content that must first be rasterized into an IOSurface.
+- A device benchmark/export protocol under [`Benchmarks/`](Benchmarks/README.md).
 
 ## Requirements
 
-- iOS 15.0+
-- Xcode 15.0+
-- Swift 5.9+
+- iOS 18.0+
+- Xcode 16.0+
+- Swift 6.0+
 
 ## Installation
 
-### Swift Package Manager
-
-Add to your `Package.swift`:
+For the current package, add the repository's `main` branch while the next release is
+being prepared:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/yourusername/DualKawaseBlur.git", from: "1.0.0")
+    .package(url: "https://github.com/smkhlv/DualKawaseBlur.git", branch: "main")
 ]
 ```
 
-Or in Xcode:
-1. File → Add Package Dependencies
-2. Enter: `https://github.com/yourusername/DualKawaseBlur.git`
-3. Select version and add to target
+In Xcode, choose **File → Add Package Dependencies** and enter the same URL. Pin a
+version tag for production once it has been published.
 
-## Usage
+## UIImage blur
 
-### Real-time Blur (SwiftUI)
-
-Use `BlurContainer` to blur dynamic or animated content in real-time:
+`blur(_:configuration:)` is asynchronous and runs the Metal work away from the caller's
+main-thread UI code. Cancellation is checked before encoding, after GPU completion, and
+before image conversion.
 
 ```swift
 import DualKawaseBlur
 
-BlurContainer(iterations: 3, offset: 2.0) {
-    // Content to blur
-    AnimatedGradientView()
-} overlay: {
-    // Content displayed on top of blur
-    Text("Hello, Blur!")
-        .foregroundColor(.white)
-}
-```
-
-### Real-time Blur (UIKit)
-
-```swift
-import DualKawaseBlur
-
-let container = BlurContainerView()
-container.iterations = 3
-container.offset = 2.0
-container.sourceView = animatedBackgroundView
-container.overlayView = labelView
-```
-
-### Static Image Blur
-
-Use `DualKawaseBlurEngine` for one-time image processing:
-
-```swift
-import DualKawaseBlur
-
-let engine = try DualKawaseBlurEngine()
-
-let blurred = engine.blur(
-    image: myImage,
-    iterations: 3,  // 1-5: blur strength (higher = stronger)
-    offset: 2.0     // 1.0-5.0: blur radius (higher = wider)
-)
-```
-
-### Parameters
-
-- **iterations** (1-5): Number of downsample/upsample passes
-  - `1`: Light blur
-  - `3`: Medium blur (default, similar to Gaussian σ≈10)
-  - `5`: Strong blur
-
-- **offset** (1.0-5.0): Blur radius multiplier
-  - `1.0`: Tight blur
-  - `2.0`: Standard blur (default)
-  - `5.0`: Wide blur
-
-### Performance
-
-For 1024×1024 image on iPhone 12+:
-- 3 iterations: ~5-10ms
-- Texture pyramid cached - changing only offset is very fast
-
-### Animating Content Inside BlurContainer
-
-When using `BlurContainer` with animations, use `TimelineView` to provide real interpolated values:
-
-```swift
-TimelineView(.animation) { timeline in
-    let phase = sin(timeline.date.timeIntervalSinceReferenceDate) * 0.5 + 0.5
-
-    BlurContainer(iterations: 3, offset: 2.0) {
-        MyAnimatedView(phase: phase)
-    } overlay: {
-        Text("Blurred!")
+Task { @MainActor in
+    do {
+        let engine = try DualKawaseBlurEngine()
+        let configuration = BlurConfiguration(iterations: 3, offset: 2)
+        let blurred = try await engine.blur(image, configuration: configuration)
+        imageView.image = blurred
+    } catch is CancellationError {
+        // The task was cancelled; no result is delivered.
+    } catch let error as DualKawaseBlurError {
+        print(error.localizedDescription)
     }
 }
 ```
 
-> **Note:** Standard SwiftUI `withAnimation` won't work inside `BlurContainer` because the content is captured via `drawHierarchy`. Use `TimelineView` with computed values instead.
+`BlurConfiguration` requires a positive finite `offset`, positive `iterations`, and an
+image large enough for the requested downsample pyramid. Invalid input is reported as
+`DualKawaseBlurError.invalidConfiguration`.
 
-### Memory Management
+## Low-level Metal encoding
+
+Use this path when a renderer already owns the source/destination textures and command
+buffer. The source and destination must belong to the same `MTLDevice` as the engine.
+`encode` records work only; the caller owns synchronization, commit, and texture
+lifetime.
 
 ```swift
-// Clear cached textures when needed
-engine.clearCache()        // DualKawaseBlurEngine
-container.clearCache()     // BlurContainerView
+let engine = try DualKawaseBlurEngine(device: device)
+let configuration = BlurConfiguration(iterations: 3, offset: 2)
+try engine.encode(
+    source: sourceTexture,
+    destination: destinationTexture,
+    configuration: configuration,
+    into: commandBuffer
+)
+commandBuffer.commit()
+```
 
-// Call on memory warning
-NotificationCenter.default.addObserver(
-    forName: UIApplication.didReceiveMemoryWarningNotification,
-    object: nil,
-    queue: .main
-) { _ in
-    engine.clearCache()
+The engine retains its temporary pyramid until the command buffer completes. The caller
+must keep `sourceTexture` and `destinationTexture` valid until the GPU has finished.
+
+## Animated Metal frames
+
+`MetalBlurFrameSource` is a latest-frame mailbox. A producer publishes a texture together
+with either `.ready` or a `MTLSharedEvent` readiness value. The consumer encodes the wait,
+samples the texture, and the package invokes `onConsumed` after the frame is consumed or
+dropped. This makes a producer independent of the blur implementation and of
+`SphereAnimation`.
+
+```swift
+let source = MetalBlurFrameSource()
+
+MetalBlurView(
+    source: source,
+    configuration: BlurConfiguration(iterations: 3, offset: 2)
+) {
+    Text("Overlay")
+}
+
+source.publish(MetalBlurFrame(
+    texture: renderedTexture,
+    readiness: .sharedEvent(readinessEvent, value: readinessValue),
+    onConsumed: { textureLease.release() }
+))
+```
+
+The producer should call `finish()` during teardown. `publish` may be called from a
+rendering callback; it does not wait for the consumer. A slow consumer receives the
+newest available frame and stale pending frames are released.
+
+The demo contains a dependency-free procedural producer in
+`Examples/DualKawaseBlurDemo/.../DemoMetalFrameProducer.swift`. It renders a triangle into
+a private texture pool, signals a shared event, and publishes `MetalBlurFrame`; it is a
+reference for integrating any other Metal renderer.
+
+## Capturing SwiftUI content
+
+`CapturedBlurView` hosts a source view, rasterizes it with `CALayer.render(in:)`, applies
+the blur, and places an optional overlay above the result:
+
+```swift
+CapturedBlurView(configuration: .init(iterations: 3, offset: 2)) {
+    AnimatedContent()
+} overlay: {
+    Controls()
 }
 ```
 
-## Example App
+This path has a CPU rasterization and IOSurface handoff. Compositor-backed video,
+protected content, and Metal-backed subviews are not guaranteed to appear in the capture;
+use `MetalBlurFrameSource` for a renderer that can provide its own texture. Errors are
+delivered through the `onError` closure.
 
-See `Examples/DualKawaseBlurDemo` for interactive demo with:
-- **Image tab**: Static image blur with picker
-- **Live tab**: Real-time animated blur demo
-- Real-time parameter sliders
+## Lifetime and concurrency rules
 
-Run the demo:
-```bash
-cd Examples/DualKawaseBlurDemo
-open DualKawaseBlurDemo.xcodeproj
-```
+- Keep all Metal textures and producer-owned leases alive until their command buffers
+  complete.
+- Encode a shared-event wait before sampling a frame that is not already `.ready`.
+- Treat `onConsumed` as exactly-once cleanup; it may run because a frame was displaced,
+  discarded, or consumed by the blur view.
+- `MetalBlurFrameSource` is safe to publish from concurrent producer callbacks, but it has
+  one consumer and intentionally retains only the newest pending frame.
+- Keep critical sections around the source mailbox synchronous and small. Do not call
+  producer code or block on a GPU wait while holding its mutex.
 
-## Algorithm Details
+## Benchmarking
 
-Dual Kawase Blur uses a two-pass approach:
+Use the demo's **Compare** tab to select the resolution and configuration, then export
+the raw JSON. Follow [`Benchmarks/README.md`](Benchmarks/README.md) exactly, including
+warm-up/sample counts, thermal notes, and device metadata. Simulator timings are useful
+for smoke tests but are not publishable device evidence. Performance depends on the
+device, resolution, configuration, and competing GPU work; this README intentionally
+makes no universal speed claim relative to Apple's blur implementations.
 
-1. **Downsample**: Progressively reduce image resolution with 5-tap filter
-2. **Upsample**: Progressively increase resolution with 8-tap filter
+## Example app
 
-Result: High-quality blur with better performance than standard Gaussian blur.
+Open `Examples/DualKawaseBlurDemo/DualKawaseBlurDemo.xcodeproj` to try:
 
-## Credits
+- **Image** — choose an image and compare async UIImage processing.
+- **Captured** — blur SwiftUI content captured through an IOSurface.
+- **Metal** — blur a procedural Metal producer through the frame contract.
+- **Compare** — view the package, MPS Gaussian, and system material side by side and
+  export a benchmark.
 
-Based on the Dual Kawase Blur algorithm.
+## Provenance and changes
+
+Algorithm references, license boundaries, and original Suretare contributions are listed
+in [`PROVENANCE.md`](PROVENANCE.md). Public API changes are recorded in
+[`CHANGELOG.md`](CHANGELOG.md). See [`CONTRIBUTING.md`](CONTRIBUTING.md) before opening a
+change or submitting measurements.
+
+## License
+
+DualKawaseBlur is released under the MIT License; see [`LICENSE`](LICENSE).

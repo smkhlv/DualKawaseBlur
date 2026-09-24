@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: macos-15
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Run package tests on iOS Simulator
+        run: >-
+          xcodebuild -scheme DualKawaseBlur
+          -destination 'platform=iOS Simulator,name=iPhone 16'
+          test
+
+      - name: Build unsigned iOS release
+        run: >-
+          xcodebuild -scheme DualKawaseBlur
+          -destination 'generic/platform=iOS'
+          -configuration Release
+          CODE_SIGNING_ALLOWED=NO
+          build
