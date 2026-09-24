@@ -93,6 +93,58 @@ final class DualKawaseBlurRenderer: Sendable {
         )
     }
 
+    /// Encodes one filtered reduction for the benchmark-only reduced-resolution paths.
+    func encodeDownsample(
+        source: MTLTexture,
+        destination: MTLTexture,
+        offset: Float,
+        into commandBuffer: MTLCommandBuffer
+    ) throws {
+        try validatePass(source: source, destination: destination, commandBuffer: commandBuffer)
+        try encodePass(
+            source: source,
+            destination: destination,
+            pipeline: context.pipelines.downsamplePipeline(for: destination.pixelFormat),
+            offset: offset,
+            into: commandBuffer
+        )
+    }
+
+    /// Encodes a single bilinear sample at the output size.
+    func encodeCopy(
+        source: MTLTexture,
+        destination: MTLTexture,
+        into commandBuffer: MTLCommandBuffer
+    ) throws {
+        try validatePass(source: source, destination: destination, commandBuffer: commandBuffer)
+        try encodePass(
+            source: source,
+            destination: destination,
+            pipeline: context.pipelines.copyPipeline(for: destination.pixelFormat),
+            offset: 0,
+            into: commandBuffer
+        )
+    }
+
+    private func validatePass(
+        source: MTLTexture,
+        destination: MTLTexture,
+        commandBuffer: MTLCommandBuffer
+    ) throws {
+        guard
+            source.device === context.device,
+            destination.device === context.device,
+            commandBuffer.device === context.device,
+            commandBuffer.status == .notEnqueued || commandBuffer.status == .enqueued,
+            source.pixelFormat == destination.pixelFormat,
+            isSupportedPixelFormat(source.pixelFormat),
+            isSupportedSource(source),
+            isSupportedDestination(destination)
+        else {
+            throw DualKawaseBlurError.unsupportedTexture
+        }
+    }
+
     private func encodePass(
         source: MTLTexture,
         destination: MTLTexture,

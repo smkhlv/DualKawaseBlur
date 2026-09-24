@@ -107,3 +107,166 @@ fragment float4 copyFragment(
 
     return sourceTexture.sample(linearSampler, in.texCoord);
 }
+
+// MARK: - Benchmark Compute Kernels
+
+/// These kernels intentionally mirror the render-pipeline filters above. They are
+/// benchmark-only experiments used to measure the cost of render-pass boundaries.
+kernel void downsampleCompute(
+    texture2d<half, access::sample> sourceTexture [[texture(0)]],
+    texture2d<half, access::write> destinationTexture [[texture(1)]],
+    constant float2 &sampleStep [[buffer(0)]],
+    uint2 position [[thread_position_in_grid]]
+) {
+    if (position.x >= destinationTexture.get_width() ||
+        position.y >= destinationTexture.get_height()) {
+        return;
+    }
+
+    constexpr sampler linearSampler(
+        mag_filter::linear,
+        min_filter::linear,
+        address::clamp_to_edge
+    );
+    const float2 size = float2(destinationTexture.get_width(), destinationTexture.get_height());
+    const float2 uv = (float2(position) + 0.5) / size;
+
+    half4 sum = sourceTexture.sample(linearSampler, uv) * half(4.0);
+    sum += sourceTexture.sample(linearSampler, uv - sampleStep);
+    sum += sourceTexture.sample(linearSampler, uv + sampleStep);
+    sum += sourceTexture.sample(linearSampler, uv + float2(sampleStep.x, -sampleStep.y));
+    sum += sourceTexture.sample(linearSampler, uv - float2(sampleStep.x, -sampleStep.y));
+    destinationTexture.write(sum / half(8.0), position);
+}
+
+/// Four equal diagonal samples preserve the five-tap kernel's zero centroid and
+/// per-axis second moment. The radius 1/sqrt(2) matches four diagonal samples
+/// plus the original center weight of four after normalization by eight.
+kernel void downsampleCompute4Tap(
+    texture2d<half, access::sample> sourceTexture [[texture(0)]],
+    texture2d<half, access::write> destinationTexture [[texture(1)]],
+    constant float2 &sampleStep [[buffer(0)]],
+    uint2 position [[thread_position_in_grid]]
+) {
+    if (position.x >= destinationTexture.get_width() ||
+        position.y >= destinationTexture.get_height()) {
+        return;
+    }
+
+    constexpr sampler linearSampler(
+        mag_filter::linear,
+        min_filter::linear,
+        address::clamp_to_edge
+    );
+    const float2 size = float2(destinationTexture.get_width(), destinationTexture.get_height());
+    const float2 uv = (float2(position) + 0.5) / size;
+    constexpr float momentMatchedScale = 0.70710678118;
+    const float2 step = sampleStep * momentMatchedScale;
+
+    half4 sum = sourceTexture.sample(linearSampler, uv + float2(-step.x, step.y));
+    sum += sourceTexture.sample(linearSampler, uv + float2(step.x, step.y));
+    sum += sourceTexture.sample(linearSampler, uv + float2(step.x, -step.y));
+    sum += sourceTexture.sample(linearSampler, uv + float2(-step.x, -step.y));
+    destinationTexture.write(sum / half(4.0), position);
+}
+
+kernel void upsampleCompute8Tap(
+    texture2d<half, access::sample> sourceTexture [[texture(0)]],
+    texture2d<half, access::write> destinationTexture [[texture(1)]],
+    constant float2 &sampleStep [[buffer(0)]],
+    uint2 position [[thread_position_in_grid]]
+) {
+    if (position.x >= destinationTexture.get_width() ||
+        position.y >= destinationTexture.get_height()) {
+        return;
+    }
+
+    constexpr sampler linearSampler(
+        mag_filter::linear,
+        min_filter::linear,
+        address::clamp_to_edge
+    );
+    const float2 size = float2(destinationTexture.get_width(), destinationTexture.get_height());
+    const float2 uv = (float2(position) + 0.5) / size;
+
+    half4 sum = sourceTexture.sample(linearSampler, uv + float2(-sampleStep.x * 2.0, 0.0));
+    sum += sourceTexture.sample(linearSampler, uv + float2(sampleStep.x * 2.0, 0.0));
+    sum += sourceTexture.sample(linearSampler, uv + float2(0.0, sampleStep.y * 2.0));
+    sum += sourceTexture.sample(linearSampler, uv + float2(0.0, -sampleStep.y * 2.0));
+    sum += sourceTexture.sample(linearSampler, uv + float2(-sampleStep.x, sampleStep.y)) * half(2.0);
+    sum += sourceTexture.sample(linearSampler, uv + float2(sampleStep.x, sampleStep.y)) * half(2.0);
+    sum += sourceTexture.sample(linearSampler, uv + float2(sampleStep.x, -sampleStep.y)) * half(2.0);
+    sum += sourceTexture.sample(linearSampler, uv + float2(-sampleStep.x, -sampleStep.y)) * half(2.0);
+    destinationTexture.write(sum / half(12.0), position);
+}
+
+/// Lower-cost final reconstruction. Intermediate upsample levels still use the
+/// faithful 8-tap filter. The diagonal radius sqrt(4/3) matches the radial second
+/// moment of the normalized 8-tap kernel: (4*4 + 8*2) / 12 = 8/3.
+kernel void upsampleCompute4Tap(
+    texture2d<half, access::sample> sourceTexture [[texture(0)]],
+    texture2d<half, access::write> destinationTexture [[texture(1)]],
+    constant float2 &sampleStep [[buffer(0)]],
+    uint2 position [[thread_position_in_grid]]
+) {
+    if (position.x >= destinationTexture.get_width() ||
+        position.y >= destinationTexture.get_height()) {
+        return;
+    }
+
+    constexpr sampler linearSampler(
+        mag_filter::linear,
+        min_filter::linear,
+        address::clamp_to_edge
+    );
+    const float2 size = float2(destinationTexture.get_width(), destinationTexture.get_height());
+    const float2 uv = (float2(position) + 0.5) / size;
+    constexpr float momentMatchedDiagonalScale = 1.15470053838;
+    const float2 step = sampleStep * momentMatchedDiagonalScale;
+
+    half4 sum = sourceTexture.sample(linearSampler, uv + float2(-step.x, step.y));
+    sum += sourceTexture.sample(linearSampler, uv + float2(step.x, step.y));
+    sum += sourceTexture.sample(linearSampler, uv + float2(step.x, -step.y));
+    sum += sourceTexture.sample(linearSampler, uv + float2(-step.x, -step.y));
+    destinationTexture.write(sum / half(4.0), position);
+}
+
+/// Three-sample final reconstruction. Equal samples at the vertices of an
+/// equilateral triangle have zero centroid and isotropic covariance. A radius
+/// sqrt(8/3) matches the faithful kernel's normalized radial second moment.
+kernel void upsampleCompute3Tap(
+    texture2d<half, access::sample> sourceTexture [[texture(0)]],
+    texture2d<half, access::write> destinationTexture [[texture(1)]],
+    constant float2 &sampleStep [[buffer(0)]],
+    uint2 position [[thread_position_in_grid]]
+) {
+    if (position.x >= destinationTexture.get_width() ||
+        position.y >= destinationTexture.get_height()) {
+        return;
+    }
+
+    constexpr sampler linearSampler(
+        mag_filter::linear,
+        min_filter::linear,
+        address::clamp_to_edge
+    );
+    const float2 size = float2(destinationTexture.get_width(), destinationTexture.get_height());
+    const float2 uv = (float2(position) + 0.5) / size;
+    constexpr float triangleRadius = 1.63299316186;
+    constexpr float triangleHalfRadius = 0.81649658093;
+    constexpr float triangleHeight = 1.41421356237;
+
+    half4 sum = sourceTexture.sample(
+        linearSampler,
+        uv + float2(sampleStep.x * triangleRadius, 0.0)
+    );
+    sum += sourceTexture.sample(
+        linearSampler,
+        uv + float2(-sampleStep.x * triangleHalfRadius, sampleStep.y * triangleHeight)
+    );
+    sum += sourceTexture.sample(
+        linearSampler,
+        uv + float2(-sampleStep.x * triangleHalfRadius, -sampleStep.y * triangleHeight)
+    );
+    destinationTexture.write(sum / half(3.0), position);
+}

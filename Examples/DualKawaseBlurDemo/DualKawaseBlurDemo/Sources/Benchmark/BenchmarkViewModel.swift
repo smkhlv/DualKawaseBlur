@@ -1,4 +1,5 @@
 import Darwin
+import CryptoKit
 import Foundation
 import Metal
 import Observation
@@ -7,9 +8,6 @@ import UIKit
 
 @MainActor @Observable
 final class BenchmarkViewModel {
-    var iterations = 3
-    var offset: Float = 2
-    var resolutionIndex = 0
     var progress = 0.0
     var status = "Ready"
     var isRunning = false
@@ -18,91 +16,154 @@ final class BenchmarkViewModel {
     var isShowingError = false
 
     @ObservationIgnored private var runTask: Task<Void, Never>?
+    @ObservationIgnored private var generation: UInt64 = 0
+    private(set) var summary = ""
 
-    let resolutions = [(name: "720p", width: 1280, height: 720),
-                       (name: "1080p", width: 1920, height: 1080),
-                       (name: "1440p", width: 2560, height: 1440)]
-
-    func start() {
-        runTask?.cancel()
+    func start(input: ComparisonBenchmarkInput) {
+        guard !isRunning else { return }
+        generation &+= 1
+        let generation = generation
         exportURL = nil
+        summary = ""
         errorMessage = ""
         isShowingError = false
         isRunning = true
         progress = 0
-        runTask = Task { await performRun() }
+        runTask = Task { await performRun(input: input, generation: generation) }
     }
 
     func cancel() {
+        guard isRunning else { return }
+        generation &+= 1
         runTask?.cancel()
         runTask = nil
         isRunning = false
         status = "Cancelled"
     }
 
-    private func performRun() async {
-        defer { isRunning = false; runTask = nil }
+    private func performRun(input: ComparisonBenchmarkInput, generation: UInt64) async {
+        defer {
+            if generation == self.generation { isRunning = false; runTask = nil }
+        }
         do {
-            let configuration = BlurConfiguration(iterations: iterations, offset: offset)
-            let resolution = resolutions[resolutionIndex]
-            status = "Matching blur strength…"
-            let match = try await BlurStrengthMatcher().match(configuration: configuration)
+            let request = input.request
+            let configuration = BlurConfiguration(iterations: request.iterations, offset: request.offset)
+            let sourceHash = SHA256.hash(data: input.pixels)
+                .map { String(format: "%02x", $0) }
+                .joined()
             try Task.checkCancellation()
-            status = "Running 30 warm-up + 300 measured pairs…"
+            status = "Tuning threadgroups, then running 30 warm-up + 300 measured runs…"
             let memoryBefore = Self.residentBytes()
             let output = try await BlurBenchmarkRunner().run(
                 configuration: configuration,
-                matchedSigma: match.sigma,
-                width: resolution.width,
-                height: resolution.height
-            ) { [weak self] value in self?.progress = value }
+                sigma: request.sigma,
+                width: request.width,
+                height: request.height,
+                sourcePixels: input.pixels
+            ) { [weak self] value in
+                guard let self, self.generation == generation else { return }
+                if value - self.progress >= 0.025 || value == 1 { self.progress = value }
+            }
+            try Task.checkCancellation()
+            guard generation == self.generation else { return }
             let memoryAfter = Self.residentBytes()
             let metadata = try Self.deviceMetadata()
             let records = [
-                makeRecord(.dualKawase, samples: output.dualKawase, output: output, match: match,
-                           metadata: metadata, width: resolution.width, height: resolution.height,
+                makeRecord(.dualKawase, samples: output.dualKawase, output: output,
+                           request: request, sourceHash: sourceHash, metadata: metadata,
                            memoryBefore: memoryBefore, memoryAfter: memoryAfter),
-                makeRecord(.mpsGaussian, samples: output.mpsGaussian, output: output, match: match,
-                           metadata: metadata, width: resolution.width, height: resolution.height,
+                makeRecord(.triangularMomentMatchedDualKawase,
+                           samples: output.triangularMomentMatchedDualKawase, output: output,
+                           request: request, sourceHash: sourceHash, metadata: metadata,
+                           memoryBefore: memoryBefore, memoryAfter: memoryAfter),
+                makeRecord(.allLevelMomentMatchedDualKawase,
+                           samples: output.allLevelDefaultThreadgroup, output: output,
+                           request: request, sourceHash: sourceHash, metadata: metadata,
+                           memoryBefore: memoryBefore, memoryAfter: memoryAfter),
+                makeRecord(.tunedAllLevelMomentMatchedDualKawase,
+                           samples: output.allLevelTunedThreadgroup, output: output,
+                           request: request, sourceHash: sourceHash, metadata: metadata,
+                           memoryBefore: memoryBefore, memoryAfter: memoryAfter),
+                makeRecord(.fourTapDownsampleDualKawase,
+                           samples: output.fourTapDownsampleDualKawase, output: output,
+                           request: request, sourceHash: sourceHash, metadata: metadata,
+                           memoryBefore: memoryBefore, memoryAfter: memoryAfter),
+                makeRecord(.mpsGaussian, samples: output.mpsGaussian, output: output,
+                           request: request, sourceHash: sourceHash, metadata: metadata,
                            memoryBefore: memoryBefore, memoryAfter: memoryAfter)
             ]
-            let data = try BenchmarkExport(schemaVersion: 1, records: records).validatedJSON()
+            let tuning = BenchmarkExport.ThreadgroupTuning(
+                warmUpIterations: output.threadgroupTuning.warmUpIterations,
+                measuredIterations: output.threadgroupTuning.measuredIterations,
+                defaultWidth: output.threadgroupTuning.defaultSize.width,
+                defaultHeight: output.threadgroupTuning.defaultSize.height,
+                selectedWidth: output.threadgroupTuning.selectedSize.width,
+                selectedHeight: output.threadgroupTuning.selectedSize.height,
+                candidates: output.threadgroupTuning.candidates.map {
+                    .init(width: $0.width, height: $0.height, gpuP50: $0.gpuP50)
+                }
+            )
+            let data = try BenchmarkExport(
+                schemaVersion: BenchmarkRecord.schemaVersion,
+                systemMaterial: .init(style: input.materialStyle, timingIncluded: false),
+                threadgroupTuning: tuning,
+                records: records
+            ).validatedJSON()
             let url = FileManager.default.temporaryDirectory
-                .appendingPathComponent("dual-kawase-benchmark-\(Int(Date().timeIntervalSince1970)).json")
+                .appendingPathComponent("dual-kawase-benchmark-\(UUID().uuidString).json")
             try data.write(to: url, options: .atomic)
             exportURL = url
+            summary = "GPU p50: Render \(format(records[0])) · 3-tap \(format(records[1])) · All-level \(format(records[2])) · Tuned \(format(records[3])) · 4-down \(format(records[4])) · MPS \(format(records[5])) ms · TG \(tuning.selectedWidth)×\(tuning.selectedHeight)"
             status = metadata.environment == .simulator
                 ? "Simulator smoke result — not publishable"
                 : "Completed"
         } catch is CancellationError {
-            status = "Cancelled"
+            if generation == self.generation { status = "Cancelled" }
         } catch {
+            guard generation == self.generation else { return }
             errorMessage = error.localizedDescription
             isShowingError = true
             status = "Failed"
         }
     }
 
+    private func format(_ record: BenchmarkRecord) -> String {
+        record.timings.gpuP50.formatted(.number.precision(.fractionLength(2)))
+    }
+
     private func makeRecord(
         _ algorithm: BenchmarkRecord.Algorithm,
         samples: BlurBenchmarkRunner.Samples,
         output: BlurBenchmarkRunner.Output,
-        match: BlurStrengthMatcher.Result,
+        request: ComparisonRequest,
+        sourceHash: String,
         metadata: BenchmarkRecord.Device,
-        width: Int,
-        height: Int,
         memoryBefore: UInt64?,
         memoryAfter: UInt64?
     ) -> BenchmarkRecord {
-        BenchmarkRecord(
-            version: 1, createdAt: Date(), device: metadata,
+        let profile = computeProfile(for: algorithm, output: output)
+        let usesDualParameters = algorithm != .mpsGaussian
+        return BenchmarkRecord(
+            version: BenchmarkRecord.schemaVersion,
+            createdAt: Date(),
+            device: metadata,
             workload: .init(
-                width: width, height: height, pixelFormat: "bgra8Unorm", algorithm: algorithm,
-                iterations: algorithm == .dualKawase ? iterations : nil,
-                offset: algorithm == .dualKawase ? offset : nil,
-                sigma: algorithm == .mpsGaussian ? match.sigma : nil,
-                matchedSecondMoment: match.targetSecondMoment,
-                normalizedRMSE: match.residualError,
+                width: request.width,
+                height: request.height,
+                pixelFormat: "bgra8Unorm",
+                algorithm: algorithm,
+                iterations: usesDualParameters ? request.iterations : nil,
+                offset: usesDualParameters ? request.offset : nil,
+                sigma: algorithm == .mpsGaussian ? request.sigma : nil,
+                reductionLevelCount: profile?.reductionLevelCount,
+                downsampleTapCount: profile?.downsampleTapCount,
+                intermediateUpsampleTapCount: profile?.intermediateUpsampleTapCount,
+                finalUpsampleTapCount: profile?.finalUpsampleTapCount,
+                threadgroupWidth: profile?.threadgroupSize.width,
+                threadgroupHeight: profile?.threadgroupSize.height,
+                threadgroupSelection: threadgroupSelection(for: algorithm),
+                parameterSelection: "manual",
+                sourceSHA256: sourceHash,
                 warmUpIterations: output.warmUpIterations,
                 measuredIterations: output.measuredIterations
             ),
@@ -117,15 +178,95 @@ final class BenchmarkViewModel {
                 gpuP95: BenchmarkMath.percentile(samples.gpuMilliseconds, 0.95),
                 gpuP99: BenchmarkMath.percentile(samples.gpuMilliseconds, 0.99)
             ),
-            counts: .init(encoded: output.measuredIterations, completed: samples.gpuMilliseconds.count,
-                          droppedNoCapacity: 0, droppedEncodingFailure: 0, droppedDeadline: 0),
-            memory: .init(residentBytesBefore: memoryBefore, residentBytesAfter: memoryAfter,
-                          peakResidentBytes: nil, allocationCount: nil)
+            counts: .init(
+                encoded: output.measuredIterations,
+                completed: samples.gpuMilliseconds.count,
+                droppedNoCapacity: 0,
+                droppedEncodingFailure: 0,
+                droppedDeadline: 0
+            ),
+            memory: .init(
+                residentBytesBefore: memoryBefore,
+                residentBytesAfter: memoryAfter,
+                peakResidentBytes: nil,
+                allocationCount: nil
+            ),
+            quality: quality(for: algorithm, output: output)
         )
     }
 
+    private func computeProfile(
+        for algorithm: BenchmarkRecord.Algorithm,
+        output: BlurBenchmarkRunner.Output
+    ) -> BlurBenchmarkRunner.ComputeProfile? {
+        switch algorithm {
+        case .triangularMomentMatchedDualKawase: output.triangularEncoder
+        case .allLevelMomentMatchedDualKawase: output.allLevelDefaultEncoder
+        case .tunedAllLevelMomentMatchedDualKawase: output.allLevelTunedEncoder
+        case .fourTapDownsampleDualKawase: output.fourTapDownsampleEncoder
+        case .dualKawase, .mpsGaussian: nil
+        }
+    }
+
+    private func threadgroupSelection(for algorithm: BenchmarkRecord.Algorithm) -> String? {
+        switch algorithm {
+        case .triangularMomentMatchedDualKawase, .allLevelMomentMatchedDualKawase:
+            "pipelineDefault"
+        case .tunedAllLevelMomentMatchedDualKawase:
+            "gpuP50Preflight"
+        case .fourTapDownsampleDualKawase:
+            "reusedGpuP50Preflight"
+        case .dualKawase, .mpsGaussian:
+            nil
+        }
+    }
+
+    private func quality(
+        for algorithm: BenchmarkRecord.Algorithm,
+        output: BlurBenchmarkRunner.Output
+    ) -> BenchmarkRecord.Quality? {
+        switch algorithm {
+        case .triangularMomentMatchedDualKawase:
+            .init(
+                referenceAlgorithm: .mpsGaussian,
+                normalizedLumaRMSE: output.quality.triangularMPS,
+                dualKawaseNormalizedLumaRMSE: output.quality.triangularRenderDual,
+                optimizationBaselineAlgorithm: nil,
+                optimizationBaselineNormalizedLumaRMSE: nil
+            )
+        case .allLevelMomentMatchedDualKawase:
+            .init(
+                referenceAlgorithm: .mpsGaussian,
+                normalizedLumaRMSE: output.quality.allLevelDefaultMPS,
+                dualKawaseNormalizedLumaRMSE: output.quality.allLevelDefaultRenderDual,
+                optimizationBaselineAlgorithm: .triangularMomentMatchedDualKawase,
+                optimizationBaselineNormalizedLumaRMSE: output.quality.allLevelDefaultThreeTap
+            )
+        case .tunedAllLevelMomentMatchedDualKawase:
+            .init(
+                referenceAlgorithm: .mpsGaussian,
+                normalizedLumaRMSE: output.quality.allLevelTunedMPS,
+                dualKawaseNormalizedLumaRMSE: output.quality.allLevelTunedRenderDual,
+                optimizationBaselineAlgorithm: .allLevelMomentMatchedDualKawase,
+                optimizationBaselineNormalizedLumaRMSE: output.quality.allLevelTunedDefault
+            )
+        case .fourTapDownsampleDualKawase:
+            .init(
+                referenceAlgorithm: .mpsGaussian,
+                normalizedLumaRMSE: output.quality.fourTapDownsampleMPS,
+                dualKawaseNormalizedLumaRMSE: output.quality.fourTapDownsampleRenderDual,
+                optimizationBaselineAlgorithm: .tunedAllLevelMomentMatchedDualKawase,
+                optimizationBaselineNormalizedLumaRMSE: output.quality.fourTapDownsampleAllLevel
+            )
+        case .dualKawase, .mpsGaussian:
+            nil
+        }
+    }
+
     private static func deviceMetadata() throws -> BenchmarkRecord.Device {
-        guard let device = MTLCreateSystemDefaultDevice() else { throw BlurBenchmarkRunner.RunnerError.metalUnavailable }
+        guard let device = MTLCreateSystemDefaultDevice() else {
+            throw BlurBenchmarkRunner.RunnerError.metalUnavailable
+        }
         let process = ProcessInfo.processInfo
         #if targetEnvironment(simulator)
         let environment: BenchmarkRecord.Environment = .simulator
@@ -133,10 +274,14 @@ final class BenchmarkViewModel {
         let environment: BenchmarkRecord.Environment = .device
         #endif
         return .init(
-            model: sysctlString("hw.machine"), gpuName: device.name,
-            gpuFamilies: supportedFamilies(device), osVersion: process.operatingSystemVersionString,
-            osBuild: sysctlString("kern.osversion"), environment: environment,
-            thermalState: thermalStateName(process.thermalState), minimumRefreshRate: 0,
+            model: sysctlString("hw.machine"),
+            gpuName: device.name,
+            gpuFamilies: supportedFamilies(device),
+            osVersion: process.operatingSystemVersionString,
+            osBuild: sysctlString("kern.osversion"),
+            environment: environment,
+            thermalState: thermalStateName(process.thermalState),
+            minimumRefreshRate: 0,
             maximumRefreshRate: Double(UIScreen.main.maximumFramesPerSecond)
         )
     }
@@ -149,8 +294,13 @@ final class BenchmarkViewModel {
     }
 
     private static func thermalStateName(_ state: ProcessInfo.ThermalState) -> String {
-        switch state { case .nominal: "nominal"; case .fair: "fair"; case .serious: "serious";
-        case .critical: "critical"; @unknown default: "unknown" }
+        switch state {
+        case .nominal: "nominal"
+        case .fair: "fair"
+        case .serious: "serious"
+        case .critical: "critical"
+        @unknown default: "unknown"
+        }
     }
 
     private static func sysctlString(_ name: String) -> String {
@@ -164,7 +314,9 @@ final class BenchmarkViewModel {
 
     private static func residentBytes() -> UInt64? {
         var info = mach_task_basic_info()
-        var count = mach_msg_type_number_t(MemoryLayout<mach_task_basic_info>.size / MemoryLayout<natural_t>.size)
+        var count = mach_msg_type_number_t(
+            MemoryLayout<mach_task_basic_info>.size / MemoryLayout<natural_t>.size
+        )
         let result = withUnsafeMutablePointer(to: &info) {
             $0.withMemoryRebound(to: integer_t.self, capacity: Int(count)) {
                 task_info(mach_task_self_, task_flavor_t(MACH_TASK_BASIC_INFO), $0, &count)

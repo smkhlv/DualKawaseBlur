@@ -3,10 +3,40 @@
   "$id": "https://github.com/smkhlv/DualKawaseBlur/Benchmarks/schema.json",
   "title": "DualKawaseBlur benchmark export",
   "type": "object",
-  "required": ["schemaVersion", "records"],
+  "required": ["schemaVersion", "systemMaterial", "threadgroupTuning", "records"],
   "properties": {
-    "schemaVersion": { "const": 1 },
-    "records": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/record" } }
+    "schemaVersion": { "const": 9 },
+    "systemMaterial": {
+      "type": "object", "required": ["style", "timingIncluded"],
+      "properties": { "style": { "type": "string", "minLength": 1 }, "timingIncluded": { "const": false } },
+      "additionalProperties": false
+    },
+    "threadgroupTuning": {
+      "type": "object",
+      "required": ["warmUpIterations", "measuredIterations", "defaultWidth", "defaultHeight", "selectedWidth", "selectedHeight", "candidates"],
+      "properties": {
+        "warmUpIterations": { "type": "integer", "minimum": 1 },
+        "measuredIterations": { "type": "integer", "minimum": 1 },
+        "defaultWidth": { "type": "integer", "minimum": 1 },
+        "defaultHeight": { "type": "integer", "minimum": 1 },
+        "selectedWidth": { "type": "integer", "minimum": 1 },
+        "selectedHeight": { "type": "integer", "minimum": 1 },
+        "candidates": {
+          "type": "array", "minItems": 1, "uniqueItems": true,
+          "items": {
+            "type": "object", "required": ["width", "height", "gpuP50"],
+            "properties": {
+              "width": { "type": "integer", "minimum": 1 },
+              "height": { "type": "integer", "minimum": 1 },
+              "gpuP50": { "type": "number", "minimum": 0 }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "records": { "type": "array", "minItems": 6, "maxItems": 6, "items": { "$ref": "#/$defs/record" } }
   },
   "additionalProperties": false,
   "$defs": {
@@ -14,29 +44,79 @@
       "type": "object",
       "required": ["version", "createdAt", "device", "workload", "timings", "counts", "memory"],
       "properties": {
-        "version": { "const": 1 },
+        "version": { "const": 9 },
         "createdAt": { "type": "string", "format": "date-time" },
         "device": {
           "type": "object",
           "required": ["model", "gpuName", "gpuFamilies", "osVersion", "osBuild", "environment", "thermalState", "minimumRefreshRate", "maximumRefreshRate"],
           "properties": {
-            "model": { "type": "string", "minLength": 1 },
-            "gpuName": { "type": "string", "minLength": 1 },
+            "model": { "type": "string", "minLength": 1 }, "gpuName": { "type": "string", "minLength": 1 },
             "gpuFamilies": { "type": "array", "minItems": 1, "items": { "type": "string" } },
-            "osVersion": { "type": "string", "minLength": 1 },
-            "osBuild": { "type": "string", "minLength": 1 },
-            "environment": { "enum": ["device", "simulator"] },
-            "thermalState": { "type": "string", "minLength": 1 },
-            "minimumRefreshRate": { "type": "number", "minimum": 0 },
-            "maximumRefreshRate": { "type": "number", "exclusiveMinimum": 0 }
-          },
-          "additionalProperties": false
+            "osVersion": { "type": "string", "minLength": 1 }, "osBuild": { "type": "string", "minLength": 1 },
+            "environment": { "enum": ["device", "simulator"] }, "thermalState": { "type": "string", "minLength": 1 },
+            "minimumRefreshRate": { "type": "number", "minimum": 0 }, "maximumRefreshRate": { "type": "number", "exclusiveMinimum": 0 }
+          }, "additionalProperties": false
         },
-        "workload": { "type": "object", "required": ["width", "height", "pixelFormat", "algorithm", "matchedSecondMoment", "normalizedRMSE", "warmUpIterations", "measuredIterations"] },
+        "workload": {
+          "type": "object",
+          "required": ["width", "height", "pixelFormat", "algorithm", "parameterSelection", "sourceSHA256", "warmUpIterations", "measuredIterations"],
+          "properties": {
+            "width": { "type": "integer", "minimum": 1 }, "height": { "type": "integer", "minimum": 1 },
+            "pixelFormat": { "const": "bgra8Unorm" },
+            "algorithm": { "enum": ["dualKawase", "triangularMomentMatchedDualKawase", "allLevelMomentMatchedDualKawase", "tunedAllLevelMomentMatchedDualKawase", "fourTapDownsampleDualKawase", "mpsGaussian"] },
+            "parameterSelection": { "const": "manual" }, "sourceSHA256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "warmUpIterations": { "type": "integer", "minimum": 0 }, "measuredIterations": { "type": "integer", "minimum": 1 },
+            "iterations": { "type": "integer", "minimum": 1 }, "offset": { "type": "number", "exclusiveMinimum": 0 },
+            "sigma": { "type": "number", "exclusiveMinimum": 0 }, "reductionLevelCount": { "type": "integer", "minimum": 1 },
+            "downsampleTapCount": { "type": "integer", "minimum": 1 },
+            "intermediateUpsampleTapCount": { "type": "integer", "minimum": 1 },
+            "finalUpsampleTapCount": { "type": "integer", "minimum": 1 },
+            "threadgroupWidth": { "type": "integer", "minimum": 1 },
+            "threadgroupHeight": { "type": "integer", "minimum": 1 },
+            "threadgroupSelection": { "enum": ["pipelineDefault", "gpuP50Preflight", "reusedGpuP50Preflight"] }
+          }, "additionalProperties": false
+        },
         "timings": { "type": "object", "required": ["cpuEncodeMilliseconds", "gpuMilliseconds", "endToEndMilliseconds", "cpuP50", "cpuP95", "cpuP99", "gpuP50", "gpuP95", "gpuP99"] },
         "counts": { "type": "object", "required": ["encoded", "completed", "droppedNoCapacity", "droppedEncodingFailure", "droppedDeadline"] },
-        "memory": { "type": "object", "required": ["residentBytesBefore", "residentBytesAfter", "peakResidentBytes", "allocationCount"] }
+        "memory": { "type": "object", "properties": { "residentBytesBefore": { "type": "integer", "minimum": 0 }, "residentBytesAfter": { "type": "integer", "minimum": 0 }, "peakResidentBytes": { "type": "integer", "minimum": 0 }, "allocationCount": { "type": "integer", "minimum": 0 } }, "additionalProperties": false },
+        "quality": { "type": "object", "required": ["referenceAlgorithm", "normalizedLumaRMSE"], "properties": { "referenceAlgorithm": { "const": "mpsGaussian" }, "normalizedLumaRMSE": { "type": "number", "minimum": 0 }, "dualKawaseNormalizedLumaRMSE": { "type": "number", "minimum": 0 }, "optimizationBaselineAlgorithm": { "enum": ["triangularMomentMatchedDualKawase", "allLevelMomentMatchedDualKawase", "tunedAllLevelMomentMatchedDualKawase"] }, "optimizationBaselineNormalizedLumaRMSE": { "type": "number", "minimum": 0 } }, "additionalProperties": false }
       },
+      "allOf": [
+        {
+          "if": { "properties": { "workload": { "properties": { "algorithm": { "enum": ["triangularMomentMatchedDualKawase", "allLevelMomentMatchedDualKawase", "tunedAllLevelMomentMatchedDualKawase", "fourTapDownsampleDualKawase"] } } } } },
+          "then": { "required": ["quality"] },
+          "else": { "not": { "required": ["quality"] } }
+        },
+        {
+          "if": { "properties": { "workload": { "properties": { "algorithm": { "enum": ["triangularMomentMatchedDualKawase", "allLevelMomentMatchedDualKawase", "tunedAllLevelMomentMatchedDualKawase", "fourTapDownsampleDualKawase"] } } } } },
+          "then": {
+            "properties": {
+              "quality": { "required": ["dualKawaseNormalizedLumaRMSE"] },
+              "workload": { "required": ["reductionLevelCount", "downsampleTapCount", "intermediateUpsampleTapCount", "finalUpsampleTapCount", "threadgroupWidth", "threadgroupHeight", "threadgroupSelection"] }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "workload": { "properties": { "algorithm": { "enum": ["allLevelMomentMatchedDualKawase", "tunedAllLevelMomentMatchedDualKawase", "fourTapDownsampleDualKawase"] } } } } },
+          "then": { "properties": { "quality": { "required": ["optimizationBaselineAlgorithm", "optimizationBaselineNormalizedLumaRMSE"] } } }
+        },
+        {
+          "if": { "properties": { "workload": { "properties": { "algorithm": { "const": "triangularMomentMatchedDualKawase" } } } } },
+          "then": { "properties": { "workload": { "properties": { "downsampleTapCount": { "const": 5 }, "intermediateUpsampleTapCount": { "const": 8 }, "finalUpsampleTapCount": { "const": 3 }, "threadgroupSelection": { "const": "pipelineDefault" } } } } }
+        },
+        {
+          "if": { "properties": { "workload": { "properties": { "algorithm": { "const": "allLevelMomentMatchedDualKawase" } } } } },
+          "then": { "properties": { "workload": { "properties": { "downsampleTapCount": { "const": 5 }, "intermediateUpsampleTapCount": { "const": 4 }, "finalUpsampleTapCount": { "const": 3 }, "threadgroupSelection": { "const": "pipelineDefault" } } }, "quality": { "properties": { "optimizationBaselineAlgorithm": { "const": "triangularMomentMatchedDualKawase" } } } } }
+        },
+        {
+          "if": { "properties": { "workload": { "properties": { "algorithm": { "const": "tunedAllLevelMomentMatchedDualKawase" } } } } },
+          "then": { "properties": { "workload": { "properties": { "downsampleTapCount": { "const": 5 }, "intermediateUpsampleTapCount": { "const": 4 }, "finalUpsampleTapCount": { "const": 3 }, "threadgroupSelection": { "const": "gpuP50Preflight" } } }, "quality": { "properties": { "optimizationBaselineAlgorithm": { "const": "allLevelMomentMatchedDualKawase" } } } } }
+        },
+        {
+          "if": { "properties": { "workload": { "properties": { "algorithm": { "const": "fourTapDownsampleDualKawase" } } } } },
+          "then": { "properties": { "workload": { "properties": { "downsampleTapCount": { "const": 4 }, "intermediateUpsampleTapCount": { "const": 4 }, "finalUpsampleTapCount": { "const": 3 }, "threadgroupSelection": { "const": "reusedGpuP50Preflight" } } }, "quality": { "properties": { "optimizationBaselineAlgorithm": { "const": "tunedAllLevelMomentMatchedDualKawase" } } } } }
+        }
+      ],
       "additionalProperties": false
     }
   }

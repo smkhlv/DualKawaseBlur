@@ -25,11 +25,11 @@ struct BlurDemoView: View {
                 }
                 .tag(DemoTab.metal)
 
-            BenchmarkView()
+            BlurComparisonView()
                 .tabItem {
-                    Label("Benchmark", systemImage: "gauge.with.dots.needle.67percent")
+                    Label("Compare", systemImage: "rectangle.split.3x1")
                 }
-                .tag(DemoTab.benchmark)
+                .tag(DemoTab.compare)
         }
     }
 }

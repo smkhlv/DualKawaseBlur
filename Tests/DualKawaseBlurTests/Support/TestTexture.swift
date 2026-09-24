@@ -48,6 +48,15 @@ enum TestTexture {
     }
 
     static func nonZeroPixelCount(_ texture: MTLTexture) throws -> Int {
+        let bytes = bytes(texture)
+        return stride(from: 0, to: bytes.count, by: 4).reduce(into: 0) { count, index in
+            if bytes[index..<(index + 4)].contains(where: { $0 != 0 }) {
+                count += 1
+            }
+        }
+    }
+
+    static func bytes(_ texture: MTLTexture) -> Data {
         var bytes = [UInt8](repeating: 0, count: texture.width * texture.height * 4)
         texture.getBytes(
             &bytes,
@@ -55,10 +64,6 @@ enum TestTexture {
             from: MTLRegionMake2D(0, 0, texture.width, texture.height),
             mipmapLevel: 0
         )
-        return stride(from: 0, to: bytes.count, by: 4).reduce(into: 0) { count, index in
-            if bytes[index..<(index + 4)].contains(where: { $0 != 0 }) {
-                count += 1
-            }
-        }
+        return Data(bytes)
     }
 }
