@@ -17,11 +17,39 @@ jobs:
         with:
           xcode-version: latest-stable
 
+      - name: Prepare an iOS Simulator
+        id: simulator
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          runtime_id="$(xcrun simctl list runtimes | awk '/^iOS [0-9]/ && $0 !~ /unavailable/ { print $NF; exit }')"
+          if [[ -z "${runtime_id}" ]]; then
+            xcodebuild -downloadPlatform iOS
+            runtime_id="$(xcrun simctl list runtimes | awk '/^iOS [0-9]/ && $0 !~ /unavailable/ { print $NF; exit }')"
+          fi
+          [[ -n "${runtime_id}" ]] || { echo 'No usable iOS Simulator runtime is installed.' >&2; exit 1; }
+
+          device_type_id="$(xcrun simctl list devicetypes | awk -F '[()]' '/iPhone 16e/ { print $2; exit }')"
+          if [[ -z "${device_type_id}" ]]; then
+            device_type_id="$(xcrun simctl list devicetypes | awk -F '[()]' '/iPhone 16/ { print $2; exit }')"
+          fi
+          [[ -n "${device_type_id}" ]] || { echo 'No supported iPhone Simulator device type is installed.' >&2; exit 1; }
+
+          device_udid="$(xcrun simctl create 'DualKawaseBlur CI' "${device_type_id}" "${runtime_id}")"
+          xcrun simctl boot "${device_udid}"
+          xcrun simctl bootstatus "${device_udid}" -b
+          echo "udid=${device_udid}" >> "${GITHUB_OUTPUT}"
+
       - name: Run package tests on iOS Simulator
         run: >-
           xcodebuild -scheme DualKawaseBlur
-          -destination 'platform=iOS Simulator,name=iPhone 16'
+          -destination 'platform=iOS Simulator,id=${{ steps.simulator.outputs.udid }}'
           test
+
+      - name: Shut down the iOS Simulator
+        if: always()
+        run: xcrun simctl shutdown '${{ steps.simulator.outputs.udid }}' || true
 
       - name: Build unsigned iOS release
         run: >-
