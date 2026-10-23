@@ -1,0 +1,90 @@
+{
+  "info" : {
+    "arguments" : [
+      "devicectl",
+      "device",
+      "process",
+      "launch",
+      "--device",
+      "00008110-XXXXXXXXXXXXXXX2",
+      "--console",
+      "--timeout",
+      "600",
+      "--json-output",
+      "DualKawaseBlur/Benchmarks/Results/2026-10-22-path-level-iphone14/attempts/b08-a01/SC/launch.json",
+      "--log-output",
+      "DualKawaseBlur/Benchmarks/Results/2026-10-22-path-level-iphone14/attempts/b08-a01/SC/launch.log",
+      "smkhlv.DualKawaseBlurDemo",
+      "--cpu-encode-benchmark",
+      "--cpu-encode-protocol",
+      "path-level-v2",
+      "--cpu-encode-mode",
+      "timing",
+      "--cpu-encode-arm",
+      "SC",
+      "--cpu-encode-block",
+      "8",
+      "--cpu-encode-attempt",
+      "1",
+      "--cpu-encode-series",
+      "c0bd50e43a812189964a5392205c81bc92bd14245952407321297b3722102415"
+    ],
+    "commandType" : "devicectl.device.process.launch",
+    "environment" : {
+
+    },
+    "jsonVersion" : 5,
+    "outcome" : "success",
+    "version" : "651.13.5"
+  },
+  "result" : {
+    "deviceIdentifier" : "F887F83F-8AEB-5B02-9BCD-3040D4A7ADA3",
+    "launchOptions" : {
+      "activatedWhenStarted" : true,
+      "arguments" : [
+        "--cpu-encode-benchmark",
+        "--cpu-encode-protocol",
+        "path-level-v2",
+        "--cpu-encode-mode",
+        "timing",
+        "--cpu-encode-arm",
+        "SC",
+        "--cpu-encode-block",
+        "8",
+        "--cpu-encode-attempt",
+        "1",
+        "--cpu-encode-series",
+        "c0bd50e43a812189964a5392205c81bc92bd14245952407321297b3722102415"
+      ],
+      "environmentVariables" : {
+        "TERM" : "vt100"
+      },
+      "platformSpecificOptions" : {
+
+      },
+      "startStopped" : false,
+      "terminateExistingInstances" : false,
+      "user" : {
+        "active" : true
+      }
+    },
+    "process" : {
+      "auditToken" : [
+        4294967295,
+        501,
+        501,
+        501,
+        501,
+        4754,
+        0,
+        13029
+      ],
+      "executable" : "file:///private/var/containers/Bundle/Application/A8DF1CD3-D86C-40E4-A428-5B04F6C9818B/DualKawaseBlurDemo.app/DualKawaseBlurDemo",
+      "processIdentifier" : 4754
+    },
+    "terminationResult" : {
+      "exitCode" : 0,
+      "wasCoreDumpCreated" : false
+    }
+  }
+}

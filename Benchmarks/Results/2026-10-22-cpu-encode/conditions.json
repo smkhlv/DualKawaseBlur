@@ -1,0 +1,10 @@
+{
+  "userQuote": "Да, всё так — iPhone 16 связан с этим Мак по Wi‑Fi и останется в той же сети; работает от батареи, без зарядки; разблокирован, бенчмарк на переднем плане; яркость ~50%, автояркость и режим энергосбережения выключены; настройки не меняются до конца серии.",
+  "brightnessApproxPercent": 50,
+  "autoBrightness": false,
+  "lowPower": false,
+  "deviceConnection": "CoreDevice localNetwork (Wi-Fi) to the same Mac; USB cable failed before freeze",
+  "chargingPolicy": "battery, not charging, throughout",
+  "foregroundMaintained": true,
+  "settingsHeldConstant": true
+}

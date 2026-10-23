@@ -1,0 +1,1 @@
+- 3-after attempt 1: xctrace attach by PID failed 3× ('Cannot find process for provided pid'); before-build installed by mistake before checking; after-build reinstalled for a clean retry (no values seen).

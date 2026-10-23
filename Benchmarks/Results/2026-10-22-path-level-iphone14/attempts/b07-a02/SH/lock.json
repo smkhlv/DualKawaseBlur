@@ -1,0 +1,26 @@
+{
+  "info" : {
+    "arguments" : [
+      "devicectl",
+      "device",
+      "info",
+      "lockState",
+      "--device",
+      "00008110-XXXXXXXXXXXXXXX2",
+      "--json-output",
+      "DualKawaseBlur/Benchmarks/Results/2026-10-22-path-level-iphone14/attempts/b07-a02/SH/lock.json"
+    ],
+    "commandType" : "devicectl.device.info.lockState",
+    "environment" : {
+
+    },
+    "jsonVersion" : 5,
+    "outcome" : "success",
+    "version" : "651.13.5"
+  },
+  "result" : {
+    "deviceIdentifier" : "F887F83F-8AEB-5B02-9BCD-3040D4A7ADA3",
+    "passcodeRequired" : false,
+    "unlockedSinceBoot" : true
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "userQuote": "Да, всё так — iPhone 14 подключён кабелем к этому Мак и останется подключён; разблокирован, бенчмарк на переднем плане; яркость ~50%, автояркость и режим энергосбережения выключены; заряжается по кабелю; настройки не меняются до конца серии. Протокол v2: принять как есть.",
+  "brightnessApproxPercent": 50,
+  "autoBrightness": false,
+  "lowPower": false,
+  "deviceConnection": "wired USB (CoreDevice transportType wired) to the same Mac",
+  "chargingPolicy": "charging over the same USB cable throughout",
+  "foregroundMaintained": true,
+  "settingsHeldConstant": true
+}

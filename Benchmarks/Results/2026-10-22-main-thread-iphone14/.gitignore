@@ -1,0 +1,2 @@
+# Instruments traces live in traces.tar.xz (see README).
+*.trace/

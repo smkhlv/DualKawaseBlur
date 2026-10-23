@@ -1,0 +1,86 @@
+{
+  "info" : {
+    "arguments" : [
+      "devicectl",
+      "device",
+      "process",
+      "launch",
+      "--device",
+      "00008140-XXXXXXXXXXXXXXX1",
+      "--console",
+      "--timeout",
+      "600",
+      "--json-output",
+      "DualKawaseBlur/Benchmarks/Results/2026-10-22-cpu-encode/attempts/b05-a01/S/launch.json",
+      "--log-output",
+      "DualKawaseBlur/Benchmarks/Results/2026-10-22-cpu-encode/attempts/b05-a01/S/launch.log",
+      "smkhlv.DualKawaseBlurDemo",
+      "--cpu-encode-benchmark",
+      "--cpu-encode-mode",
+      "timing",
+      "--cpu-encode-arm",
+      "S",
+      "--cpu-encode-block",
+      "5",
+      "--cpu-encode-attempt",
+      "1",
+      "--cpu-encode-series",
+      "e4904a369e5c5587b3bb646a88fa1a47175066727d160356d07165057dc7abf7"
+    ],
+    "commandType" : "devicectl.device.process.launch",
+    "environment" : {
+
+    },
+    "jsonVersion" : 5,
+    "outcome" : "success",
+    "version" : "651.13.5"
+  },
+  "result" : {
+    "deviceIdentifier" : "9E200EFA-D0DB-54D9-9866-5AE783906F6A",
+    "launchOptions" : {
+      "activatedWhenStarted" : true,
+      "arguments" : [
+        "--cpu-encode-benchmark",
+        "--cpu-encode-mode",
+        "timing",
+        "--cpu-encode-arm",
+        "S",
+        "--cpu-encode-block",
+        "5",
+        "--cpu-encode-attempt",
+        "1",
+        "--cpu-encode-series",
+        "e4904a369e5c5587b3bb646a88fa1a47175066727d160356d07165057dc7abf7"
+      ],
+      "environmentVariables" : {
+        "TERM" : "vt100"
+      },
+      "platformSpecificOptions" : {
+
+      },
+      "startStopped" : false,
+      "terminateExistingInstances" : false,
+      "user" : {
+        "active" : true
+      }
+    },
+    "process" : {
+      "auditToken" : [
+        4294967295,
+        501,
+        501,
+        501,
+        501,
+        84808,
+        0,
+        243615
+      ],
+      "executable" : "file:///private/var/containers/Bundle/Application/A2ECC499-B239-4AEA-936A-A2846984B993/DualKawaseBlurDemo.app/DualKawaseBlurDemo",
+      "processIdentifier" : 84808
+    },
+    "terminationResult" : {
+      "exitCode" : 0,
+      "wasCoreDumpCreated" : false
+    }
+  }
+}

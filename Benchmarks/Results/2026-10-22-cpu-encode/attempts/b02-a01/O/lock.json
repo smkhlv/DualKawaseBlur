@@ -1,0 +1,26 @@
+{
+  "info" : {
+    "arguments" : [
+      "devicectl",
+      "device",
+      "info",
+      "lockState",
+      "--device",
+      "00008140-XXXXXXXXXXXXXXX1",
+      "--json-output",
+      "DualKawaseBlur/Benchmarks/Results/2026-10-22-cpu-encode/attempts/b02-a01/O/lock.json"
+    ],
+    "commandType" : "devicectl.device.info.lockState",
+    "environment" : {
+
+    },
+    "jsonVersion" : 5,
+    "outcome" : "success",
+    "version" : "651.13.5"
+  },
+  "result" : {
+    "deviceIdentifier" : "9E200EFA-D0DB-54D9-9866-5AE783906F6A",
+    "passcodeRequired" : false,
+    "unlockedSinceBoot" : true
+  }
+}

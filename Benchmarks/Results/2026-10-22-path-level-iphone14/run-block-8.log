@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/sergeimikhailov/Documents/Suretare/.worktrees/blur-v2-series/DualKawaseBlur/Benchmarks/CPUEncode/run_cpu_encode.py", line 446, in <module>
+    main()
+  File "/Users/sergeimikhailov/Documents/Suretare/.worktrees/blur-v2-series/DualKawaseBlur/Benchmarks/CPUEncode/run_cpu_encode.py", line 434, in main
+    print(json.dumps(run_block(args.root, Device(state["series"]["device"]), args.authorize_retry), indent=2))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sergeimikhailov/Documents/Suretare/.worktrees/blur-v2-series/DualKawaseBlur/Benchmarks/CPUEncode/run_cpu_encode.py", line 325, in run_block
+    raise ValueError("attempt 2 needs --authorize-retry with the user's words")
+ValueError: attempt 2 needs --authorize-retry with the user's words

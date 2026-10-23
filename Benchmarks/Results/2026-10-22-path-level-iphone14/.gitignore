@@ -1,0 +1,5 @@
+# Raw per-leg reports and device snapshots live in raw-data.tar.xz (see raw-data.sha256).
+attempts/*/*/report.json
+**/processes.*
+**/details.*
+journal.lock

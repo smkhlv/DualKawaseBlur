@@ -1,0 +1,4392 @@
+{
+  "appExecutableSHA256" : "ae287c767185e38735c6394fd06ad12d9fb8eac5f466b40c446c61dd029deed0",
+  "arms" : [
+    "LC",
+    "SC",
+    "SH"
+  ],
+  "automaticPromotion" : false,
+  "checks" : [
+    {
+      "differenceVersusSC" : {
+        "LC" : 5,
+        "SH" : 1
+      },
+      "fixture" : "sphere-000.bgra",
+      "outputSHA256" : {
+        "LC" : "ffed3f4fb4f349592ffd7ef3a8998db315eb111e8af4576a0cfa7d8c7a953c5a",
+        "SC" : "693cad0246bf7f8b546ca7cd56a0625502d1fb3a44b6a8b92b3b25568821107e",
+        "SH" : "e12ccf8e930cc98d73681c7ed8b1fb44c11100e79614dc062678b4a98a15b161"
+      },
+      "sourceSHA256" : "c90401283609864d685d22ca088416ef4a69b02fa324f7503e8928cc07c74f6a"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 5,
+        "SH" : 1
+      },
+      "fixture" : "sphere-003.bgra",
+      "outputSHA256" : {
+        "LC" : "0df6e575f79ef44dfba92b9732172b778b073823765c36303f529a6338650fa1",
+        "SC" : "ddb0c9f9151081ce9be9ade40071f62efb9ba8cb5d1a1a34429f64263ca84139",
+        "SH" : "993b9a7b405cb5d0c8451860382673d0c37c2b68075aab84e387204e18436fd0"
+      },
+      "sourceSHA256" : "63d77366eab2d1ead924b51b002f7cd8292854093a67da60cf0fc3b476c32f8b"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 5,
+        "SH" : 1
+      },
+      "fixture" : "sphere-006.bgra",
+      "outputSHA256" : {
+        "LC" : "5f75281b13ad48d364677275054bd5e47f5c0a164630fe3d46bb99e3965a3d14",
+        "SC" : "dc01af8256f4a28c6ff5cc0f9bdc3288db7ccec931cf6b7e39135fdbd37dea57",
+        "SH" : "c43ba238ea6048a06687ea124f1382657aa71c283d883b6896baedf01be74fd0"
+      },
+      "sourceSHA256" : "d781574c60cffa799552ae6e301c902019fb862b68db760985e4e0f5fc31d786"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 5,
+        "SH" : 1
+      },
+      "fixture" : "sphere-009.bgra",
+      "outputSHA256" : {
+        "LC" : "3cc5f188d8df4b0dfe569d488508e6516fd89935ec4098ae757ef7970e09ef94",
+        "SC" : "0fd5d71696a6754745ffcab886237d97cf0b161b18d4ffaba6b244b70ca09ea4",
+        "SH" : "66726ac1051eaa9b544fa6ffcf879e86979bd04c0ac6c9788d2673e6171ed852"
+      },
+      "sourceSHA256" : "de7ab58ba04b707c8ac6fe64f934e4b5389a171d55908b3def4068ec5ff0e061"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "sphere-012.bgra",
+      "outputSHA256" : {
+        "LC" : "844ae7b1757fc569f37f41f44cbf570a9cf548d9b9676337da57a4346b95ffc6",
+        "SC" : "9a1c4c67c41e48943433c2c0a46c52464a63b3a6ccff2a6229168bfc681f8621",
+        "SH" : "8cf80f96918ae3920f956b3e53f899cb3202bbf6ef8b1f3a225421e5feaf4e42"
+      },
+      "sourceSHA256" : "c858a82137d03c9a77390ac58a4773afdfb3082b44ca16e16e45d855a9338cd9"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 5,
+        "SH" : 1
+      },
+      "fixture" : "sphere-015.bgra",
+      "outputSHA256" : {
+        "LC" : "61e252aff7bb4e920f7e1064cf30826aecbd1485fcb5e1110490a06363bc9990",
+        "SC" : "39123c9381a1409b39378827b470bcb4b7e41a03eff345ba9de12396074ad394",
+        "SH" : "9612a2a988a63d7e8b75ba401e348d2473357906347eeb874f713c4d2ca83f7e"
+      },
+      "sourceSHA256" : "aa6d3f685ed06a658243ebc4e5be6a0dec4ad0b3d59e02ba696fc9b73f6a8a6a"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "sphere-018.bgra",
+      "outputSHA256" : {
+        "LC" : "d1e00efd8fd4115601ce10a6959687716e697ae6941376dab503142eda824b67",
+        "SC" : "077fa7f66f4e1d3575d31f6103b289af0e1fdaee5d2e01117775e81880a1f968",
+        "SH" : "1b795eb9f58945368737bf4205b957302ea24feb2e0969f171831c38bc411f2d"
+      },
+      "sourceSHA256" : "bcfd60142172f2f2ec5df01a961c2a1d10db669b9f1b64e5d30843e9c8c94b92"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "sphere-021.bgra",
+      "outputSHA256" : {
+        "LC" : "b8d8848bcb7fd27b1a86c7a49a29caccf1a10515d499d0f30bad3a01a00469de",
+        "SC" : "2af6b3c26097c0fbb065f99e3122e0f69489b3691324079cd3c326d0aa11f4d0",
+        "SH" : "45312510b3ddcc3bd1124631d92342aa53e52f4c1df407b51a973870a705d529"
+      },
+      "sourceSHA256" : "2791f44ed74c673c825dc0bc7e6bae8eafd8849187ac88c32c27214b78fa31b7"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 33,
+        "SH" : 1
+      },
+      "fixture" : "photo-1.bgra",
+      "outputSHA256" : {
+        "LC" : "deb1eec0cd2a26955a9e70d3adada7bf08c6af9e14f4e70282cb8638ab50970d",
+        "SC" : "de3f631232df81e1931e6bb2c7ec0508b6f6ad9e9254d04f367cdd4c0cfb3c1e",
+        "SH" : "cb96794f987520ec7f47503964b932ea03e4ba6c9b47e96af54ed250569eddcd"
+      },
+      "sourceSHA256" : "5485698845b39e74242366bce843ff766fbd80cc53a48d533ceed04b55613028"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 19,
+        "SH" : 1
+      },
+      "fixture" : "photo-2.bgra",
+      "outputSHA256" : {
+        "LC" : "a9ff5bf729b38dcdf4b22957d1c477af8459d093860ae947b1c3b4339b978654",
+        "SC" : "84bebc73d513f54a0053d755e0f12b9ab0332deb95397af789d78782934db171",
+        "SH" : "57d6fc861ca0fe22a2919e50a0b4bd017c0a45d75780983029e919ec9a0b740f"
+      },
+      "sourceSHA256" : "0338326dc62da5d5e683e678e7b8c3538abcb43c94930aeca43343f7ddc242d8"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 5,
+        "SH" : 1
+      },
+      "fixture" : "gradient.bgra",
+      "outputSHA256" : {
+        "LC" : "669e347173f07a433c060880fc915619ab657155cb3704b55f6b1ea86207ba68",
+        "SC" : "7cd91cf770aa9680122367cc4c4c7a9adf55f6cc32fab48a5bf293031b578970",
+        "SH" : "731ef86276369ceb9701c229cb0d690acb95e032645534dcb00dfa6603751102"
+      },
+      "sourceSHA256" : "1c995bc115fe246ea2fb7ea3a9518dff6e57bd1bf0607701e4417306243ba180"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 122,
+        "SH" : 1
+      },
+      "fixture" : "coarse-checker.bgra",
+      "outputSHA256" : {
+        "LC" : "fcc7c3a1493475f7be8ef9dd267d79b807decd4e1149afdc28b435e5457a037c",
+        "SC" : "8736ed4ddf2a82b8159e0f657bd0720ced3713451ce4cc8d8b6014e6fa109925",
+        "SH" : "ff31f41b6d75545357134189dceaca276d4ac94a75a11a908d52476fbe99896e"
+      },
+      "sourceSHA256" : "7b34b84c2c52018d18a65d6913af7d02503bdf294cd68ed920f9bfb9c896122e"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 33,
+        "SH" : 1
+      },
+      "fixture" : "fine-detail.bgra",
+      "outputSHA256" : {
+        "LC" : "d00111a62b0fb7a38bd7379172a0f6b82873be85dbc0acccbe91152271e82668",
+        "SC" : "a9181ff4c9c140eddd09fdab6d9b05249b89fec755343ea74c7a637a68a69e88",
+        "SH" : "64e9a2ce2a623b5b755017e0e0e350b429438f0c2d8ff4047bffc4dc8b241d71"
+      },
+      "sourceSHA256" : "ce152607482a782d65cbf04e47f67a33545aa6a368662b8d5816f0aad1768e01"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "edge-x.bgra",
+      "outputSHA256" : {
+        "LC" : "5d604a5f09d892a8b064f2a845db804dce88728ee24c97c847ac04d73ae2f32f",
+        "SC" : "44bd90ae1cd188494365a7a80230b7c2f962415f083798b57a235edaacf42854",
+        "SH" : "22bd2e540684bb595e86feee08bc62607f6ea8229eb8838fc598d2f96ed35bc6"
+      },
+      "sourceSHA256" : "4862703dbeecde106efba0094c18931df419e11cb08e1abfaa5bd5a87565a7eb"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "edge-y.bgra",
+      "outputSHA256" : {
+        "LC" : "7589bb82ea0b7316a67f2c8d0b81a39d1b99b129c679e5ebb3e297a191efc564",
+        "SC" : "7dcd890f51b16bd5a83094234520e694e6773c6bb0fd52c4dc1469801c1923ab",
+        "SH" : "5ca85b6197187ce3940e202e6d281bbabc0579929fa28a0e150f42cc43d8232a"
+      },
+      "sourceSHA256" : "92876d0f438c46089a5e13037d60f01171429eeb0ac6f723a61f84d9af6506bd"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 90,
+        "SH" : 1
+      },
+      "fixture" : "alpha-border.bgra",
+      "outputSHA256" : {
+        "LC" : "a59d31915d70b39250af44b4d3d80976f9418807374646746d096032d4eb5c01",
+        "SC" : "902b9c2fc835d89157801912941db78393a3cec027598a19eb453548d9bf2208",
+        "SH" : "3a788f3139b530c8015fb8fe074b649b8a0a0e532e1302a83533bfa2f9bdbf4d"
+      },
+      "sourceSHA256" : "bdcc0859369e0a9c0c9e2f6942c4108c46c088a220902b26db6d4f87ea1068bd"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "calibration-0",
+      "outputSHA256" : {
+        "LC" : "cf02c93cb076179e0f15a2cc9cf89e245f87497ba775f9b23b22ec8e8a71c887",
+        "SC" : "c0f203d982657c88f6ac54efe0383fd56d908798a181ec6c9da83d6c1ce2506d",
+        "SH" : "7f51c23a346e78f69a2c500a5aef35c0124c218e87ad05ad4f150ec1e2d2eaf8"
+      },
+      "sourceSHA256" : "fb1d3b7c153e2d7827b984bd0db372fa4c70f1565229a52ea5ba4b1f47780033"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "calibration-1",
+      "outputSHA256" : {
+        "LC" : "5d604a5f09d892a8b064f2a845db804dce88728ee24c97c847ac04d73ae2f32f",
+        "SC" : "44bd90ae1cd188494365a7a80230b7c2f962415f083798b57a235edaacf42854",
+        "SH" : "22bd2e540684bb595e86feee08bc62607f6ea8229eb8838fc598d2f96ed35bc6"
+      },
+      "sourceSHA256" : "4862703dbeecde106efba0094c18931df419e11cb08e1abfaa5bd5a87565a7eb"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "calibration-2",
+      "outputSHA256" : {
+        "LC" : "4b3289923f5e19c5fccd999b983e6aae7b8a279b69123b8f4c55213981e8c820",
+        "SC" : "abe9709f24ebd9843b19231bfd32cdd6f262d36a223be58dec850118d8d58a17",
+        "SH" : "2507a4b550f597462123f04bd9d42e036f835faf28ac8dcc1cd791b6255c3aec"
+      },
+      "sourceSHA256" : "ae316f21ee3ed67b5d7c0c2905a531acac083d8b452504a8ef84eb67da9c6494"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "calibration-3",
+      "outputSHA256" : {
+        "LC" : "3950957772ff8d760ed6ce56b444d3b5a42d2e00f75e7122ba07bfc6a3b0d950",
+        "SC" : "bee1165d11465bad911af6101866d95bfa9077ae4d62e97c1dd913ac1efafbcd",
+        "SH" : "2f83765dae556cc29a834fbdbb475903a121d620ec257f936fd67901d7b65cd3"
+      },
+      "sourceSHA256" : "3eedeab8be32115e4c9b71381a51a7aa0d914c9ff5a0642f16cc001c1fe0e591"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "calibration-4",
+      "outputSHA256" : {
+        "LC" : "7589bb82ea0b7316a67f2c8d0b81a39d1b99b129c679e5ebb3e297a191efc564",
+        "SC" : "7dcd890f51b16bd5a83094234520e694e6773c6bb0fd52c4dc1469801c1923ab",
+        "SH" : "5ca85b6197187ce3940e202e6d281bbabc0579929fa28a0e150f42cc43d8232a"
+      },
+      "sourceSHA256" : "92876d0f438c46089a5e13037d60f01171429eeb0ac6f723a61f84d9af6506bd"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 5,
+        "SH" : 1
+      },
+      "fixture" : "calibration-5",
+      "outputSHA256" : {
+        "LC" : "02afe345329efbb5c609bd6723f309f4384d337f5d28de2184299936cb73cba1",
+        "SC" : "d34789c355b7328660ba0d9214c9cbc778371e3e30afecc83ffa71f8be85f3c9",
+        "SH" : "f72af1ef128be4059e46931cdbbe2f6b360c6622cafdcea3c9f1dd37873b7a63"
+      },
+      "sourceSHA256" : "ba85c0a779b32154efb9f789dc5f356babad34cd44d688b8c3e08648b9891eca"
+    }
+  ],
+  "completed" : true,
+  "compositeBaseColor" : [
+    0.25,
+    0.5,
+    0.75,
+    1
+  ],
+  "compositeMapping" : "unit",
+  "corpusManifestSHA256" : "d346b0d0c0d370fa641c013d225b0043f0d9b6d20222f58e4ab38e4eda6a980b",
+  "debugBuild" : false,
+  "endToEndMeasured" : false,
+  "expectedOutputSHA256" : {
+    "LC" : {
+      "sphere-000.bgra" : "ffed3f4fb4f349592ffd7ef3a8998db315eb111e8af4576a0cfa7d8c7a953c5a",
+      "sphere-003.bgra" : "0df6e575f79ef44dfba92b9732172b778b073823765c36303f529a6338650fa1",
+      "sphere-006.bgra" : "5f75281b13ad48d364677275054bd5e47f5c0a164630fe3d46bb99e3965a3d14",
+      "sphere-009.bgra" : "3cc5f188d8df4b0dfe569d488508e6516fd89935ec4098ae757ef7970e09ef94",
+      "sphere-012.bgra" : "844ae7b1757fc569f37f41f44cbf570a9cf548d9b9676337da57a4346b95ffc6",
+      "sphere-015.bgra" : "61e252aff7bb4e920f7e1064cf30826aecbd1485fcb5e1110490a06363bc9990",
+      "sphere-018.bgra" : "d1e00efd8fd4115601ce10a6959687716e697ae6941376dab503142eda824b67",
+      "sphere-021.bgra" : "b8d8848bcb7fd27b1a86c7a49a29caccf1a10515d499d0f30bad3a01a00469de"
+    },
+    "SC" : {
+      "sphere-000.bgra" : "693cad0246bf7f8b546ca7cd56a0625502d1fb3a44b6a8b92b3b25568821107e",
+      "sphere-003.bgra" : "ddb0c9f9151081ce9be9ade40071f62efb9ba8cb5d1a1a34429f64263ca84139",
+      "sphere-006.bgra" : "dc01af8256f4a28c6ff5cc0f9bdc3288db7ccec931cf6b7e39135fdbd37dea57",
+      "sphere-009.bgra" : "0fd5d71696a6754745ffcab886237d97cf0b161b18d4ffaba6b244b70ca09ea4",
+      "sphere-012.bgra" : "9a1c4c67c41e48943433c2c0a46c52464a63b3a6ccff2a6229168bfc681f8621",
+      "sphere-015.bgra" : "39123c9381a1409b39378827b470bcb4b7e41a03eff345ba9de12396074ad394",
+      "sphere-018.bgra" : "077fa7f66f4e1d3575d31f6103b289af0e1fdaee5d2e01117775e81880a1f968",
+      "sphere-021.bgra" : "2af6b3c26097c0fbb065f99e3122e0f69489b3691324079cd3c326d0aa11f4d0"
+    },
+    "SH" : {
+      "sphere-000.bgra" : "e12ccf8e930cc98d73681c7ed8b1fb44c11100e79614dc062678b4a98a15b161",
+      "sphere-003.bgra" : "993b9a7b405cb5d0c8451860382673d0c37c2b68075aab84e387204e18436fd0",
+      "sphere-006.bgra" : "c43ba238ea6048a06687ea124f1382657aa71c283d883b6896baedf01be74fd0",
+      "sphere-009.bgra" : "66726ac1051eaa9b544fa6ffcf879e86979bd04c0ac6c9788d2673e6171ed852",
+      "sphere-012.bgra" : "8cf80f96918ae3920f956b3e53f899cb3202bbf6ef8b1f3a225421e5feaf4e42",
+      "sphere-015.bgra" : "9612a2a988a63d7e8b75ba401e348d2473357906347eeb874f713c4d2ca83f7e",
+      "sphere-018.bgra" : "1b795eb9f58945368737bf4205b957302ea24feb2e0969f171831c38bc411f2d",
+      "sphere-021.bgra" : "45312510b3ddcc3bd1124631d92342aa53e52f4c1df407b51a973870a705d529"
+    }
+  },
+  "gpu" : "Apple A15 GPU",
+  "hardware" : "iPhone14,7",
+  "height" : 2556,
+  "iterations" : 5,
+  "metallibSHA256" : "aca464abb857b3dbfc2a913ff28e79d939a355689b93ca1057b23adf6fda1ebe",
+  "method" : "path-level-qualification-v2",
+  "mpsOptions" : "allowReducedPrecision",
+  "offset" : 5,
+  "os" : "Version 27.0.1 (Build 24A446)",
+  "photoFixturesIncluded" : true,
+  "pixelFormat" : "bgra8Unorm",
+  "processSessionUUID" : "2003efd0-07a1-404c-9aa3-9a5e64451285",
+  "protocolID" : "path-level-v2",
+  "s4Compiled" : false,
+  "sessionLabel" : "qualification",
+  "shQualityPassed" : true,
+  "sigma" : 92.087890625,
+  "timingSmoke" : {
+    "LC" : {
+      "pathOutput" : {
+        "blurOutputStorageMode" : 2,
+        "blurOutputTextureUsage" : 3,
+        "compositeSourceHeight" : 2556,
+        "compositeSourceWidth" : 1179,
+        "compositeStorageMode" : 2,
+        "compositeTextureUsage" : 4
+      },
+      "rows" : [
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.35162233334
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.333935541676
+          },
+          "index" : 0,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.34468866668,
+            "encodeStart" : 43483.333999500006,
+            "gpuEnd" : 43483.351267750004,
+            "gpuStart" : 43483.347933625,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.344748583346,
+            "submitStart" : 43483.33395675001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.35670237501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.35165512501
+          },
+          "index" : 1,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.35194920834,
+            "encodeStart" : 43483.351672291676,
+            "gpuEnd" : 43483.356395875,
+            "gpuStart" : 43483.35422754167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.35197266668,
+            "submitStart" : 43483.35166375001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.361678541674
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.35672300001
+          },
+          "index" : 2,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.35691400001,
+            "encodeStart" : 43483.35673320834,
+            "gpuEnd" : 43483.36136029167,
+            "gpuStart" : 43483.35919241667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.35693300001,
+            "submitStart" : 43483.35672858334
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.366541375006
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.361706291675
+          },
+          "index" : 3,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.36190625001,
+            "encodeStart" : 43483.361721541674,
+            "gpuEnd" : 43483.366215125,
+            "gpuStart" : 43483.364047250005,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.36192387501,
+            "submitStart" : 43483.36171262501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.371477750006
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.366559708345
+          },
+          "index" : 4,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.36675191668,
+            "encodeStart" : 43483.366571208346,
+            "gpuEnd" : 43483.37119679167,
+            "gpuStart" : 43483.3690235,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.36676770834,
+            "submitStart" : 43483.36656595834
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.376097750006
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.371502833346
+          },
+          "index" : 5,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.37170050001,
+            "encodeStart" : 43483.371513958344,
+            "gpuEnd" : 43483.37586129167,
+            "gpuStart" : 43483.37364991667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.371717583344,
+            "submitStart" : 43483.37150937501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.381163333346
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.37612141667
+          },
+          "index" : 6,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.37636112501,
+            "encodeStart" : 43483.37613645834,
+            "gpuEnd" : 43483.380760375,
+            "gpuStart" : 43483.378552500006,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.37637987501,
+            "submitStart" : 43483.37612637501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.38636075001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.381192833345
+          },
+          "index" : 7,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.38144300001,
+            "encodeStart" : 43483.381207083345,
+            "gpuEnd" : 43483.38598725,
+            "gpuStart" : 43483.38378225,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.38146587501,
+            "submitStart" : 43483.381200416676
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.38954758334
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.38638191667
+          },
+          "index" : 8,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.386610625006,
+            "encodeStart" : 43483.38639525001,
+            "gpuEnd" : 43483.38922925,
+            "gpuStart" : 43483.387007875004,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.38662937501,
+            "submitStart" : 43483.386389833344
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.39278204168
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.38956670834
+          },
+          "index" : 9,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.38976300001,
+            "encodeStart" : 43483.38957862501,
+            "gpuEnd" : 43483.39243166667,
+            "gpuStart" : 43483.390148750004,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.38978212501,
+            "submitStart" : 43483.38957425001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.39612145834
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.392805375006
+          },
+          "index" : 10,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.39307150001,
+            "encodeStart" : 43483.39282212501,
+            "gpuEnd" : 43483.39568554167,
+            "gpuStart" : 43483.39347054167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.39309529168,
+            "submitStart" : 43483.392815916675
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.39962429168
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.39614700001
+          },
+          "index" : 11,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.39644079168,
+            "encodeStart" : 43483.39616400001,
+            "gpuEnd" : 43483.39908379167,
+            "gpuStart" : 43483.39683629167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.396468958344,
+            "submitStart" : 43483.39615737501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.403139666676
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.39965341667
+          },
+          "index" : 12,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.399982458344,
+            "encodeStart" : 43483.39967354167,
+            "gpuEnd" : 43483.40265079167,
+            "gpuStart" : 43483.400431375005,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.400012958344,
+            "submitStart" : 43483.39966454168
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.40663562501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.40316570834
+          },
+          "index" : 13,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.40347887501,
+            "encodeStart" : 43483.403184416675,
+            "gpuEnd" : 43483.40613525,
+            "gpuStart" : 43483.403898000004,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.40350775001,
+            "submitStart" : 43483.40317616668
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.410129333344
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.40666937501
+          },
+          "index" : 14,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.40698245834,
+            "encodeStart" : 43483.40668833334,
+            "gpuEnd" : 43483.4096185,
+            "gpuStart" : 43483.40739766667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.407012458345,
+            "submitStart" : 43483.406680666674
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.41359295834
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.41016041668
+          },
+          "index" : 15,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.41049466668,
+            "encodeStart" : 43483.41018070834,
+            "gpuEnd" : 43483.413150541666,
+            "gpuStart" : 43483.410935625005,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.41052733334,
+            "submitStart" : 43483.410172333344
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.41725945834
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.413631375006
+          },
+          "index" : 16,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.414059291674,
+            "encodeStart" : 43483.41366141668,
+            "gpuEnd" : 43483.41671316667,
+            "gpuStart" : 43483.414499000006,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.414098541674,
+            "submitStart" : 43483.41365062501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.42082162501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.417302583344
+          },
+          "index" : 17,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.417721083344,
+            "encodeStart" : 43483.417327416675,
+            "gpuEnd" : 43483.420389750005,
+            "gpuStart" : 43483.418177875006,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.41775762501,
+            "submitStart" : 43483.41731775001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.42423529168
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.42084895834
+          },
+          "index" : 18,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.42119391668,
+            "encodeStart" : 43483.42087129167,
+            "gpuEnd" : 43483.423824000005,
+            "gpuStart" : 43483.42161104167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.42122658334,
+            "submitStart" : 43483.420863041676
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.42766650001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.42426716668
+          },
+          "index" : 19,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.42462858334,
+            "encodeStart" : 43483.42428962501,
+            "gpuEnd" : 43483.427265000006,
+            "gpuStart" : 43483.42504516667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.42466125001,
+            "submitStart" : 43483.42428137501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.43115825001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.42769500001
+          },
+          "index" : 20,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.42806850001,
+            "encodeStart" : 43483.42772020834,
+            "gpuEnd" : 43483.430719,
+            "gpuStart" : 43483.428497500005,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.42810279167,
+            "submitStart" : 43483.42771166668
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.434594083345
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.43118475001
+          },
+          "index" : 21,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.43152987501,
+            "encodeStart" : 43483.43120700001,
+            "gpuEnd" : 43483.434164125,
+            "gpuStart" : 43483.43194891667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.431562208345,
+            "submitStart" : 43483.43119912501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.43804925001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.43461725001
+          },
+          "index" : 22,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.43494837501,
+            "encodeStart" : 43483.434638083345,
+            "gpuEnd" : 43483.43762316667,
+            "gpuStart" : 43483.43540825,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.43497895834,
+            "submitStart" : 43483.43463070834
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.44141237501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.43807579167
+          },
+          "index" : 23,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.43842083334,
+            "encodeStart" : 43483.43809729168,
+            "gpuEnd" : 43483.44106916667,
+            "gpuStart" : 43483.43884329167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.43845404168,
+            "submitStart" : 43483.438089541676
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.44491937501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.44143541667
+          },
+          "index" : 24,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.44176208334,
+            "encodeStart" : 43483.44145562501,
+            "gpuEnd" : 43483.44438704167,
+            "gpuStart" : 43483.442174875,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.44179162501,
+            "submitStart" : 43483.44144887501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.44830595834
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.44494375001
+          },
+          "index" : 25,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.445277083345,
+            "encodeStart" : 43483.44496508334,
+            "gpuEnd" : 43483.44790425,
+            "gpuStart" : 43483.445690125,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.44530787501,
+            "submitStart" : 43483.44495741668
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.45176112501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.44833158334
+          },
+          "index" : 26,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.44867454168,
+            "encodeStart" : 43483.448353916676,
+            "gpuEnd" : 43483.45131441667,
+            "gpuStart" : 43483.44909341667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.44870787501,
+            "submitStart" : 43483.44834579168
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.45519375001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.45178783334
+          },
+          "index" : 27,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.45213687501,
+            "encodeStart" : 43483.451811041676,
+            "gpuEnd" : 43483.454817750004,
+            "gpuStart" : 43483.452600916666,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.45216695834,
+            "submitStart" : 43483.45180162501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.45864904168
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.45521695834
+          },
+          "index" : 28,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.455538583345,
+            "encodeStart" : 43483.455237708346,
+            "gpuEnd" : 43483.458236750004,
+            "gpuStart" : 43483.455974875,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.45556741668,
+            "submitStart" : 43483.45523012501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.462154708344
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.45867316668
+          },
+          "index" : 29,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.45900125001,
+            "encodeStart" : 43483.458694833345,
+            "gpuEnd" : 43483.461701125,
+            "gpuStart" : 43483.459423,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.45902962501,
+            "submitStart" : 43483.45868654168
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.465635791676
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.46217775001
+          },
+          "index" : 30,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.462532291676,
+            "encodeStart" : 43483.46219875001,
+            "gpuEnd" : 43483.465157625,
+            "gpuStart" : 43483.462941791666,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.46256229168,
+            "submitStart" : 43483.462191083345
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.46903375001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.465665333344
+          },
+          "index" : 31,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.46600800001,
+            "encodeStart" : 43483.465686291675,
+            "gpuEnd" : 43483.468647375004,
+            "gpuStart" : 43483.4664375,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.46604125001,
+            "submitStart" : 43483.46567841667
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.47251054167
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.46906508334
+          },
+          "index" : 32,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.46944387501,
+            "encodeStart" : 43483.46908866668,
+            "gpuEnd" : 43483.472084125,
+            "gpuStart" : 43483.46987491667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.46947687501,
+            "submitStart" : 43483.46907916667
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.47599154168
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.47254437501
+          },
+          "index" : 33,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.472936208345,
+            "encodeStart" : 43483.47256887501,
+            "gpuEnd" : 43483.47558729167,
+            "gpuStart" : 43483.473371,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.47297179168,
+            "submitStart" : 43483.47255920834
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.47953775001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.47602266668
+          },
+          "index" : 34,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.47637341668,
+            "encodeStart" : 43483.47604395834,
+            "gpuEnd" : 43483.479019125,
+            "gpuStart" : 43483.476808125,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.47640829167,
+            "submitStart" : 43483.476035916676
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.48307362501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.47957887501
+          },
+          "index" : 35,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.479989041676,
+            "encodeStart" : 43483.47960270834,
+            "gpuEnd" : 43483.482660625006,
+            "gpuStart" : 43483.480450625,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.48002687501,
+            "submitStart" : 43483.47959300001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.486503708344
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.48310100001
+          },
+          "index" : 36,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.48344158334,
+            "encodeStart" : 43483.483123916674,
+            "gpuEnd" : 43483.486153750004,
+            "gpuStart" : 43483.483881500004,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.48347329168,
+            "submitStart" : 43483.48311533334
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.489934208344
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.48654366667
+          },
+          "index" : 37,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.48691708334,
+            "encodeStart" : 43483.486567833344,
+            "gpuEnd" : 43483.489557375004,
+            "gpuStart" : 43483.487346375005,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.486953083346,
+            "submitStart" : 43483.48655866668
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.493599833346
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.48997350001
+          },
+          "index" : 38,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.49039345834,
+            "encodeStart" : 43483.49000166668,
+            "gpuEnd" : 43483.493068375006,
+            "gpuStart" : 43483.49083729167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.49043554167,
+            "submitStart" : 43483.489989416674
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.49717395834
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.49363758334
+          },
+          "index" : 39,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.49404166668,
+            "encodeStart" : 43483.493664625006,
+            "gpuEnd" : 43483.49671854167,
+            "gpuStart" : 43483.49450379167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.49407800001,
+            "submitStart" : 43483.49365295834
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.50069562501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.497208666675
+          },
+          "index" : 40,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.49758266668,
+            "encodeStart" : 43483.49723287501,
+            "gpuEnd" : 43483.50024341667,
+            "gpuStart" : 43483.49802216667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.49761620834,
+            "submitStart" : 43483.497223041675
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.50407375001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.50072366668
+          },
+          "index" : 41,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.50106608334,
+            "encodeStart" : 43483.50074600001,
+            "gpuEnd" : 43483.5037085,
+            "gpuStart" : 43483.501488,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.50109762501,
+            "submitStart" : 43483.50073783334
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.507539333346
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.50410641667
+          },
+          "index" : 42,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.504481166674,
+            "encodeStart" : 43483.504129708344,
+            "gpuEnd" : 43483.50712054167,
+            "gpuStart" : 43483.50490316667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.50451412501,
+            "submitStart" : 43483.50412158334
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.51117616668
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.507581916674
+          },
+          "index" : 43,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.508009166675,
+            "encodeStart" : 43483.50760925001,
+            "gpuEnd" : 43483.510702125,
+            "gpuStart" : 43483.508484875005,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.50805283334,
+            "submitStart" : 43483.50759775001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.514653333346
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.511214958344
+          },
+          "index" : 44,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.51159366668,
+            "encodeStart" : 43483.51124004168,
+            "gpuEnd" : 43483.514252625006,
+            "gpuStart" : 43483.51203429167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.511626916676,
+            "submitStart" : 43483.51123037501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.51810537501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.51468287501
+          },
+          "index" : 45,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.51502237501,
+            "encodeStart" : 43483.51470337501,
+            "gpuEnd" : 43483.51765941667,
+            "gpuStart" : 43483.515437250004,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.51505333334,
+            "submitStart" : 43483.51469600001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.52158712501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.51812950001
+          },
+          "index" : 46,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.518461833344,
+            "encodeStart" : 43483.518149583346,
+            "gpuEnd" : 43483.521132,
+            "gpuStart" : 43483.518913541666,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.51849525001,
+            "submitStart" : 43483.51814225001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.52509570834
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.521623791676
+          },
+          "index" : 47,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.52203391668,
+            "encodeStart" : 43483.52164895834,
+            "gpuEnd" : 43483.524677625006,
+            "gpuStart" : 43483.522464375004,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.52207170834,
+            "submitStart" : 43483.52163841668
+          }
+        }
+      ],
+      "timingEnd" : 43483.52513662501,
+      "timingStart" : 43483.333829583346
+    },
+    "SC" : {
+      "pathOutput" : {
+        "blurOutputStorageMode" : 2,
+        "blurOutputTextureUsage" : 5,
+        "compositeSourceHeight" : 2556,
+        "compositeSourceWidth" : 1179,
+        "compositeStorageMode" : 2,
+        "compositeTextureUsage" : 4
+      },
+      "rows" : [
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.533568000006
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.52528391668
+          },
+          "index" : 0,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.525741041674,
+            "encodeStart" : 43483.52531841668,
+            "gpuEnd" : 43483.53316254167,
+            "gpuStart" : 43483.526871125,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.52577691668,
+            "submitStart" : 43483.52530262501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.53654475001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.53360512501
+          },
+          "index" : 1,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.53390758334,
+            "encodeStart" : 43483.53362583334,
+            "gpuEnd" : 43483.536161875,
+            "gpuStart" : 43483.534308500006,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.53393262501,
+            "submitStart" : 43483.53361625001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.53945675001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.53656983334
+          },
+          "index" : 2,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.53681141668,
+            "encodeStart" : 43483.53658783334,
+            "gpuEnd" : 43483.53906641667,
+            "gpuStart" : 43483.53721779167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.53683258334,
+            "submitStart" : 43483.53658100001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.54247487501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.53948816668
+          },
+          "index" : 3,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.53980162501,
+            "encodeStart" : 43483.539512333344,
+            "gpuEnd" : 43483.54204375,
+            "gpuStart" : 43483.540237625006,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.539830708345,
+            "submitStart" : 43483.53950362501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.54542658334
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.542502458346
+          },
+          "index" : 4,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.54279362501,
+            "encodeStart" : 43483.542525458346,
+            "gpuEnd" : 43483.54502325,
+            "gpuStart" : 43483.543220750005,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.54282137501,
+            "submitStart" : 43483.54251775001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.548369166674
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.54545225001
+          },
+          "index" : 5,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.54574037501,
+            "encodeStart" : 43483.54547370834,
+            "gpuEnd" : 43483.547990375,
+            "gpuStart" : 43483.54615579167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.54576720834,
+            "submitStart" : 43483.54546595834
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.55132820834
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.54839550001
+          },
+          "index" : 6,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.54868233334,
+            "encodeStart" : 43483.548417166676,
+            "gpuEnd" : 43483.55094991667,
+            "gpuStart" : 43483.54910254167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.54870804168,
+            "submitStart" : 43483.54840916667
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.55432558334
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.551359166675
+          },
+          "index" : 7,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.55167129168,
+            "encodeStart" : 43483.55138329168,
+            "gpuEnd" : 43483.553971500005,
+            "gpuStart" : 43483.5521355,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.551699333344,
+            "submitStart" : 43483.55137483334
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.557233958345
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.55434850001
+          },
+          "index" : 8,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.55462195834,
+            "encodeStart" : 43483.554369166675,
+            "gpuEnd" : 43483.55690925,
+            "gpuStart" : 43483.55504566667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.55464783334,
+            "submitStart" : 43483.554361541675
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.560172333346
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.55725787501
+          },
+          "index" : 9,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.55753141668,
+            "encodeStart" : 43483.557278833345,
+            "gpuEnd" : 43483.5597575,
+            "gpuStart" : 43483.557938750004,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.55755725001,
+            "submitStart" : 43483.557271083344
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.563080916676
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.560195166676
+          },
+          "index" : 10,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.56046895834,
+            "encodeStart" : 43483.56021483334,
+            "gpuEnd" : 43483.562700375005,
+            "gpuStart" : 43483.560867750006,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.56049450001,
+            "submitStart" : 43483.56020766668
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.56601675001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.563108708346
+          },
+          "index" : 11,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.56340458334,
+            "encodeStart" : 43483.56313125001,
+            "gpuEnd" : 43483.56565175,
+            "gpuStart" : 43483.563822125005,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.56343125001,
+            "submitStart" : 43483.563122958345
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.568925875006
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.56603925001
+          },
+          "index" : 12,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.56631491668,
+            "encodeStart" : 43483.56605887501,
+            "gpuEnd" : 43483.56856291667,
+            "gpuStart" : 43483.56671791667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.56633995834,
+            "submitStart" : 43483.566051833346
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.57188554168
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.568947083346
+          },
+          "index" : 13,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.569216458345,
+            "encodeStart" : 43483.568966958344,
+            "gpuEnd" : 43483.571520875004,
+            "gpuStart" : 43483.56962529167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.56924012501,
+            "submitStart" : 43483.56895987501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.57475833334
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.571907333346
+          },
+          "index" : 14,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.57217633334,
+            "encodeStart" : 43483.57192695834,
+            "gpuEnd" : 43483.57441679167,
+            "gpuStart" : 43483.572583,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.57220066668,
+            "submitStart" : 43483.57192008334
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.57762558334
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.57477925001
+          },
+          "index" : 15,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.57504600001,
+            "encodeStart" : 43483.57479850001,
+            "gpuEnd" : 43483.577305625004,
+            "gpuStart" : 43483.57544975,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.57507041668,
+            "submitStart" : 43483.57479162501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.580531666674
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.57764841668
+          },
+          "index" : 16,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.57791687501,
+            "encodeStart" : 43483.57766825001,
+            "gpuEnd" : 43483.580186750005,
+            "gpuStart" : 43483.578323625,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.577941375006,
+            "submitStart" : 43483.57766100001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.583463458344
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.58055804168
+          },
+          "index" : 17,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.58084841668,
+            "encodeStart" : 43483.580579666675,
+            "gpuEnd" : 43483.583107625,
+            "gpuStart" : 43483.58126425,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.58087425001,
+            "submitStart" : 43483.580571916675
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.58640908334
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.58348675001
+          },
+          "index" : 18,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.58376216668,
+            "encodeStart" : 43483.58350737501,
+            "gpuEnd" : 43483.58606154167,
+            "gpuStart" : 43483.58417391667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.58378991667,
+            "submitStart" : 43483.58350020834
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.589302791675
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.58643170834
+          },
+          "index" : 19,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.58669187501,
+            "encodeStart" : 43483.586450708346,
+            "gpuEnd" : 43483.588968250006,
+            "gpuStart" : 43483.587101625,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.586717333346,
+            "submitStart" : 43483.586443958346
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.59216850001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.58932516668
+          },
+          "index" : 20,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.58958950001,
+            "encodeStart" : 43483.589344833345,
+            "gpuEnd" : 43483.591860750006,
+            "gpuStart" : 43483.589999,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.58961370834,
+            "submitStart" : 43483.58933787501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.59507745834
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.59219195834
+          },
+          "index" : 21,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.59246175001,
+            "encodeStart" : 43483.592211583345,
+            "gpuEnd" : 43483.59472529167,
+            "gpuStart" : 43483.59286679167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.59248604168,
+            "submitStart" : 43483.592204833345
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.59795366668
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.59510012501
+          },
+          "index" : 22,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.59536833334,
+            "encodeStart" : 43483.59512000001,
+            "gpuEnd" : 43483.59761429167,
+            "gpuStart" : 43483.59577375,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.59539283334,
+            "submitStart" : 43483.59511312501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.600878291676
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.59797970834
+          },
+          "index" : 23,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.598260083345,
+            "encodeStart" : 43483.59800112501,
+            "gpuEnd" : 43483.600507125004,
+            "gpuStart" : 43483.59867054167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.59828720834,
+            "submitStart" : 43483.59799308334
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.60381866668
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.60090470834
+          },
+          "index" : 24,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.60120166668,
+            "encodeStart" : 43483.60093854168,
+            "gpuEnd" : 43483.60344891667,
+            "gpuStart" : 43483.601615375,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.60122829168,
+            "submitStart" : 43483.60093087501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.60673966668
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.603847041675
+          },
+          "index" : 25,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.604145208345,
+            "encodeStart" : 43483.60386933334,
+            "gpuEnd" : 43483.606409875,
+            "gpuStart" : 43483.604553000005,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.60417137501,
+            "submitStart" : 43483.603861375006
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.609655708344
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.60676579168
+          },
+          "index" : 26,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.607045166675,
+            "encodeStart" : 43483.60678708334,
+            "gpuEnd" : 43483.60930991667,
+            "gpuStart" : 43483.60744779167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.60707029168,
+            "submitStart" : 43483.60677937501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.612535791675
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.609678833345
+          },
+          "index" : 27,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.60995375001,
+            "encodeStart" : 43483.60969958334,
+            "gpuEnd" : 43483.612218,
+            "gpuStart" : 43483.6103635,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.60997837501,
+            "submitStart" : 43483.609692083344
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.615431166676
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.612557958346
+          },
+          "index" : 28,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.61282387501,
+            "encodeStart" : 43483.61257741668,
+            "gpuEnd" : 43483.615082625,
+            "gpuStart" : 43483.6132335,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.61284883334,
+            "submitStart" : 43483.61257062501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.61837008334
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.61545358334
+          },
+          "index" : 29,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.615719708345,
+            "encodeStart" : 43483.615473125006,
+            "gpuEnd" : 43483.618025375006,
+            "gpuStart" : 43483.61612279167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.61574325001,
+            "submitStart" : 43483.61546625001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.62129625001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.61839237501
+          },
+          "index" : 30,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.618653291676,
+            "encodeStart" : 43483.618412375006,
+            "gpuEnd" : 43483.62095275,
+            "gpuStart" : 43483.61910016667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.61867754168,
+            "submitStart" : 43483.61840529168
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.624176041674
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.62131900001
+          },
+          "index" : 31,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.62158337501,
+            "encodeStart" : 43483.62133900001,
+            "gpuEnd" : 43483.623849375006,
+            "gpuStart" : 43483.621985875005,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.62160733334,
+            "submitStart" : 43483.62133220834
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.62713937501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.62419741668
+          },
+          "index" : 32,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.624452458345,
+            "encodeStart" : 43483.62421604167,
+            "gpuEnd" : 43483.626771125004,
+            "gpuStart" : 43483.624861250006,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.62447650001,
+            "submitStart" : 43483.624209541675
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.630070833344
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.62716108334
+          },
+          "index" : 33,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.627422083344,
+            "encodeStart" : 43483.62718062501,
+            "gpuEnd" : 43483.62973475,
+            "gpuStart" : 43483.627829625,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.62744562501,
+            "submitStart" : 43483.627173833345
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.63296850001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.63009404168
+          },
+          "index" : 34,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.63035729167,
+            "encodeStart" : 43483.63011354168,
+            "gpuEnd" : 43483.63261225,
+            "gpuStart" : 43483.630760500004,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.63038150001,
+            "submitStart" : 43483.63010679168
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.63584970834
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.63299129168
+          },
+          "index" : 35,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.63325229168,
+            "encodeStart" : 43483.63301045834,
+            "gpuEnd" : 43483.63551391667,
+            "gpuStart" : 43483.63365425,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.63327616668,
+            "submitStart" : 43483.63300383334
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.63873133334
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.63587141668
+          },
+          "index" : 36,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.636125166675,
+            "encodeStart" : 43483.635890166675,
+            "gpuEnd" : 43483.638389875,
+            "gpuStart" : 43483.636528125004,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.63614845834,
+            "submitStart" : 43483.635883458344
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.64164383334
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.63875258334
+          },
+          "index" : 37,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.63901500001,
+            "encodeStart" : 43483.63877175001,
+            "gpuEnd" : 43483.641310750005,
+            "gpuStart" : 43483.63942491667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.63903850001,
+            "submitStart" : 43483.63876487501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.644596333346
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.64166625001
+          },
+          "index" : 38,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.64192608334,
+            "encodeStart" : 43483.641685416675,
+            "gpuEnd" : 43483.644234125,
+            "gpuStart" : 43483.642331375006,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.641950166675,
+            "submitStart" : 43483.641678916676
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.64747254168
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.64461795834
+          },
+          "index" : 39,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.64487766667,
+            "encodeStart" : 43483.644637166675,
+            "gpuEnd" : 43483.647129375,
+            "gpuStart" : 43483.64528104167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.64490158334,
+            "submitStart" : 43483.644630416675
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.65036254167
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.64749575001
+          },
+          "index" : 40,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.64775612501,
+            "encodeStart" : 43483.647515333345,
+            "gpuEnd" : 43483.650014000006,
+            "gpuStart" : 43483.648160916666,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.647779916675,
+            "submitStart" : 43483.64750862501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.65324675001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.65038404168
+          },
+          "index" : 41,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.650644541674,
+            "encodeStart" : 43483.65040329168,
+            "gpuEnd" : 43483.652916875006,
+            "gpuStart" : 43483.651053125,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.65066825001,
+            "submitStart" : 43483.65039650001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.65623495834
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.653273458345
+          },
+          "index" : 42,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.653554208344,
+            "encodeStart" : 43483.65329500001,
+            "gpuEnd" : 43483.65587075,
+            "gpuStart" : 43483.653973,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.65358070834,
+            "submitStart" : 43483.65328712501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.65911866668
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.65625800001
+          },
+          "index" : 43,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.65652179168,
+            "encodeStart" : 43483.65627795834,
+            "gpuEnd" : 43483.658765125,
+            "gpuStart" : 43483.656923250004,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.65654566668,
+            "submitStart" : 43483.65627116668
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.66198850001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.65914154168
+          },
+          "index" : 44,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.65940070834,
+            "encodeStart" : 43483.65916087501,
+            "gpuEnd" : 43483.6616605,
+            "gpuStart" : 43483.659807250006,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.659424166675,
+            "submitStart" : 43483.65915425001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.664867916676
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.662010833345
+          },
+          "index" : 45,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.66227404168,
+            "encodeStart" : 43483.66203112501,
+            "gpuEnd" : 43483.66453254167,
+            "gpuStart" : 43483.66268004167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.66229866668,
+            "submitStart" : 43483.66202387501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.66772729168
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.66488958334
+          },
+          "index" : 46,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.66515008334,
+            "encodeStart" : 43483.66490887501,
+            "gpuEnd" : 43483.667413375006,
+            "gpuStart" : 43483.6655525,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.66517341667,
+            "submitStart" : 43483.664902166674
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.67073000001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.66774945834
+          },
+          "index" : 47,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.66800841667,
+            "encodeStart" : 43483.66776912501,
+            "gpuEnd" : 43483.670367125,
+            "gpuStart" : 43483.668406625,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.66803195834,
+            "submitStart" : 43483.66776241668
+          }
+        }
+      ],
+      "timingEnd" : 43483.67075325001,
+      "timingStart" : 43483.52527875001
+    },
+    "SH" : {
+      "pathOutput" : {
+        "compositeSourceHeight" : 1278,
+        "compositeSourceWidth" : 589,
+        "compositeStorageMode" : 2,
+        "compositeTextureUsage" : 4
+      },
+      "rows" : [
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.67608454168
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.670781833345
+          },
+          "index" : 0,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.67102608334,
+            "encodeStart" : 43483.67080225001,
+            "gpuEnd" : 43483.67575354167,
+            "gpuStart" : 43483.672076,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.67104970834,
+            "submitStart" : 43483.67079583334
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.67852720834
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.676108958345
+          },
+          "index" : 1,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.67635020834,
+            "encodeStart" : 43483.67612870834,
+            "gpuEnd" : 43483.678203250005,
+            "gpuStart" : 43483.67676475,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.67637650001,
+            "submitStart" : 43483.67612208334
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.68096150001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.678548416676
+          },
+          "index" : 2,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.67876879167,
+            "encodeStart" : 43483.67856883334,
+            "gpuEnd" : 43483.680622750006,
+            "gpuStart" : 43483.67917816667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.67879254168,
+            "submitStart" : 43483.67856100001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.68337633334
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.68098258334
+          },
+          "index" : 3,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.68120120835,
+            "encodeStart" : 43483.68100187501,
+            "gpuEnd" : 43483.683031375,
+            "gpuStart" : 43483.681609,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.68122450001,
+            "submitStart" : 43483.68099537501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.68579287501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.683398666675
+          },
+          "index" : 4,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.683620458345,
+            "encodeStart" : 43483.68341845834,
+            "gpuEnd" : 43483.685458,
+            "gpuStart" : 43483.684024291666,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.683644166675,
+            "submitStart" : 43483.68341166668
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.68822625001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.685815250006
+          },
+          "index" : 5,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.686034958344,
+            "encodeStart" : 43483.68583491668,
+            "gpuEnd" : 43483.687892291666,
+            "gpuStart" : 43483.686445375,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.68605945834,
+            "submitStart" : 43483.68582791668
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.69061125001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.68824858334
+          },
+          "index" : 6,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.68846770834,
+            "encodeStart" : 43483.68826779167,
+            "gpuEnd" : 43483.69030241667,
+            "gpuStart" : 43483.688873875006,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.688490958346,
+            "submitStart" : 43483.688261416675
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.69302991668
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.690633958344
+          },
+          "index" : 7,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.69085441667,
+            "encodeStart" : 43483.69065362501,
+            "gpuEnd" : 43483.69270475,
+            "gpuStart" : 43483.691265125,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.69087808334,
+            "submitStart" : 43483.69064691668
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.69539883334
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.69305137501
+          },
+          "index" : 8,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.69326908334,
+            "encodeStart" : 43483.69307150001,
+            "gpuEnd" : 43483.695069,
+            "gpuStart" : 43483.69366591667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.69329291668,
+            "submitStart" : 43483.69306375001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.69780808334
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.69541966668
+          },
+          "index" : 9,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.69563708334,
+            "encodeStart" : 43483.69543833334,
+            "gpuEnd" : 43483.697465625,
+            "gpuStart" : 43483.69604,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.69566075001,
+            "submitStart" : 43483.69543187501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.700180666674
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.69783179167
+          },
+          "index" : 10,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.698052083346,
+            "encodeStart" : 43483.69785154168,
+            "gpuEnd" : 43483.699857625004,
+            "gpuStart" : 43483.698462875,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.698075666674,
+            "submitStart" : 43483.69784479168
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.702621333345
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.70020325001
+          },
+          "index" : 11,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.70042216668,
+            "encodeStart" : 43483.70022304168,
+            "gpuEnd" : 43483.70227925,
+            "gpuStart" : 43483.700835625,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.70044687501,
+            "submitStart" : 43483.700216166675
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.70502570835
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.70264350001
+          },
+          "index" : 12,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.70286170834,
+            "encodeStart" : 43483.70266275001,
+            "gpuEnd" : 43483.704719875,
+            "gpuStart" : 43483.70327579167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.70288512501,
+            "submitStart" : 43483.70265616668
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.70746445834
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.705048333344
+          },
+          "index" : 13,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.705268125006,
+            "encodeStart" : 43483.70506800001,
+            "gpuEnd" : 43483.707123125,
+            "gpuStart" : 43483.70568116667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.70529187501,
+            "submitStart" : 43483.70506129168
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.70987550001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.707486791674
+          },
+          "index" : 14,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.70770604168,
+            "encodeStart" : 43483.707506083345,
+            "gpuEnd" : 43483.70955675,
+            "gpuStart" : 43483.708113875,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.70772987501,
+            "submitStart" : 43483.707499416676
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.712320791674
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.70992275001
+          },
+          "index" : 15,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.710138666676,
+            "encodeStart" : 43483.70994333334,
+            "gpuEnd" : 43483.711985500006,
+            "gpuStart" : 43483.71055175,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.71016308334,
+            "submitStart" : 43483.70993625001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.71473504168
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.71234375001
+          },
+          "index" : 16,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.71256729167,
+            "encodeStart" : 43483.71236454168,
+            "gpuEnd" : 43483.71441291667,
+            "gpuStart" : 43483.71298054167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.71259175001,
+            "submitStart" : 43483.71235666668
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.71714050001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.71475637501
+          },
+          "index" : 17,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.71497050001,
+            "encodeStart" : 43483.71477550001,
+            "gpuEnd" : 43483.716811750004,
+            "gpuStart" : 43483.71537725,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.71499525001,
+            "submitStart" : 43483.71476895834
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.71955087501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.71716500001
+          },
+          "index" : 18,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.71739562501,
+            "encodeStart" : 43483.71718595834,
+            "gpuEnd" : 43483.719225500005,
+            "gpuStart" : 43483.717806,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.71742087501,
+            "submitStart" : 43483.71717825001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.721960541676
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.71957229167
+          },
+          "index" : 19,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.71978991668,
+            "encodeStart" : 43483.719591833345,
+            "gpuEnd" : 43483.721639125004,
+            "gpuStart" : 43483.72020029167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.71981387501,
+            "submitStart" : 43483.719585000006
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.72435845834
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.72198162501
+          },
+          "index" : 20,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.72219716667,
+            "encodeStart" : 43483.72200079168,
+            "gpuEnd" : 43483.724050875004,
+            "gpuStart" : 43483.72260775,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.722221291675,
+            "submitStart" : 43483.72199416668
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.72676900001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.72438116668
+          },
+          "index" : 21,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.724599833346,
+            "encodeStart" : 43483.72440054168,
+            "gpuEnd" : 43483.72644325,
+            "gpuStart" : 43483.725010875,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.72462362501,
+            "submitStart" : 43483.72439383334
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.72916929168
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.72679050001
+          },
+          "index" : 22,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.72700354167,
+            "encodeStart" : 43483.726809791675,
+            "gpuEnd" : 43483.72885854167,
+            "gpuStart" : 43483.727416875,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.72702762501,
+            "submitStart" : 43483.72680337501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.73164841667
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.729192083345
+          },
+          "index" : 23,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.729411083346,
+            "encodeStart" : 43483.72921162501,
+            "gpuEnd" : 43483.731257750005,
+            "gpuStart" : 43483.729822416666,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.72943500001,
+            "submitStart" : 43483.72920504167
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.734047083344
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.73167091668
+          },
+          "index" : 24,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.73189175001,
+            "encodeStart" : 43483.73169208334,
+            "gpuEnd" : 43483.733737375005,
+            "gpuStart" : 43483.732307791666,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.731916458346,
+            "submitStart" : 43483.73168529168
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.73645325001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.73406987501
+          },
+          "index" : 25,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.73428487501,
+            "encodeStart" : 43483.73408900001,
+            "gpuEnd" : 43483.7361345,
+            "gpuStart" : 43483.73469641667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.73430850001,
+            "submitStart" : 43483.73408233334
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.73886337501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.736474208345
+          },
+          "index" : 26,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.736693041676,
+            "encodeStart" : 43483.73649441668,
+            "gpuEnd" : 43483.73855041667,
+            "gpuStart" : 43483.737109,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.736716958345,
+            "submitStart" : 43483.736486708345
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.74128183334
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.73888483334
+          },
+          "index" : 27,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.73909912501,
+            "encodeStart" : 43483.73890458334,
+            "gpuEnd" : 43483.740952,
+            "gpuStart" : 43483.73951525,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.73912341668,
+            "submitStart" : 43483.73889791668
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.74368837501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.74130325001
+          },
+          "index" : 28,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.741520416675,
+            "encodeStart" : 43483.74132195834,
+            "gpuEnd" : 43483.743371625,
+            "gpuStart" : 43483.741931625,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.74154387501,
+            "submitStart" : 43483.74131566667
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.74608958334
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.74370925001
+          },
+          "index" : 29,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.74392604168,
+            "encodeStart" : 43483.74372945834,
+            "gpuEnd" : 43483.74576025,
+            "gpuStart" : 43483.744336,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.743949291675,
+            "submitStart" : 43483.74372170834
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.74856300001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.746110666674
+          },
+          "index" : 30,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.74632691668,
+            "encodeStart" : 43483.74612937501,
+            "gpuEnd" : 43483.74816891667,
+            "gpuStart" : 43483.746735625005,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.74634987501,
+            "submitStart" : 43483.746123208344
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.75099391668
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.74858500001
+          },
+          "index" : 31,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.748806416676,
+            "encodeStart" : 43483.748605958346,
+            "gpuEnd" : 43483.75065375,
+            "gpuStart" : 43483.74922304167,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.748831291676,
+            "submitStart" : 43483.748599083345
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.75337083334
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.75101516668
+          },
+          "index" : 32,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.75123266668,
+            "encodeStart" : 43483.75103425001,
+            "gpuEnd" : 43483.753058291666,
+            "gpuStart" : 43483.75164266667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.75125570835,
+            "submitStart" : 43483.75102770834
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.75575050001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.75339387501
+          },
+          "index" : 33,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.75360916668,
+            "encodeStart" : 43483.753413041675,
+            "gpuEnd" : 43483.755395625005,
+            "gpuStart" : 43483.754012375,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.75363262501,
+            "submitStart" : 43483.753406375006
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.75816300001
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.75577291667
+          },
+          "index" : 34,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.75599075001,
+            "encodeStart" : 43483.75579220834,
+            "gpuEnd" : 43483.757845125,
+            "gpuStart" : 43483.75640191667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.75601441668,
+            "submitStart" : 43483.75578541667
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.760573833344
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.758185000006
+          },
+          "index" : 35,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.758399083345,
+            "encodeStart" : 43483.75820441668,
+            "gpuEnd" : 43483.7602505,
+            "gpuStart" : 43483.758811750005,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.758422916675,
+            "submitStart" : 43483.75819800001
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.76297158335
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.76059554167
+          },
+          "index" : 36,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.76081579168,
+            "encodeStart" : 43483.760615083345,
+            "gpuEnd" : 43483.76266291667,
+            "gpuStart" : 43483.761231875,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.76083979168,
+            "submitStart" : 43483.760608250006
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.76538091667
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.76299312501
+          },
+          "index" : 37,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.76321200001,
+            "encodeStart" : 43483.76301216667,
+            "gpuEnd" : 43483.765060791666,
+            "gpuStart" : 43483.763620791666,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.76323562501,
+            "submitStart" : 43483.763005541674
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.76778737501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.76540287501
+          },
+          "index" : 38,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.76561320834,
+            "encodeStart" : 43483.76542191668,
+            "gpuEnd" : 43483.76746329167,
+            "gpuStart" : 43483.76602275,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.76563700001,
+            "submitStart" : 43483.765415583344
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.770249541674
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.767808458346
+          },
+          "index" : 39,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.76802466668,
+            "encodeStart" : 43483.767827458345,
+            "gpuEnd" : 43483.76993291667,
+            "gpuStart" : 43483.768441500004,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.76804825001,
+            "submitStart" : 43483.76782095835
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.77262841668
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.770271625006
+          },
+          "index" : 40,
+          "inputIndex" : 0,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.77048641667,
+            "encodeStart" : 43483.770291833345,
+            "gpuEnd" : 43483.77231291667,
+            "gpuStart" : 43483.77089475,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.77050904168,
+            "submitStart" : 43483.77028537501
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.775033208345
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.77265070834
+          },
+          "index" : 41,
+          "inputIndex" : 1,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.77286854167,
+            "encodeStart" : 43483.77267012501,
+            "gpuEnd" : 43483.774712125,
+            "gpuStart" : 43483.773282375005,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.77289300001,
+            "submitStart" : 43483.77266354168
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.77742791668
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.77505475001
+          },
+          "index" : 42,
+          "inputIndex" : 2,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.77527283334,
+            "encodeStart" : 43483.77507495834,
+            "gpuEnd" : 43483.777122375,
+            "gpuStart" : 43483.77568125,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.77529520835,
+            "submitStart" : 43483.775068458344
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.77985158334
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.77744916668
+          },
+          "index" : 43,
+          "inputIndex" : 3,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.777666833346,
+            "encodeStart" : 43483.77746820834,
+            "gpuEnd" : 43483.77950925,
+            "gpuStart" : 43483.778075250004,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.777690541676,
+            "submitStart" : 43483.77746170834
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.78224679168
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.77987325001
+          },
+          "index" : 44,
+          "inputIndex" : 4,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.780089666674,
+            "encodeStart" : 43483.779892208346,
+            "gpuEnd" : 43483.78193866667,
+            "gpuStart" : 43483.780498750006,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.780112750006,
+            "submitStart" : 43483.77988566668
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.78463762501
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.782268291674
+          },
+          "index" : 45,
+          "inputIndex" : 5,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.782484416675,
+            "encodeStart" : 43483.78228729167,
+            "gpuEnd" : 43483.784299375,
+            "gpuStart" : 43483.78287916667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.782507291675,
+            "submitStart" : 43483.78228070834
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.787084333344
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.78465983334
+          },
+          "index" : 46,
+          "inputIndex" : 6,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.78487762501,
+            "encodeStart" : 43483.78467900001,
+            "gpuEnd" : 43483.786770000006,
+            "gpuStart" : 43483.785326000005,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.784901000006,
+            "submitStart" : 43483.784672416674
+          }
+        },
+        {
+          "after" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.789502875006
+          },
+          "before" : {
+            "foreground" : true,
+            "lowPower" : false,
+            "thermal" : 0,
+            "time" : 43483.78710579168
+          },
+          "index" : 47,
+          "inputIndex" : 7,
+          "phase" : "smoke",
+          "timing" : {
+            "encodeEnd" : 43483.787322458345,
+            "encodeStart" : 43483.78712491668,
+            "gpuEnd" : 43483.789175750004,
+            "gpuStart" : 43483.78773316667,
+            "gpuSucceeded" : true,
+            "submitEnd" : 43483.78734654168,
+            "submitStart" : 43483.78711825001
+          }
+        }
+      ],
+      "timingEnd" : 43483.78952529168,
+      "timingStart" : 43483.67077570834
+    }
+  },
+  "timingSmokeCooling" : {
+    "checkpoints" : [
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43463.03151012501
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43463.552472416675
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43464.081738541674
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43464.60843208334
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43465.11535000001
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43465.618981666674
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43466.14452000001
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43466.67645879168
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43467.17978912501
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43467.71347470834
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43468.24464925001
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43468.767544583345
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43469.28563904168
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43469.80336800001
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43470.33046329168
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43470.83332429168
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43471.364703041676
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43471.87195333334
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43472.382486541675
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43472.88364762501
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43473.40180458334
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43473.92440754168
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43474.44823237501
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43474.954753333346
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43475.45894187501
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43475.97070112501
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43476.48858437501
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43477.02225691667
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43477.546179291676
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43478.05173316668
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43478.57330754168
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43479.10081366668
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43479.63446208334
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43480.16819837501
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43480.69823308334
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43481.22720970834
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43481.76089862501
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43482.28626525001
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43482.80240020834
+      },
+      {
+        "foreground" : true,
+        "lowPower" : false,
+        "thermal" : 0,
+        "time" : 43483.33375729168
+      }
+    ],
+    "elapsedSeconds" : 20.302247208339395,
+    "noEncodes" : true,
+    "nominalContinuousSeconds" : 20.302247166669986,
+    "pollSeconds" : 0.5
+  },
+  "width" : 1179
+}

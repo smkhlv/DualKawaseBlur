@@ -1,0 +1,7 @@
+{
+  "block": 7,
+  "attempt": 1,
+  "completed": false,
+  "reason": "thermal",
+  "detail": "thermal: SH: thermalDeadline"
+}

@@ -26,3 +26,22 @@ swiftc -swift-version 6 \
 /tmp/blur-export-validation
 # Optionally pass an exported JSON path to also validate a real run.
 ```
+
+## CPU encode series (O / S / S4 / MPS-L)
+
+The fresh-process block series for Task 5 of `docs/superpowers/plans/2026-10-21-blur-cpu-encode.md`
+is separate from the in-app benchmark above:
+- protocol (draft, frozen by hash at `freeze`): `CPU_ENCODE_PROTOCOL.md`;
+- production main-thread procedure: `MAIN_THREAD_ENCODE_PROCEDURE.md`;
+- native route: `Examples/DualKawaseBlurDemo/.../Sources/CPUEncodeBenchmark/` (launch argument `--cpu-encode-benchmark`);
+- host driver: `CPUEncode/run_cpu_encode.py`.
+
+The path-level series v2 (LC / SC / SH: blur + the presenters' opaque composite) for Suretare-u2z3
+uses the same tools: protocol `PATH_LEVEL_PROTOCOL.md` (draft, not frozen), selected with
+`--protocol path-level-v2` on `qualify`/`freeze` and natively with `--cpu-encode-protocol path-level-v2`.
+
+Host tests need no device or simulator:
+
+```sh
+python3 -m unittest discover -s DualKawaseBlur/Benchmarks/CPUEncode/tests -v
+```

@@ -1,0 +1,369 @@
+{
+  "appExecutableSHA256" : "ae287c767185e38735c6394fd06ad12d9fb8eac5f466b40c446c61dd029deed0",
+  "arms" : [
+    "LC",
+    "SC",
+    "SH"
+  ],
+  "automaticPromotion" : false,
+  "checks" : [
+    {
+      "differenceVersusSC" : {
+        "LC" : 5,
+        "SH" : 1
+      },
+      "fixture" : "sphere-000.bgra",
+      "outputSHA256" : {
+        "LC" : "ffed3f4fb4f349592ffd7ef3a8998db315eb111e8af4576a0cfa7d8c7a953c5a",
+        "SC" : "693cad0246bf7f8b546ca7cd56a0625502d1fb3a44b6a8b92b3b25568821107e",
+        "SH" : "e12ccf8e930cc98d73681c7ed8b1fb44c11100e79614dc062678b4a98a15b161"
+      },
+      "sourceSHA256" : "c90401283609864d685d22ca088416ef4a69b02fa324f7503e8928cc07c74f6a"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 5,
+        "SH" : 1
+      },
+      "fixture" : "sphere-003.bgra",
+      "outputSHA256" : {
+        "LC" : "0df6e575f79ef44dfba92b9732172b778b073823765c36303f529a6338650fa1",
+        "SC" : "ddb0c9f9151081ce9be9ade40071f62efb9ba8cb5d1a1a34429f64263ca84139",
+        "SH" : "993b9a7b405cb5d0c8451860382673d0c37c2b68075aab84e387204e18436fd0"
+      },
+      "sourceSHA256" : "63d77366eab2d1ead924b51b002f7cd8292854093a67da60cf0fc3b476c32f8b"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 5,
+        "SH" : 1
+      },
+      "fixture" : "sphere-006.bgra",
+      "outputSHA256" : {
+        "LC" : "5f75281b13ad48d364677275054bd5e47f5c0a164630fe3d46bb99e3965a3d14",
+        "SC" : "dc01af8256f4a28c6ff5cc0f9bdc3288db7ccec931cf6b7e39135fdbd37dea57",
+        "SH" : "c43ba238ea6048a06687ea124f1382657aa71c283d883b6896baedf01be74fd0"
+      },
+      "sourceSHA256" : "d781574c60cffa799552ae6e301c902019fb862b68db760985e4e0f5fc31d786"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 5,
+        "SH" : 1
+      },
+      "fixture" : "sphere-009.bgra",
+      "outputSHA256" : {
+        "LC" : "3cc5f188d8df4b0dfe569d488508e6516fd89935ec4098ae757ef7970e09ef94",
+        "SC" : "0fd5d71696a6754745ffcab886237d97cf0b161b18d4ffaba6b244b70ca09ea4",
+        "SH" : "66726ac1051eaa9b544fa6ffcf879e86979bd04c0ac6c9788d2673e6171ed852"
+      },
+      "sourceSHA256" : "de7ab58ba04b707c8ac6fe64f934e4b5389a171d55908b3def4068ec5ff0e061"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "sphere-012.bgra",
+      "outputSHA256" : {
+        "LC" : "844ae7b1757fc569f37f41f44cbf570a9cf548d9b9676337da57a4346b95ffc6",
+        "SC" : "9a1c4c67c41e48943433c2c0a46c52464a63b3a6ccff2a6229168bfc681f8621",
+        "SH" : "8cf80f96918ae3920f956b3e53f899cb3202bbf6ef8b1f3a225421e5feaf4e42"
+      },
+      "sourceSHA256" : "c858a82137d03c9a77390ac58a4773afdfb3082b44ca16e16e45d855a9338cd9"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 5,
+        "SH" : 1
+      },
+      "fixture" : "sphere-015.bgra",
+      "outputSHA256" : {
+        "LC" : "61e252aff7bb4e920f7e1064cf30826aecbd1485fcb5e1110490a06363bc9990",
+        "SC" : "39123c9381a1409b39378827b470bcb4b7e41a03eff345ba9de12396074ad394",
+        "SH" : "9612a2a988a63d7e8b75ba401e348d2473357906347eeb874f713c4d2ca83f7e"
+      },
+      "sourceSHA256" : "aa6d3f685ed06a658243ebc4e5be6a0dec4ad0b3d59e02ba696fc9b73f6a8a6a"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "sphere-018.bgra",
+      "outputSHA256" : {
+        "LC" : "d1e00efd8fd4115601ce10a6959687716e697ae6941376dab503142eda824b67",
+        "SC" : "077fa7f66f4e1d3575d31f6103b289af0e1fdaee5d2e01117775e81880a1f968",
+        "SH" : "1b795eb9f58945368737bf4205b957302ea24feb2e0969f171831c38bc411f2d"
+      },
+      "sourceSHA256" : "bcfd60142172f2f2ec5df01a961c2a1d10db669b9f1b64e5d30843e9c8c94b92"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "sphere-021.bgra",
+      "outputSHA256" : {
+        "LC" : "b8d8848bcb7fd27b1a86c7a49a29caccf1a10515d499d0f30bad3a01a00469de",
+        "SC" : "2af6b3c26097c0fbb065f99e3122e0f69489b3691324079cd3c326d0aa11f4d0",
+        "SH" : "45312510b3ddcc3bd1124631d92342aa53e52f4c1df407b51a973870a705d529"
+      },
+      "sourceSHA256" : "2791f44ed74c673c825dc0bc7e6bae8eafd8849187ac88c32c27214b78fa31b7"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 33,
+        "SH" : 1
+      },
+      "fixture" : "photo-1.bgra",
+      "outputSHA256" : {
+        "LC" : "deb1eec0cd2a26955a9e70d3adada7bf08c6af9e14f4e70282cb8638ab50970d",
+        "SC" : "de3f631232df81e1931e6bb2c7ec0508b6f6ad9e9254d04f367cdd4c0cfb3c1e",
+        "SH" : "cb96794f987520ec7f47503964b932ea03e4ba6c9b47e96af54ed250569eddcd"
+      },
+      "sourceSHA256" : "5485698845b39e74242366bce843ff766fbd80cc53a48d533ceed04b55613028"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 19,
+        "SH" : 1
+      },
+      "fixture" : "photo-2.bgra",
+      "outputSHA256" : {
+        "LC" : "a9ff5bf729b38dcdf4b22957d1c477af8459d093860ae947b1c3b4339b978654",
+        "SC" : "84bebc73d513f54a0053d755e0f12b9ab0332deb95397af789d78782934db171",
+        "SH" : "57d6fc861ca0fe22a2919e50a0b4bd017c0a45d75780983029e919ec9a0b740f"
+      },
+      "sourceSHA256" : "0338326dc62da5d5e683e678e7b8c3538abcb43c94930aeca43343f7ddc242d8"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 5,
+        "SH" : 1
+      },
+      "fixture" : "gradient.bgra",
+      "outputSHA256" : {
+        "LC" : "669e347173f07a433c060880fc915619ab657155cb3704b55f6b1ea86207ba68",
+        "SC" : "7cd91cf770aa9680122367cc4c4c7a9adf55f6cc32fab48a5bf293031b578970",
+        "SH" : "731ef86276369ceb9701c229cb0d690acb95e032645534dcb00dfa6603751102"
+      },
+      "sourceSHA256" : "1c995bc115fe246ea2fb7ea3a9518dff6e57bd1bf0607701e4417306243ba180"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 122,
+        "SH" : 1
+      },
+      "fixture" : "coarse-checker.bgra",
+      "outputSHA256" : {
+        "LC" : "fcc7c3a1493475f7be8ef9dd267d79b807decd4e1149afdc28b435e5457a037c",
+        "SC" : "8736ed4ddf2a82b8159e0f657bd0720ced3713451ce4cc8d8b6014e6fa109925",
+        "SH" : "ff31f41b6d75545357134189dceaca276d4ac94a75a11a908d52476fbe99896e"
+      },
+      "sourceSHA256" : "7b34b84c2c52018d18a65d6913af7d02503bdf294cd68ed920f9bfb9c896122e"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 33,
+        "SH" : 1
+      },
+      "fixture" : "fine-detail.bgra",
+      "outputSHA256" : {
+        "LC" : "d00111a62b0fb7a38bd7379172a0f6b82873be85dbc0acccbe91152271e82668",
+        "SC" : "a9181ff4c9c140eddd09fdab6d9b05249b89fec755343ea74c7a637a68a69e88",
+        "SH" : "64e9a2ce2a623b5b755017e0e0e350b429438f0c2d8ff4047bffc4dc8b241d71"
+      },
+      "sourceSHA256" : "ce152607482a782d65cbf04e47f67a33545aa6a368662b8d5816f0aad1768e01"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "edge-x.bgra",
+      "outputSHA256" : {
+        "LC" : "5d604a5f09d892a8b064f2a845db804dce88728ee24c97c847ac04d73ae2f32f",
+        "SC" : "44bd90ae1cd188494365a7a80230b7c2f962415f083798b57a235edaacf42854",
+        "SH" : "22bd2e540684bb595e86feee08bc62607f6ea8229eb8838fc598d2f96ed35bc6"
+      },
+      "sourceSHA256" : "4862703dbeecde106efba0094c18931df419e11cb08e1abfaa5bd5a87565a7eb"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "edge-y.bgra",
+      "outputSHA256" : {
+        "LC" : "7589bb82ea0b7316a67f2c8d0b81a39d1b99b129c679e5ebb3e297a191efc564",
+        "SC" : "7dcd890f51b16bd5a83094234520e694e6773c6bb0fd52c4dc1469801c1923ab",
+        "SH" : "5ca85b6197187ce3940e202e6d281bbabc0579929fa28a0e150f42cc43d8232a"
+      },
+      "sourceSHA256" : "92876d0f438c46089a5e13037d60f01171429eeb0ac6f723a61f84d9af6506bd"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 90,
+        "SH" : 1
+      },
+      "fixture" : "alpha-border.bgra",
+      "outputSHA256" : {
+        "LC" : "a59d31915d70b39250af44b4d3d80976f9418807374646746d096032d4eb5c01",
+        "SC" : "902b9c2fc835d89157801912941db78393a3cec027598a19eb453548d9bf2208",
+        "SH" : "3a788f3139b530c8015fb8fe074b649b8a0a0e532e1302a83533bfa2f9bdbf4d"
+      },
+      "sourceSHA256" : "bdcc0859369e0a9c0c9e2f6942c4108c46c088a220902b26db6d4f87ea1068bd"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "calibration-0",
+      "outputSHA256" : {
+        "LC" : "cf02c93cb076179e0f15a2cc9cf89e245f87497ba775f9b23b22ec8e8a71c887",
+        "SC" : "c0f203d982657c88f6ac54efe0383fd56d908798a181ec6c9da83d6c1ce2506d",
+        "SH" : "7f51c23a346e78f69a2c500a5aef35c0124c218e87ad05ad4f150ec1e2d2eaf8"
+      },
+      "sourceSHA256" : "fb1d3b7c153e2d7827b984bd0db372fa4c70f1565229a52ea5ba4b1f47780033"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "calibration-1",
+      "outputSHA256" : {
+        "LC" : "5d604a5f09d892a8b064f2a845db804dce88728ee24c97c847ac04d73ae2f32f",
+        "SC" : "44bd90ae1cd188494365a7a80230b7c2f962415f083798b57a235edaacf42854",
+        "SH" : "22bd2e540684bb595e86feee08bc62607f6ea8229eb8838fc598d2f96ed35bc6"
+      },
+      "sourceSHA256" : "4862703dbeecde106efba0094c18931df419e11cb08e1abfaa5bd5a87565a7eb"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "calibration-2",
+      "outputSHA256" : {
+        "LC" : "4b3289923f5e19c5fccd999b983e6aae7b8a279b69123b8f4c55213981e8c820",
+        "SC" : "abe9709f24ebd9843b19231bfd32cdd6f262d36a223be58dec850118d8d58a17",
+        "SH" : "2507a4b550f597462123f04bd9d42e036f835faf28ac8dcc1cd791b6255c3aec"
+      },
+      "sourceSHA256" : "ae316f21ee3ed67b5d7c0c2905a531acac083d8b452504a8ef84eb67da9c6494"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "calibration-3",
+      "outputSHA256" : {
+        "LC" : "3950957772ff8d760ed6ce56b444d3b5a42d2e00f75e7122ba07bfc6a3b0d950",
+        "SC" : "bee1165d11465bad911af6101866d95bfa9077ae4d62e97c1dd913ac1efafbcd",
+        "SH" : "2f83765dae556cc29a834fbdbb475903a121d620ec257f936fd67901d7b65cd3"
+      },
+      "sourceSHA256" : "3eedeab8be32115e4c9b71381a51a7aa0d914c9ff5a0642f16cc001c1fe0e591"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 4,
+        "SH" : 1
+      },
+      "fixture" : "calibration-4",
+      "outputSHA256" : {
+        "LC" : "7589bb82ea0b7316a67f2c8d0b81a39d1b99b129c679e5ebb3e297a191efc564",
+        "SC" : "7dcd890f51b16bd5a83094234520e694e6773c6bb0fd52c4dc1469801c1923ab",
+        "SH" : "5ca85b6197187ce3940e202e6d281bbabc0579929fa28a0e150f42cc43d8232a"
+      },
+      "sourceSHA256" : "92876d0f438c46089a5e13037d60f01171429eeb0ac6f723a61f84d9af6506bd"
+    },
+    {
+      "differenceVersusSC" : {
+        "LC" : 5,
+        "SH" : 1
+      },
+      "fixture" : "calibration-5",
+      "outputSHA256" : {
+        "LC" : "02afe345329efbb5c609bd6723f309f4384d337f5d28de2184299936cb73cba1",
+        "SC" : "d34789c355b7328660ba0d9214c9cbc778371e3e30afecc83ffa71f8be85f3c9",
+        "SH" : "f72af1ef128be4059e46931cdbbe2f6b360c6622cafdcea3c9f1dd37873b7a63"
+      },
+      "sourceSHA256" : "ba85c0a779b32154efb9f789dc5f356babad34cd44d688b8c3e08648b9891eca"
+    }
+  ],
+  "completed" : false,
+  "compositeBaseColor" : [
+    0.25,
+    0.5,
+    0.75,
+    1
+  ],
+  "compositeMapping" : "unit",
+  "corpusManifestSHA256" : "d346b0d0c0d370fa641c013d225b0043f0d9b6d20222f58e4ab38e4eda6a980b",
+  "debugBuild" : false,
+  "endToEndMeasured" : false,
+  "expectedOutputSHA256" : {
+    "LC" : {
+      "sphere-000.bgra" : "ffed3f4fb4f349592ffd7ef3a8998db315eb111e8af4576a0cfa7d8c7a953c5a",
+      "sphere-003.bgra" : "0df6e575f79ef44dfba92b9732172b778b073823765c36303f529a6338650fa1",
+      "sphere-006.bgra" : "5f75281b13ad48d364677275054bd5e47f5c0a164630fe3d46bb99e3965a3d14",
+      "sphere-009.bgra" : "3cc5f188d8df4b0dfe569d488508e6516fd89935ec4098ae757ef7970e09ef94",
+      "sphere-012.bgra" : "844ae7b1757fc569f37f41f44cbf570a9cf548d9b9676337da57a4346b95ffc6",
+      "sphere-015.bgra" : "61e252aff7bb4e920f7e1064cf30826aecbd1485fcb5e1110490a06363bc9990",
+      "sphere-018.bgra" : "d1e00efd8fd4115601ce10a6959687716e697ae6941376dab503142eda824b67",
+      "sphere-021.bgra" : "b8d8848bcb7fd27b1a86c7a49a29caccf1a10515d499d0f30bad3a01a00469de"
+    },
+    "SC" : {
+      "sphere-000.bgra" : "693cad0246bf7f8b546ca7cd56a0625502d1fb3a44b6a8b92b3b25568821107e",
+      "sphere-003.bgra" : "ddb0c9f9151081ce9be9ade40071f62efb9ba8cb5d1a1a34429f64263ca84139",
+      "sphere-006.bgra" : "dc01af8256f4a28c6ff5cc0f9bdc3288db7ccec931cf6b7e39135fdbd37dea57",
+      "sphere-009.bgra" : "0fd5d71696a6754745ffcab886237d97cf0b161b18d4ffaba6b244b70ca09ea4",
+      "sphere-012.bgra" : "9a1c4c67c41e48943433c2c0a46c52464a63b3a6ccff2a6229168bfc681f8621",
+      "sphere-015.bgra" : "39123c9381a1409b39378827b470bcb4b7e41a03eff345ba9de12396074ad394",
+      "sphere-018.bgra" : "077fa7f66f4e1d3575d31f6103b289af0e1fdaee5d2e01117775e81880a1f968",
+      "sphere-021.bgra" : "2af6b3c26097c0fbb065f99e3122e0f69489b3691324079cd3c326d0aa11f4d0"
+    },
+    "SH" : {
+      "sphere-000.bgra" : "e12ccf8e930cc98d73681c7ed8b1fb44c11100e79614dc062678b4a98a15b161",
+      "sphere-003.bgra" : "993b9a7b405cb5d0c8451860382673d0c37c2b68075aab84e387204e18436fd0",
+      "sphere-006.bgra" : "c43ba238ea6048a06687ea124f1382657aa71c283d883b6896baedf01be74fd0",
+      "sphere-009.bgra" : "66726ac1051eaa9b544fa6ffcf879e86979bd04c0ac6c9788d2673e6171ed852",
+      "sphere-012.bgra" : "8cf80f96918ae3920f956b3e53f899cb3202bbf6ef8b1f3a225421e5feaf4e42",
+      "sphere-015.bgra" : "9612a2a988a63d7e8b75ba401e348d2473357906347eeb874f713c4d2ca83f7e",
+      "sphere-018.bgra" : "1b795eb9f58945368737bf4205b957302ea24feb2e0969f171831c38bc411f2d",
+      "sphere-021.bgra" : "45312510b3ddcc3bd1124631d92342aa53e52f4c1df407b51a973870a705d529"
+    }
+  },
+  "failure" : "thermalDeadline",
+  "failureEnvironment" : {
+    "foreground" : true,
+    "lowPower" : false,
+    "thermal" : 1,
+    "time" : 41513.636134750006
+  },
+  "failureReason" : "thermalDeadline",
+  "gpu" : "Apple A15 GPU",
+  "hardware" : "iPhone14,7",
+  "height" : 2556,
+  "iterations" : 5,
+  "metallibSHA256" : "aca464abb857b3dbfc2a913ff28e79d939a355689b93ca1057b23adf6fda1ebe",
+  "method" : "path-level-qualification-v2",
+  "mpsOptions" : "allowReducedPrecision",
+  "offset" : 5,
+  "os" : "Version 27.0.1 (Build 24A446)",
+  "photoFixturesIncluded" : true,
+  "pixelFormat" : "bgra8Unorm",
+  "processSessionUUID" : "d3b8689a-efab-4efa-b940-952ba0c53b3b",
+  "protocolID" : "path-level-v2",
+  "s4Compiled" : false,
+  "sessionLabel" : "qualification",
+  "shQualityPassed" : true,
+  "sigma" : 92.087890625,
+  "timingSmoke" : {
+
+  },
+  "width" : 1179
+}

@@ -1,0 +1,239 @@
+{
+  "protocolID": "path-level-v2",
+  "independentBlocks": 8,
+  "arms": [
+    "LC",
+    "SC",
+    "SH"
+  ],
+  "comparisons": {
+    "SH_vs_LC_gpu": {
+      "metric": "gpuP95Ms",
+      "baseline": "LC",
+      "candidate": "SH",
+      "direction": "reduction",
+      "values": [
+        37.041062223167074,
+        37.12566163494127,
+        36.668058222447065,
+        36.954589061977416,
+        36.70963998889569,
+        36.59964353876487,
+        37.59636874533462,
+        37.21885803593329
+      ],
+      "median": 36.997825642572245,
+      "favorablePairs": 8,
+      "bootstrap95CI": [
+        36.668058222447065,
+        37.21885803593329
+      ],
+      "positionMedians": {
+        "candidateFirst": 36.89685992869417,
+        "baselineFirst": 36.997825642572245
+      }
+    },
+    "SH_vs_LC_cpu": {
+      "metric": "cpuEncodeP95Ms",
+      "baseline": "LC",
+      "candidate": "SH",
+      "direction": "reduction",
+      "values": [
+        32.11761814338966,
+        23.01863270636451,
+        30.849460047883735,
+        31.93330041272633,
+        31.889669288877386,
+        29.888513845767243,
+        36.55413194569522,
+        31.822747372325306
+      ],
+      "median": 31.856208330601348,
+      "favorablePairs": 8,
+      "bootstrap95CI": [
+        29.888513845767243,
+        32.11761814338966
+      ],
+      "positionMedians": {
+        "candidateFirst": 30.368986946825487,
+        "baselineFirst": 31.911484850801855
+      }
+    },
+    "SH_vs_SC_gpu": {
+      "metric": "gpuP95Ms",
+      "baseline": "SC",
+      "candidate": "SH",
+      "direction": "reduction",
+      "values": [
+        23.85260808799012,
+        22.764825239246164,
+        22.36461532125718,
+        23.39571876013779,
+        22.50182896696508,
+        23.471582071539224,
+        23.139725954499745,
+        22.68459941132324
+      ],
+      "median": 22.952275596872955,
+      "favorablePairs": 8,
+      "bootstrap95CI": [
+        22.50182896696508,
+        23.471582071539224
+      ],
+      "positionMedians": {
+        "candidateFirst": 23.267722357318767,
+        "baselineFirst": 22.59321418914416
+      }
+    },
+    "SC_vs_LC_gpu": {
+      "metric": "gpuP95Ms",
+      "baseline": "LC",
+      "candidate": "SC",
+      "direction": "reduction",
+      "values": [
+        17.319639982438954,
+        18.59364782973521,
+        18.4238707135643,
+        17.699885805839347,
+        18.333092036293717,
+        17.15449217766117,
+        18.80899199276435,
+        18.798659146750463
+      ],
+      "median": 18.37848137492901,
+      "favorablePairs": 8,
+      "bootstrap95CI": [
+        17.319639982438954,
+        18.798659146750463
+      ],
+      "positionMedians": {
+        "candidateFirst": 18.333092036293717,
+        "baselineFirst": 18.59364782973521
+      }
+    },
+    "SC_vs_LC_cpu": {
+      "metric": "cpuEncodeP95Ms",
+      "baseline": "LC",
+      "candidate": "SC",
+      "direction": "reduction",
+      "values": [
+        9.225137837893765,
+        18.161488950540804,
+        14.840412304209908,
+        15.032595670177553,
+        18.860393025922388,
+        12.213454688759416,
+        22.584401040728586,
+        16.834045474752664
+      ],
+      "median": 15.933320572465108,
+      "favorablePairs": 8,
+      "bootstrap95CI": [
+        12.213454688759416,
+        18.860393025922388
+      ],
+      "positionMedians": {
+        "candidateFirst": 14.840412304209908,
+        "baselineFirst": 16.834045474752664
+      }
+    },
+    "SH_vs_SC_cpu": {
+      "metric": "cpuEncodeP95Ms",
+      "baseline": "SC",
+      "candidate": "SH",
+      "direction": "reduction",
+      "values": [
+        25.21896454616961,
+        5.935034366507821,
+        18.79887887769241,
+        19.890809747399626,
+        16.057849857613405,
+        20.13413228000058,
+        18.045111182716745,
+        18.022641576274342
+      ],
+      "median": 18.421995030204577,
+      "favorablePairs": 8,
+      "bootstrap95CI": [
+        16.057849857613405,
+        20.13413228000058
+      ],
+      "positionMedians": {
+        "candidateFirst": 18.967960465058184,
+        "baselineFirst": 18.410760226983378
+      }
+    },
+    "SH_vs_LC_submit": {
+      "metric": "submitP95Ms",
+      "baseline": "LC",
+      "candidate": "SH",
+      "direction": "reduction",
+      "values": [
+        30.22573272671227,
+        20.33333470444711,
+        28.712538210415303,
+        30.11127332971997,
+        30.40803080240844,
+        27.959753667780564,
+        34.847854085356175,
+        29.557482833623094
+      ],
+      "median": 29.83437808167153,
+      "favorablePairs": 8,
+      "bootstrap95CI": [
+        27.959753667780564,
+        30.40803080240844
+      ],
+      "positionMedians": {
+        "candidateFirst": 28.336145939097932,
+        "baselineFirst": 30.168503028216122
+      }
+    }
+  },
+  "endToEndMeasured": false,
+  "automaticPromotion": false,
+  "cpuGpuSummed": false,
+  "screens": {
+    "P1_SH_gpu_below_LC": true,
+    "P2_SH_cpu_below_LC": true
+  },
+  "descriptiveOnly": [
+    "SH_vs_SC_gpu",
+    "SC_vs_LC_gpu",
+    "SC_vs_LC_cpu",
+    "SH_vs_SC_cpu",
+    "SH_vs_LC_submit"
+  ],
+  "marginalMediansMs": {
+    "LC": {
+      "cpuEncodeP95Ms": 0.3324791650811676,
+      "gpuP95Ms": 2.2994374994596,
+      "submitP95Ms": 0.3719583328347653
+    },
+    "SC": {
+      "cpuEncodeP95Ms": 0.2809166689985432,
+      "gpuP95Ms": 1.8786875007208437,
+      "submitP95Ms": 0.31639583539799787
+    },
+    "SH": {
+      "cpuEncodeP95Ms": 0.2281875022163149,
+      "gpuP95Ms": 1.4498958335025236,
+      "submitP95Ms": 0.2626458335726056
+    }
+  },
+  "limitation": "the single device fixed at freeze only (series hardware/gpu), sigma 92.087890625, eight prerecorded Sphere inputs, n=8 blocks; one drained command buffer per path (blur + opaque composite into an offscreen render target, no drawable), so not end-to-end, pipelined, presentation, frame-latency or energy evidence",
+  "excludedAttempts": [
+    {
+      "block": 5,
+      "attempt": 1,
+      "reason": "thermal",
+      "detail": "thermal: SH: thermalDeadline"
+    },
+    {
+      "block": 7,
+      "attempt": 1,
+      "reason": "thermal",
+      "detail": "thermal: SH: thermalDeadline"
+    }
+  ]
+}
