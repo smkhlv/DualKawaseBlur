@@ -101,7 +101,7 @@
 			mainGroup = C1069C402F31C48C00272F89;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				C1069C632F31C5C900272F89 /* XCLocalSwiftPackageReference "../.." */,
+				C1069C632F31C5C900272F89 /* XCLocalSwiftPackageReference "../../../DualKawaseBlur" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C1069C4A2F31C48C00272F89 /* Products */;
@@ -345,9 +345,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		C1069C632F31C5C900272F89 /* XCLocalSwiftPackageReference "../.." */ = {
+		C1069C632F31C5C900272F89 /* XCLocalSwiftPackageReference "../../../DualKawaseBlur" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../..;
+			relativePath = ../../../DualKawaseBlur;
 		};
 /* End XCLocalSwiftPackageReference section */
 

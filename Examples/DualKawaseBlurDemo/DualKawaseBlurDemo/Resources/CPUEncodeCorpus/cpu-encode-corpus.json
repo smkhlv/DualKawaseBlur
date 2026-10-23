@@ -1,0 +1,163 @@
+{
+  "compression": "raw-deflate",
+  "height": 2556,
+  "pixelFormat": "bgra8Unorm",
+  "primarySequence": [
+    "sphere-000.bgra",
+    "sphere-003.bgra",
+    "sphere-006.bgra",
+    "sphere-009.bgra",
+    "sphere-012.bgra",
+    "sphere-015.bgra",
+    "sphere-018.bgra",
+    "sphere-021.bgra"
+  ],
+  "protocolID": "cpu-encode-corpus-v1",
+  "records": [
+    {
+      "bundled": true,
+      "bytes": 12054096,
+      "file": "sphere-000.bgra",
+      "kind": "sphere",
+      "resource": "sphere-000.bgra.deflate",
+      "resourceSHA256": "67b91f7c785b9bffd9a4f4b4decc0bfa2074abeb8108375a21770e4ca32b0944",
+      "sha256": "c90401283609864d685d22ca088416ef4a69b02fa324f7503e8928cc07c74f6a"
+    },
+    {
+      "bundled": true,
+      "bytes": 12054096,
+      "file": "sphere-003.bgra",
+      "kind": "sphere",
+      "resource": "sphere-003.bgra.deflate",
+      "resourceSHA256": "018273a0c5e103b0fa8cd07d52e42389ee4ad1dbc1633aa3302aeecfebef6784",
+      "sha256": "63d77366eab2d1ead924b51b002f7cd8292854093a67da60cf0fc3b476c32f8b"
+    },
+    {
+      "bundled": true,
+      "bytes": 12054096,
+      "file": "sphere-006.bgra",
+      "kind": "sphere",
+      "resource": "sphere-006.bgra.deflate",
+      "resourceSHA256": "fc90524ea58b6b98b6720e21ce525812f8635e700fb83a30ae2e1a808cb0cadb",
+      "sha256": "d781574c60cffa799552ae6e301c902019fb862b68db760985e4e0f5fc31d786"
+    },
+    {
+      "bundled": true,
+      "bytes": 12054096,
+      "file": "sphere-009.bgra",
+      "kind": "sphere",
+      "resource": "sphere-009.bgra.deflate",
+      "resourceSHA256": "9a9f2630aeb42192690bac0d2b264f3ae5d6c4a3520f9563c60a04f785fb692a",
+      "sha256": "de7ab58ba04b707c8ac6fe64f934e4b5389a171d55908b3def4068ec5ff0e061"
+    },
+    {
+      "bundled": true,
+      "bytes": 12054096,
+      "file": "sphere-012.bgra",
+      "kind": "sphere",
+      "resource": "sphere-012.bgra.deflate",
+      "resourceSHA256": "92e530c35ec776ca5c6d2bf7d09748033a81b988cb1ec403c9a0c352591a728a",
+      "sha256": "c858a82137d03c9a77390ac58a4773afdfb3082b44ca16e16e45d855a9338cd9"
+    },
+    {
+      "bundled": true,
+      "bytes": 12054096,
+      "file": "sphere-015.bgra",
+      "kind": "sphere",
+      "resource": "sphere-015.bgra.deflate",
+      "resourceSHA256": "dba3a0ebf69a2cad40fcbe29c24814826c1d0ad71667f84f08a47fc60d28ed65",
+      "sha256": "aa6d3f685ed06a658243ebc4e5be6a0dec4ad0b3d59e02ba696fc9b73f6a8a6a"
+    },
+    {
+      "bundled": true,
+      "bytes": 12054096,
+      "file": "sphere-018.bgra",
+      "kind": "sphere",
+      "resource": "sphere-018.bgra.deflate",
+      "resourceSHA256": "1997665f8754dc9318a8e193baf9dda9b26e521d50410f422ee445d75a93ce10",
+      "sha256": "bcfd60142172f2f2ec5df01a961c2a1d10db669b9f1b64e5d30843e9c8c94b92"
+    },
+    {
+      "bundled": true,
+      "bytes": 12054096,
+      "file": "sphere-021.bgra",
+      "kind": "sphere",
+      "resource": "sphere-021.bgra.deflate",
+      "resourceSHA256": "9bbc6cb654429fabd8205cbcea7d930e70f61a5e9a20beab1e8934e2082588f3",
+      "sha256": "2791f44ed74c673c825dc0bc7e6bae8eafd8849187ac88c32c27214b78fa31b7"
+    },
+    {
+      "bundled": false,
+      "bytes": 12054096,
+      "file": "photo-1.bgra",
+      "kind": "photo",
+      "sha256": "5485698845b39e74242366bce843ff766fbd80cc53a48d533ceed04b55613028",
+      "stagedName": "photo-1.bgra"
+    },
+    {
+      "bundled": false,
+      "bytes": 12054096,
+      "file": "photo-2.bgra",
+      "kind": "photo",
+      "sha256": "0338326dc62da5d5e683e678e7b8c3538abcb43c94930aeca43343f7ddc242d8",
+      "stagedName": "photo-2.bgra"
+    },
+    {
+      "bundled": true,
+      "bytes": 12054096,
+      "file": "gradient.bgra",
+      "kind": "diagnostic",
+      "resource": "gradient.bgra.deflate",
+      "resourceSHA256": "061b334cddd54b235dff490ebb38dc2dd0a4709836426d3897b25ca3129b43f2",
+      "sha256": "1c995bc115fe246ea2fb7ea3a9518dff6e57bd1bf0607701e4417306243ba180"
+    },
+    {
+      "bundled": true,
+      "bytes": 12054096,
+      "file": "coarse-checker.bgra",
+      "kind": "diagnostic",
+      "resource": "coarse-checker.bgra.deflate",
+      "resourceSHA256": "470fbc7b54d100421650448bc19234cdfc82a20566b308608a2f20f01a25a9b0",
+      "sha256": "7b34b84c2c52018d18a65d6913af7d02503bdf294cd68ed920f9bfb9c896122e"
+    },
+    {
+      "bundled": true,
+      "bytes": 12054096,
+      "file": "fine-detail.bgra",
+      "kind": "diagnostic",
+      "resource": "fine-detail.bgra.deflate",
+      "resourceSHA256": "5ad99ea437c1482ff3b28878f47b73f17f7552433b46d51f082b8d8fba859461",
+      "sha256": "ce152607482a782d65cbf04e47f67a33545aa6a368662b8d5816f0aad1768e01"
+    },
+    {
+      "bundled": true,
+      "bytes": 12054096,
+      "file": "edge-x.bgra",
+      "kind": "diagnostic",
+      "resource": "edge-x.bgra.deflate",
+      "resourceSHA256": "d695fd205a267cb1569578a3b037141a72fcdc8b8b9f7ebe2e76466d3e08b790",
+      "sha256": "4862703dbeecde106efba0094c18931df419e11cb08e1abfaa5bd5a87565a7eb"
+    },
+    {
+      "bundled": true,
+      "bytes": 12054096,
+      "file": "edge-y.bgra",
+      "kind": "diagnostic",
+      "resource": "edge-y.bgra.deflate",
+      "resourceSHA256": "6f5edb484084c02c725b9dc3a9361a92be3245b31424054fe8c1662d3126f08a",
+      "sha256": "92876d0f438c46089a5e13037d60f01171429eeb0ac6f723a61f84d9af6506bd"
+    },
+    {
+      "bundled": true,
+      "bytes": 12054096,
+      "file": "alpha-border.bgra",
+      "kind": "diagnostic",
+      "resource": "alpha-border.bgra.deflate",
+      "resourceSHA256": "56291989ab9fa5ccf978717c1a5bb9b69c5af4ca8dabe498897f7c99b10c62e0",
+      "sha256": "bdcc0859369e0a9c0c9e2f6942c4108c46c088a220902b26db6d4f87ea1068bd"
+    }
+  ],
+  "rowBytes": 4716,
+  "sourceManifestSHA256": "693cfeb263e35cbdb0f706e9c11d2237513a5959bd2ec6dfacea0cb636e510bd",
+  "width": 1179
+}

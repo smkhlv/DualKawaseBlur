@@ -5,6 +5,7 @@ final class PipelineStateCache: Sendable {
     private let downsamplePipelines: [MTLPixelFormat: MTLRenderPipelineState]
     private let upsamplePipelines: [MTLPixelFormat: MTLRenderPipelineState]
     private let copyPipelines: [MTLPixelFormat: MTLRenderPipelineState]
+    private let compositePipelines: [MTLPixelFormat: MTLRenderPipelineState]
 
     init(device: MTLDevice, library: MTLLibrary) throws {
         let formats: [MTLPixelFormat] = [.bgra8Unorm, .bgra8Unorm_srgb]
@@ -26,6 +27,12 @@ final class PipelineStateCache: Sendable {
             fragmentFunctionName: "copyFragment",
             formats: formats
         )
+        compositePipelines = try Self.makePipelines(
+            device: device,
+            library: library,
+            fragmentFunctionName: "compositeOpaqueFragment",
+            formats: formats
+        )
     }
 
     func downsamplePipeline(for format: MTLPixelFormat) throws -> MTLRenderPipelineState {
@@ -38,6 +45,10 @@ final class PipelineStateCache: Sendable {
 
     func copyPipeline(for format: MTLPixelFormat) throws -> MTLRenderPipelineState {
         try pipeline(in: copyPipelines, for: format)
+    }
+
+    func compositePipeline(for format: MTLPixelFormat) throws -> MTLRenderPipelineState {
+        try pipeline(in: compositePipelines, for: format)
     }
 
     func getDownsamplePipeline() throws -> MTLRenderPipelineState {

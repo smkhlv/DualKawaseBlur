@@ -126,6 +126,35 @@ final class DualKawaseBlurRenderer: Sendable {
         )
     }
 
+    func encodeOpaqueComposite(
+        source: MTLTexture,
+        destination: MTLTexture,
+        baseColor: SIMD4<Float>,
+        mapping: SharedBackgroundUVMapping = .unit,
+        into commandBuffer: MTLCommandBuffer
+    ) throws {
+        try validatePass(source: source, destination: destination, commandBuffer: commandBuffer)
+        let descriptor = MTLRenderPassDescriptor()
+        descriptor.colorAttachments[0].texture = destination
+        descriptor.colorAttachments[0].loadAction = .dontCare
+        descriptor.colorAttachments[0].storeAction = .store
+
+        guard let encoder = commandBuffer.makeRenderCommandEncoder(descriptor: descriptor) else {
+            throw DualKawaseBlurError.commandBufferCreationFailed
+        }
+        defer { encoder.endEncoding() }
+        encoder.setRenderPipelineState(try context.pipelines.compositePipeline(for: destination.pixelFormat))
+        encoder.setViewport(MTLViewport(
+            originX: 0, originY: 0,
+            width: Double(destination.width), height: Double(destination.height),
+            znear: 0, zfar: 1
+        ))
+        var uniforms = OpaqueCompositeUniforms(baseColor: baseColor, mapping: mapping)
+        encoder.setFragmentBytes(&uniforms, length: MemoryLayout<OpaqueCompositeUniforms>.stride, index: 0)
+        encoder.setFragmentTexture(source, index: 0)
+        quad.draw(encoder: encoder)
+    }
+
     private func validatePass(
         source: MTLTexture,
         destination: MTLTexture,

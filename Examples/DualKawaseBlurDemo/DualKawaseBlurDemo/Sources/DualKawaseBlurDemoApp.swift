@@ -4,7 +4,12 @@ import SwiftUI
 struct DualKawaseBlurDemoApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            let arguments = ProcessInfo.processInfo.arguments
+            if arguments.contains(CPUEncodeBenchmark.flag) {
+                CPUEncodeBenchmarkView(request: CPUEncodeBenchmark.request(from: arguments))
+            } else {
+                ContentView()
+            }
         }
     }
 }

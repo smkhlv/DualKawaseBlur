@@ -47,6 +47,15 @@ enum TestTexture {
         return texture
     }
 
+    /// Deterministic non-trivial pattern; `phase` varies it between calls.
+    static func patterned(device: MTLDevice, width: Int, height: Int, phase: Int = 0) throws -> MTLTexture {
+        let texture = try empty(device: device, width: width, height: height)
+        let bytes = (0..<(width * height * 4)).map { UInt8(($0 * 73 + $0 / 4 * 19 + phase * 37) % 256) }
+        texture.replace(region: MTLRegionMake2D(0, 0, width, height), mipmapLevel: 0,
+                        withBytes: bytes, bytesPerRow: width * 4)
+        return texture
+    }
+
     static func nonZeroPixelCount(_ texture: MTLTexture) throws -> Int {
         let bytes = bytes(texture)
         return stride(from: 0, to: bytes.count, by: 4).reduce(into: 0) { count, index in

@@ -17,6 +17,12 @@ struct BlurUniforms {
     float2 offset;
 };
 
+struct OpaqueCompositeUniforms {
+    float4 baseColor;
+    float2 uvOrigin;
+    float2 uvScale;
+};
+
 // MARK: - Vertex Shader
 
 vertex VertexOut vertexShader(VertexIn in [[stage_in]]) {
@@ -106,6 +112,24 @@ fragment float4 copyFragment(
     );
 
     return sourceTexture.sample(linearSampler, in.texCoord);
+}
+
+// Blend the premultiplied-looking blur RGB over the resolved opaque base. The
+// output alpha is explicit so the surface stays opaque at filtered edge pixels.
+fragment float4 compositeOpaqueFragment(
+    VertexOut in [[stage_in]],
+    texture2d<float> sourceTexture [[texture(0)]],
+    constant OpaqueCompositeUniforms &uniforms [[buffer(0)]]
+) {
+    constexpr sampler linearSampler(
+        mag_filter::linear,
+        min_filter::linear,
+        address::clamp_to_edge
+    );
+    const float2 sourceUV = uniforms.uvOrigin + in.texCoord * uniforms.uvScale;
+    const float4 source = sourceTexture.sample(linearSampler, sourceUV);
+    const float3 rgb = source.rgb + uniforms.baseColor.rgb * (1.0 - source.a);
+    return float4(rgb, 1.0);
 }
 
 // MARK: - Benchmark Compute Kernels
@@ -269,4 +293,53 @@ kernel void upsampleCompute3Tap(
         uv + float2(-sampleStep.x * triangleHalfRadius, -sampleStep.y * triangleHeight)
     );
     destinationTexture.write(sum / half(3.0), position);
+}
+
+// Benchmark-only final reconstruction directly into a render attachment.
+vertex float4 fullscreenTriangle443(uint id [[vertex_id]]) {
+    const float2 positions[3] = { float2(-1, -1), float2(3, -1), float2(-1, 3) };
+    return float4(positions[id], 0, 1);
+}
+
+// Same four samples/arithmetic as downsampleCompute4Tap, at destination pixel centers.
+fragment half4 downsampleFragment4Tap443(
+    float4 position [[position]],
+    texture2d<half> sourceTexture [[texture(0)]],
+    constant float4 &uniforms [[buffer(0)]]
+) {
+    constexpr sampler linearSampler(mag_filter::linear, min_filter::linear, address::clamp_to_edge);
+    const float2 uv = position.xy / uniforms.zw;
+    constexpr float momentMatchedScale = 0.70710678118;
+    const float2 step = uniforms.xy * momentMatchedScale;
+    half4 sum = sourceTexture.sample(linearSampler, uv + float2(-step.x, step.y));
+    sum += sourceTexture.sample(linearSampler, uv + float2(step.x, step.y));
+    sum += sourceTexture.sample(linearSampler, uv + float2(step.x, -step.y));
+    sum += sourceTexture.sample(linearSampler, uv + float2(-step.x, -step.y));
+    return sum / half(4.0);
+}
+
+// Same intermediate four-tap kernel as compute, including half accumulation order.
+fragment half4 upsampleFragment4Tap443(
+    float4 position [[position]], texture2d<half> sourceTexture [[texture(0)]],
+    constant float4 &uniforms [[buffer(0)]]
+) {
+    constexpr sampler linearSampler(mag_filter::linear, min_filter::linear, address::clamp_to_edge);
+    const float2 uv = position.xy / uniforms.zw;
+    const float2 step = uniforms.xy * 1.15470053838;
+    half4 sum = sourceTexture.sample(linearSampler, uv + float2(-step.x, step.y));
+    sum += sourceTexture.sample(linearSampler, uv + float2(step.x, step.y));
+    sum += sourceTexture.sample(linearSampler, uv + float2(step.x, -step.y));
+    sum += sourceTexture.sample(linearSampler, uv + float2(-step.x, -step.y));
+    return sum / half(4.0);
+}
+
+// Opt-in covariance redistribution experiment, not an identical blur kernel.
+// The penultimate four-tap restore supplies the removed triangular tap variance.
+fragment half4 upsampleFragment1TapRedistributed443(
+    float4 position [[position]],
+    texture2d<half> sourceTexture [[texture(0)]],
+    constant float4 &uniforms [[buffer(0)]]
+) {
+    constexpr sampler linearSampler(mag_filter::linear, min_filter::linear, address::clamp_to_edge);
+    return sourceTexture.sample(linearSampler, position.xy * uniforms.zw);
 }

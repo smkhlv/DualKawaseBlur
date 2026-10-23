@@ -15,6 +15,18 @@ struct BlurUniforms {
     }
 }
 
+struct OpaqueCompositeUniforms {
+    var baseColor: SIMD4<Float>
+    var uvOrigin: SIMD2<Float>
+    var uvScale: SIMD2<Float>
+
+    init(baseColor: SIMD4<Float>, mapping: SharedBackgroundUVMapping) {
+        self.baseColor = baseColor
+        uvOrigin = mapping.origin
+        uvScale = mapping.scale
+    }
+}
+
 /// Vertex structure for full-screen quad
 struct Vertex {
     var position: SIMD3<Float>
